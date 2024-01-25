@@ -1,0 +1,48 @@
+.header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 66px;
+    padding: 5px;
+    background-color: #2d3748;
+    color: white;
+}
+
+.header>div {
+    height: 100%;
+}
+
+.header img {
+    height: 100%;
+}
+
+.header .logo {
+    margin-left: 20px;
+}
+
+.header .group-info-user {
+    display: flex;
+    align-items: center;
+}
+
+.header .group-info-user > img {
+    height: 60%;
+    border-radius: 33px;
+    background-color: #0b2136;
+    padding: 5px;
+}
+
+.header .group-info-user .user-info {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.header .avatar {
+    vertical-align: middle;
+    height: 90%;
+    border-radius: 50%;
+}

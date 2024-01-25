@@ -1,0 +1,15 @@
+.group-filter {
+    display: flex;
+}
+
+.item-filter {
+    background-color: #474747;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 7px 15px 7px 15px;
+    border: 1px solid #474747;
+}
+
+.btn-remove {
+    cursor: pointer;
+}

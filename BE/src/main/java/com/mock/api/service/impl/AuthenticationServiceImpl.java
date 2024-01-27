@@ -1,26 +1,71 @@
 package com.mock.api.service.impl;
 
+import com.mock.api.constant.ErrorCodeConstant;
 import com.mock.api.dto.UserDetailsDto;
 import com.mock.api.entities.UserModel;
+import com.mock.api.exception.ParameterException;
+import com.mock.api.exception.PermitException;
 import com.mock.api.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.mock.api.request.LoginRequest;
+import com.mock.api.request.RegisterUserRequest;
+import com.mock.api.response.AccessTokenResponse;
+import com.mock.api.service.AuthenticationService;
+import com.mock.api.service.TokenService;
+import com.mock.api.util.ObjectUtil;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service
-public class AuthenticationServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+@Service
+@RequiredArgsConstructor
+public class AuthenticationServiceImpl implements AuthenticationService {
+
+    private final UserRepository userRepository;
+    private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetailsDto loadUserByUsername(String username) throws UsernameNotFoundException {
+    public AccessTokenResponse signIn(LoginRequest request) {
 
-        UserModel user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        // Load to get data
+        UserModel user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new ParameterException(ErrorCodeConstant.VALIDATION_001,
+                        new String[] {"username: " + request.getUsername()}));
 
-        return UserDetailsDto.build(user);
+
+        if (!user.isActive()) {
+            throw new PermitException(ErrorCodeConstant.VALIDATION_003);
+        }
+
+        // this auth by spring boot -> auto config, call to loadUserByUsername(String username) config
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+
+        UserDetailsDto userDetailsDto = UserDetailsDto.build(user);
+        String token = tokenService.generateToken(userDetailsDto);
+        return AccessTokenResponse.builder()
+                .accessToken(token)
+                .build();
     }
 
+    @Override
+    @Transactional
+    public AccessTokenResponse signUp(RegisterUserRequest request) {
+
+        UserModel userModel = ObjectUtil.copyObject(request, UserModel.class);
+        userModel.setPassword(passwordEncoder.encode(request.getPassword()));
+        userModel = userRepository.saveAndFlush(userModel);
+
+        UserDetailsDto user = UserDetailsDto.build(userModel);
+        String token = tokenService.generateToken(user);
+
+        return AccessTokenResponse.builder()
+                .accessToken(token)
+                .build();
+    }
 }

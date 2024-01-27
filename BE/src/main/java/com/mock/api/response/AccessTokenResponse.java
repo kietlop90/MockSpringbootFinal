@@ -8,5 +8,5 @@ import lombok.Data;
 public class AccessTokenResponse {
     private final String type = "Bearer";
     private String accessToken;
-    private boolean isPassword;
+    private boolean isNeedChangePassword;
 }

@@ -1,5 +1,11 @@
 package com.mock.api.util;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ClassUtils;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -8,21 +14,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.ClassUtils;
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
-
 public final class ObjectUtil {
 
     /**
      * Dozer Mapper (Thread safe)
      */
-    private static Mapper MAPPER = new DozerBeanMapper();
+    private static final Mapper MAPPER = new DozerBeanMapper();
 
     static {
-        List<String> mappingFiles = Arrays.asList("dozer-custom-mapping.xml");
+        List<String> mappingFiles = List.of("dozer-custom-mapping.xml");
         ((DozerBeanMapper) MAPPER).setMappingFiles(mappingFiles);
     }
 
@@ -145,9 +145,7 @@ public final class ObjectUtil {
         String CLASS_KEY = "class";
         try {
             describe = PropertyUtils.describe(bean);
-            if (describe.containsKey(CLASS_KEY)) {
-                describe.remove(CLASS_KEY);
-            }
+            describe.remove(CLASS_KEY);
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }

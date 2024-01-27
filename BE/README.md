@@ -53,3 +53,46 @@ docker run -p 8080:8080 -d be_phuc_image
 <h2 style="display: c">Hi 👋, I'm Phúc Kute</h2>
 <h3 align="center">Start learning Developer at <a href="https://google.com" target="blank">phuckute.com</a></h3>
 <h2 style="display: c">Thank you!</h4>
+
+# Hướng Dẫn Cài Đặt Docker
+
+## Windows 10 và 11
+
+1. Tải Docker Desktop từ trang chính thức của Docker: [Docker Desktop](https://www.docker.com/products/docker-desktop)
+2. Chạy tệp cài đặt và làm theo hướng dẫn để hoàn thành quá trình cài đặt.
+
+## Linux
+
+1. Mở terminal và chạy các lệnh sau để cài đặt Docker:
+
+    ```bash
+    sudo apt update
+    sudo apt install docker.io
+    ```
+
+2. Khởi động Docker và đặt nó để khởi động cùng hệ thống:
+
+    ```bash
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    ```
+
+3. (Tùy chọn) Thêm người dùng vào nhóm "docker" để chạy Docker mà không cần sudo:
+
+    ```bash
+    sudo usermod -aG docker $USER
+    ```
+
+   Đăng nhập lại để thay đổi có hiệu lực.
+
+## macOS
+
+1. Sử dụng Homebrew để cài đặt Docker:
+
+    ```bash
+    brew install --cask docker
+    ```
+
+2. Mở Docker Desktop sau khi cài đặt và làm theo hướng dẫn.
+
+Lưu ý: Đảm bảo bạn sử dụng tài khoản có quyền quản trị để cài đặt Docker.

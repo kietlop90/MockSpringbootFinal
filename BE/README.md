@@ -23,8 +23,8 @@ alt="Project Architecture By Phúc Kute"/></a>
    4. spring-boot-starter-validation
    5. spring-boot-starter-thymeleaf
    5. Spring AOP concepts..
-3.  4.0.0
-4. Mysql 
+3. Maven 4.0.0
+4. Mysql (lasted)
 5. Docker / Docker Compose
 
 ## Step run project
@@ -47,7 +47,8 @@ docker run -p 8080:8080 -d be_phuc_image
 ```
 3. Testing
    1. Open browser with url <a href="http://localhost:8080" target="blank">localhost:8080</a> to open website
-   2. Check API documentation at <a href="http://localhost:8080/swagger-ui" target="blank">😱Not support Swagger for JakartaEE 😭😭😭</a>.
+   2. Check html documentation at <a href="http://localhost:8080/swagger-ui/index.html" target="blank">😱Not support Swagger for JakartaEE 😭😭😭</a>.
+   2. Check API documentation at <a href="http://localhost:8080/v3/api-docs" target="blank">😱click</a>.
 
 # Author
 <h2 style="display: c">Hi 👋, I'm Phúc Kute</h2>

@@ -1,9 +1,17 @@
 package com.mock.api.service;
 
+import com.mock.api.dto.UserDetailsDto;
 import com.mock.api.request.RegisterUserRequest;
-import com.mock.api.response.RegisterUserResponse;
+import com.mock.api.request.SearchListUserRequest;
+import com.mock.api.request.UpdateUserRequest;
+import com.mock.api.response.RegisterUpdateUserResponse;
+import com.mock.api.response.SearchListUserResponse;
 
 public interface UserService {
 
-    RegisterUserResponse register(RegisterUserRequest request);
+    RegisterUpdateUserResponse register(RegisterUserRequest request, UserDetailsDto userLogin);
+
+   SearchListUserResponse searchList(SearchListUserRequest search);
+
+    RegisterUpdateUserResponse update(UpdateUserRequest request,  UserDetailsDto userLogin);
 }

@@ -19,7 +19,7 @@ public class DefaultController {
     @GetMapping("/healthCheck")
     public String healthCheck() {
         // api
-        return "{'message': 'API Data'}";
+        return "{\"message\": \"API Data\"}";
     }
 
 }

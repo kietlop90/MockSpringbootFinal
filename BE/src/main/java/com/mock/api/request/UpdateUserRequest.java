@@ -3,6 +3,7 @@ package com.mock.api.request;
 import com.mock.api.constant.AppConstants;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterUserRequest {
+public class UpdateUserRequest {
 
+    @NotNull
+    private Long id;
 
-    // this for comment swagger
     @NotBlank
     @Size(min = 6, max = 200)
     private String username;
@@ -30,9 +32,8 @@ public class RegisterUserRequest {
     private String password;
 
     private String name;
-
     private String email;
 
-    @Parameter(name = "dob", example = "2021-12-31")
+    @Parameter(name = "date of birthday", required = false, example = "2021-12-31")
     private LocalDate dob;
 }

@@ -5,11 +5,12 @@ import com.mock.api.request.RegisterUserRequest;
 import com.mock.api.response.AccessTokenResponse;
 import com.mock.api.response.ErrorResponse;
 import com.mock.api.service.AuthenticationService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,15 +30,12 @@ public class AuthenticationController {
         return authenticationService.signUp(request);
     }
 
-    @ApiOperation(value = "Sign in", notes = "If you log in 5 times incorrectly, you will be locked out...",
-            response = AccessTokenResponse.class)
+    @Operation(summary = "Sign in",
+            description = "If you log in 5 times incorrectly, you will be locked out...")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully",
-                    response = AccessTokenResponse.class),
-            @ApiResponse(code = 400, message = "Invalid param",
-                    response = ErrorResponse.class),
-            @ApiResponse(code = 401, message = "Authentication failed",
-                    response = AuthenticationException.class)})
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = AccessTokenResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "401", content = {@Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")})})
     @PostMapping("/signin")
     public AccessTokenResponse signIn(@Validated @RequestBody LoginRequest request) {
         return authenticationService.signIn(request);

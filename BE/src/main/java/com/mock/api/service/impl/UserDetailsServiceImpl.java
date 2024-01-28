@@ -1,7 +1,7 @@
 package com.mock.api.service.impl;
 
 import com.mock.api.dto.UserDetailsDto;
-import com.mock.api.entities.UserModel;
+import com.mock.api.entities.User;
 import com.mock.api.exception.ParameterException;
 import com.mock.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetailsDto loadUserByUsername(String username) {
-        UserModel user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ParameterException("Invalid username or password."));
         return UserDetailsDto.build(user);
     }

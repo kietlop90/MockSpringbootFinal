@@ -1,8 +1,8 @@
 package com.mock.api.service.impl;
 
-import com.mock.api.constant.ErrorCodeConstant;
+import com.mock.api.constant.MessageCodeConstant;
 import com.mock.api.dto.UserDetailsDto;
-import com.mock.api.entities.UserModel;
+import com.mock.api.entities.User;
 import com.mock.api.exception.ParameterException;
 import com.mock.api.exception.PermitException;
 import com.mock.api.repository.UserRepository;
@@ -33,13 +33,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AccessTokenResponse signIn(LoginRequest request) {
 
         // Load to get data
-        UserModel user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new ParameterException(ErrorCodeConstant.VALIDATION_001,
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new ParameterException(MessageCodeConstant.VALIDATION_001,
                         new String[] {"username: " + request.getUsername()}));
 
 
         if (!user.isActive()) {
-            throw new PermitException(ErrorCodeConstant.VALIDATION_003);
+            throw new PermitException(MessageCodeConstant.VALIDATION_003);
         }
 
         // this auth by spring boot -> auto config, call to loadUserByUsername(String username) config
@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public AccessTokenResponse signUp(RegisterUserRequest request) {
 
-        UserModel userModel = ObjectUtil.copyObject(request, UserModel.class);
+        User userModel = ObjectUtil.copyObject(request, User.class);
         userModel.setPassword(passwordEncoder.encode(request.getPassword()));
         userModel = userRepository.saveAndFlush(userModel);
 

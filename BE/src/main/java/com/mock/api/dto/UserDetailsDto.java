@@ -1,7 +1,7 @@
 package com.mock.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mock.api.entities.UserModel;
+import com.mock.api.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,15 +18,17 @@ public class UserDetailsDto implements UserDetails {
     private Long userId;
     private String username;
     private String email;
+    private String phone;
     private List<String> roles;
     private String password;
     private final List<GrantedAuthority> grantedAuthorities;
 
-    public UserDetailsDto(Long userId, String username, String password, String email, List<String> roles) {
+    public UserDetailsDto(Long userId, String username, String password, String email, String phone, List<String> roles) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.phone = phone;
         this.roles = roles;
         this.grantedAuthorities = roles == null ? Collections.emptyList() : roles.stream()
                 .map(SimpleGrantedAuthority::new)
@@ -43,7 +45,7 @@ public class UserDetailsDto implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    public static UserDetailsDto build(UserModel user) {
+    public static UserDetailsDto build(User user) {
 
         List<GrantedAuthority> authorities = Collections.emptyList();
         //TODO
@@ -52,10 +54,12 @@ public class UserDetailsDto implements UserDetails {
 //                .map(SimpleGrantedAuthority::new)
 //                .collect(Collectors.toList());
 
-        return new UserDetailsDto(user.getId(),
+        return new UserDetailsDto(
+                user.getId(),
                 user.getUsername(),
                 user.getPassword(),
                 user.getEmail(),
+                user.getPhone(),
                 null);
     }
 
@@ -121,6 +125,15 @@ public class UserDetailsDto implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<String> getRoles() {

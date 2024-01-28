@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/login.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+
+<body>
+    <div id="header" th:insert="header.html"></div>
+    <div id="body" class="body">
+        <form method="POST" th:object="${loginForm}" th:action="@{login}" class="form-signin">
+            <h2 class="form-heading">Log in</h2>
+
+            <div class="form-group">
+                <input th:field="*{username}" type="text" value="aumauduong"
+                       class="form-control" placeholder="Username" autofocus/>
+                <input
+                        th:field="*{password}" type="password" value="aumauduong" class="form-control"
+                        placeholder="Password"/>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Log
+                    In
+                </button>
+                <h4 class="text-center">
+                    <a th:href="@{register}">Create an account</a>
+                </h4>
+            </div>
+        </form>
+    </div>
+    <div id="footer" th:insert="footer.html"></div>
+</body>
+
+</html>

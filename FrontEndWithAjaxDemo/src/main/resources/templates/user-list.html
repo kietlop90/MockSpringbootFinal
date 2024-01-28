@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Syllabus</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+</head>
+
+<body>
+    <div id="header" th:insert="header.html"></div>
+    <div id="body" class="body">
+        <div id="menu"></div>
+        </div>
+        <div class="content">
+            <div class="row mb-2">
+                <div class="col title">
+                    Syllabus
+                </div>
+            </div>
+            <div class="row">
+                <!-- filter -->
+                <div class="col-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/document-manage/search.png}" alt="">
+                        </span>
+                        <input class="form-control" id="input-filter" placeholder="Search by...">
+                    </div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/navigation-menu/calendar-today.png}" alt="">
+                        </span>
+                        <input class="form-control" id="datepicker-filter" placeholder="Create date...">
+                    </div>
+                </div>
+                <div class="col-6 group-btn-right">
+                    <button type="button" class="btn btn-orange">
+                        <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
+                        Import
+                    </button>
+                    <button type="button" class="btn btn-main">
+                        <img th:src="@{/icon/action/add-white.png}" alt="">
+                        Add Syllabus
+                    </button>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="group-filter">
+                            <span class="item-filter">
+                                foundation
+                                <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
+                                    alt="">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- table -->
+                <div class="row">
+                    <div class="col">
+                        <table class="table">
+                            <thead class="header-table">
+                                <tr>
+                                    <th>Syllabus</th>
+                                    <th>Code</th>
+                                    <th>Created on</th>
+                                    <th>Created by</th>
+                                    <th>Duration</th>
+                                    <th>Output standard</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <th:block th:each="item : ${list}">
+                                    <tr th:id='${"tr"+ item.id}'>
+                                        <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
+                                        <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
+                                        <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
+                                        <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
+                                        <td th:id='${"gender"+ item.id}' th:text="${item.gender}"></td>
+                                        <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                        <td th:id='${"action"+ item.id}'>...</td>
+                                    </tr>
+                                </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-pagging">
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/first_page.png}" alt="">
+                            </div>
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
+                            </div>
+                            <div class="item-pagging number active">1</div>
+                            <div class="item-pagging number">2</div>
+                            <div class="item-pagging number">3</div>
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
+                            </div>
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/last_page.png}" alt="">
+                            </div>
+                            <div class="item-per-page">
+                                Rows per page:
+                                <select class="form-control" name="item-per-page" id="item-per-page">
+                                    <option value="">10</option>
+                                    <option value="">20</option>
+                                    <option value="">30</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" th:insert="footer.html"></div>
+</body>
+
+</html>

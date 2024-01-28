@@ -17,11 +17,11 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
         if(Token.API_KEY.equals("None")){
             response.sendRedirect("/user/login");
         }
-        else {
-            if(!Token.ROLE.contains(ERole.ADMIN)) {
-                throw new ForbiddenException("403 Forbidden");
-            }
-        }
+//        else {
+//            if(!Token.ROLE.contains(ERole.ADMIN)) {
+//                throw new ForbiddenException("403 Forbidden");
+//            }
+//        }
         return true;
     }
 }

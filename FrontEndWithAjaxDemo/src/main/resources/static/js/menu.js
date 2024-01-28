@@ -3,7 +3,7 @@ $(document).ready(function () {
         {
             label: "Home",
             path: "home.html",
-            icon: "assets/icon/navigation-menu/home.png",
+            icon: "icon/navigation-menu/home.png",
         },
         {
             label: "Syllabus",
@@ -17,7 +17,7 @@ $(document).ready(function () {
                     path: "createSyllabus.html",
                 },
             ],
-            icon: "assets/icon/navigation-menu/book-open.png",
+            icon: "icon/navigation-menu/book-open.png",
         },
         {
             label: "Training program",
@@ -31,7 +31,7 @@ $(document).ready(function () {
                     path: "createprogram.html",
                 },
             ],
-            icon: "assets/icon/navigation-menu/biotech.png",
+            icon: "icon/navigation-menu/biotech.png",
         },
         {
             label: "Class",
@@ -45,12 +45,12 @@ $(document).ready(function () {
                     path: "createClass.html",
                 },
             ],
-            icon: "assets/icon/navigation-menu/school.png",
+            icon: "icon/navigation-menu/school.png",
         },
         {
             label: "Training calendar",
             path: "trainingCalendar.html",
-            icon: "assets/icon/navigation-menu/calendar-today.png",
+            icon: "icon/navigation-menu/calendar-today.png",
         },
         {
             label: "User management",
@@ -64,12 +64,12 @@ $(document).ready(function () {
                     path: "userPermission.html",
                 },
             ],
-            icon: "assets/icon/navigation-menu/group.png",
+            icon: "icon/navigation-menu/group.png",
         },
         {
             label: "Learning materials",
             path: "learningMaterials.html",
-            icon: "assets/icon/navigation-menu/folder.png",
+            icon: "icon/navigation-menu/folder.png",
         },
         {
             label: "Setting",
@@ -79,7 +79,7 @@ $(document).ready(function () {
                     path: "calendar.html",
                 }
             ],
-            icon: "assets/icon/navigation-menu/settings.png",
+            icon: "icon/navigation-menu/settings.png",
         },
     ]
     let menuDom = $("#menu")
@@ -95,7 +95,7 @@ $(document).ready(function () {
             .append($("<div>").html(item.label))
         if (item.subMenu) {
             parentItemsDom
-                .append($("<img>").attr("src", "../assets/icon/navigation-menu/arrow-default.png"))
+                .append($("<img>").attr("src", "../icon/navigation-menu/arrow-default.png"))
             for (const subItem of item.subMenu) {
                 subItemsDom
                     .append($("<div>").html(subItem.label))

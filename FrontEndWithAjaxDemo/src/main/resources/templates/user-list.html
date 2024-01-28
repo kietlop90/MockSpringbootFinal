@@ -22,12 +22,11 @@
 <body>
     <div id="header" th:insert="header.html"></div>
     <div id="body" class="body">
-        <div id="menu"></div>
-        </div>
+        <div id="menu" class="menu"></div>
         <div class="content">
             <div class="row mb-2">
                 <div class="col title">
-                    Syllabus
+                    Users
                 </div>
             </div>
             <div class="row">
@@ -37,7 +36,7 @@
                         <span class="input-group-text">
                             <img th:src="@{/icon/document-manage/search.png}" alt="">
                         </span>
-                        <input class="form-control" id="input-filter" placeholder="Search by...">
+                        <input class="form-control" id="input-filter" placeholder="Search by name...">
                     </div>
                 </div>
                 <div class="col-3 mb-2">
@@ -49,13 +48,9 @@
                     </div>
                 </div>
                 <div class="col-6 group-btn-right">
-                    <button type="button" class="btn btn-orange">
-                        <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
-                        Import
-                    </button>
                     <button type="button" class="btn btn-main">
                         <img th:src="@{/icon/action/add-white.png}" alt="">
-                        Add Syllabus
+                        Add User
                     </button>
                 </div>
 
@@ -77,13 +72,13 @@
                         <table class="table">
                             <thead class="header-table">
                                 <tr>
-                                    <th>Syllabus</th>
-                                    <th>Code</th>
-                                    <th>Created on</th>
-                                    <th>Created by</th>
-                                    <th>Duration</th>
-                                    <th>Output standard</th>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Day Of Birth</th>
                                     <th>Status</th>
+                                    <th>Roles</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,8 +88,8 @@
                                         <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
                                         <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
                                         <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
-                                        <td th:id='${"gender"+ item.id}' th:text="${item.gender}"></td>
-                                        <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                        <td th:id='${"status"+ item.id}' th:text="${item.status}"></td>
+                                        <td th:id='${"type"+ item.id}' th:text="${item.roles}"></td>
                                         <td th:id='${"action"+ item.id}'>...</td>
                                     </tr>
                                 </th:block>

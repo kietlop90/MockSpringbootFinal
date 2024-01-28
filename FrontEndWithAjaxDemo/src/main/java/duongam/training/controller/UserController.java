@@ -3,6 +3,8 @@ package duongam.training.controller;
 import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.response.fordetail.DResponseUser;
+import duongam.training.dto.response.forlist.LResponseCustomer;
+import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.service.HttpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,12 +13,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
     private HttpUser httpUser;
+
+	@GetMapping("/list")
+	public String list(Model model) {
+		List<LResponseUser> list = httpUser.getAll();
+		model.addAttribute("list", list);
+		return "user-list";
+	}
 
 	@GetMapping("/register")
 	public String registration(Model model) {
@@ -51,6 +61,6 @@ public class UserController {
 		if(dResponseUser == null){
 			return "redirect:/user/login";
 		}
-		return "redirect:/customer/list";
+		return "redirect:/user/list";
 	}
 }

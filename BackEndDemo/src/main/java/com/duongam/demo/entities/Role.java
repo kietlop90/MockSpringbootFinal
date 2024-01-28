@@ -29,10 +29,6 @@ public class Role {
         this.name = name;
     }
 
-    public Role(ERole name, String description) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
         return "Role{" +

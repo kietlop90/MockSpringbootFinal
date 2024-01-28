@@ -31,13 +31,14 @@ public class SecurityConfig {
             // start html
             new AntPathRequestMatcher("/"),
             new AntPathRequestMatcher("/index"),
+            new AntPathRequestMatcher("/home"),
             new AntPathRequestMatcher("/static/**"),
             new AntPathRequestMatcher("/favicon.ico"),
             // config api
             new AntPathRequestMatcher("/auth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/swagger-resources/**"),
-            new AntPathRequestMatcher("/v3/api-docs"),
+            new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/healthCheck"));
     private static final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DefaultController {
 
-    @GetMapping(value = {"/", "/index"})
+    @GetMapping(value = {"/", "/index" , "/home"})
     public String home(Model model) {
         model.addAttribute("text", "hello");
         // html view

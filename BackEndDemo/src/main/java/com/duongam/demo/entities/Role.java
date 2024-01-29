@@ -27,7 +27,6 @@ public class Role {
 
     private String description;
 
-
     @OneToMany(mappedBy = "role",cascade = CascadeType.PERSIST)
     private Set<User> users;
 

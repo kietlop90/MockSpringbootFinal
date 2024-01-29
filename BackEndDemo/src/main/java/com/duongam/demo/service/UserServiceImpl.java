@@ -5,6 +5,7 @@ import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
+import com.duongam.demo.entities.enums.ERole;
 import com.duongam.demo.repositories.RoleRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IUserService;
@@ -47,9 +48,9 @@ public class UserServiceImpl implements IUserService {
 		}
 
 		DResponseUser detailRespondUser = modelMapper.map(user, DResponseUser.class);
-		detailRespondUser.setRole(user.getRole());
+		detailRespondUser.setRole(user.roleName());
 
-		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole());
+		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.roleName());
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>(List.of(grantedAuthority));
 
 		TokenAuthenticationService.addAuthentication(response, user.getUsername(), grantedAuthorities);
@@ -61,16 +62,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public DResponseUser create(RegisterModel registerModel) {
 //		Role role = roleRepository.findById(registerModel.getRoleId()).get();
+		Role role = new Role(ERole.ADMIN);
 		User user = new User();
 		user.setUsername(registerModel.getUsername());
+		user.onPrePersist();
+		user.setRole(role);
 		user.setPassword(bCryptPasswordEncoder.encode(registerModel.getPassword()));
-		Long id = Long.valueOf(1);
-		Optional<Role> roleOpt = roleRepository.findById(id);
-		if (roleOpt.isPresent()) {
-			Role role = roleOpt.get();
-			user.setRole(role);
-		}
-
 		return modelMapper.map(userRepository.save(user), DResponseUser.class);
 	}
 

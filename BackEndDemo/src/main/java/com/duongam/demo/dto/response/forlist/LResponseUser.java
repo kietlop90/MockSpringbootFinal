@@ -1,5 +1,6 @@
 package com.duongam.demo.dto.response.forlist;
 
+import com.duongam.demo.entities.Role;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
@@ -9,10 +10,7 @@ public interface LResponseUser {
     String getName();
     String getEmail();
     String getPhone();
-
-    @Value("#{target.role}")// để xác định kiểu dữ liệu nhận cho getRole() để không bị lỗi
-// không convert được dữ liệu.
-    String getRole();
+    String roleName();
     LocalDate getDob();
     String getGender();
     Boolean getStatus();

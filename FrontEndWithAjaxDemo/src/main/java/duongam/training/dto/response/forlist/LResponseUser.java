@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -21,8 +22,8 @@ public class LResponseUser {
     private String gender;
     private Boolean status;
     private String createdBy;
-    private LocalDate createdDate;
+    private Timestamp createdDate;
     private String modifiedBy;
-    private LocalDate modifiedDate;
+    private Timestamp modifiedDate;
     private String username;
 }

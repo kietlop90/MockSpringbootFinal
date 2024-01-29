@@ -1,6 +1,7 @@
 package com.duongam.demo.entities;
 
 
+import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.entities.enums.EGender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +10,13 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -56,24 +60,40 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private EGender gender;
 
-    @ManyToOne
-//            (cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
-
 
     @OneToMany(mappedBy = "userId")
     private List<ClassUser> classUser;
 
-
     @OneToMany(mappedBy = "userId")
     private List<TrainingProgram> trainingProgram;
 
-    public User(String email, String password) {
-        this.email = email;
+    @Transient
+    public String roleName() {
+        return role.getName().toString();
+    }
+
+    public User(CRequestUser cRequestUser) {
+        this.username = cRequestUser.getUsername();
+        this.password = cRequestUser.getPassword();
+    }
+
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getRole() {
-        return this.role.getName().name();
+    // auto setting when insert
+    @PrePersist
+    public void onPrePersist() {
+        createdDate = Timestamp.valueOf(LocalDateTime.now());
+        modifiedDate = Timestamp.valueOf(LocalDateTime.now());
+    }
+
+    // auto setting when update
+    @PreUpdate
+    public void onPreUpdate() {
+        modifiedDate = Timestamp.valueOf(LocalDateTime.now());
     }
 }

@@ -63,7 +63,7 @@
                         <div class="group-filter">
                             <span class="item-filter">
                                 foundation
-                                <img class="btn-remove" th:src="@{/assets/icon/navigation-menu/menu/menu_open-white.png"
+                                <img class="btn-remove" th:src="@{/assets/icon/navigation-menu/menu/menu_open-white.png}"
                                     alt="">
                             </span>
                         </div>
@@ -86,14 +86,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>John</td>
-                                    <td>Doe</td>
+                                <tr th:each=" syllabus : ${list}">
+                                    <td th:text="${syllabus.topicName}"></td>
+                                    <td th:text="${syllabus.topicCode}"></td>
+                                    <td th:text="${syllabus.createdDate}"></td>
+                                    <td th:text="${syllabus.createdBy}"></td>
                                     <td>john@example.com</td>
                                     <td>john@example.com</td>
-                                    <td>john@example.com</td>
-                                    <td>john@example.com</td>
-                                    <td>john@example.com</td>
+                                    <td th:text="${syllabus.status}"></td>
                                 </tr>
                             </tbody>
                         </table>

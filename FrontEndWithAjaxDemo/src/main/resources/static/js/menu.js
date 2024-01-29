@@ -10,7 +10,7 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "View syllabus",
-                    path: "/sallybus/list",
+                    path: "/syllabus/list",
                 },
                 {
                     label: "Create syllabus",

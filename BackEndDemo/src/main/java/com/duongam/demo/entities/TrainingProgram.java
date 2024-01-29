@@ -32,11 +32,12 @@ public class TrainingProgram {
     // them phan cua topic code vao
     private Integer status;
 
-    private Long createdBy;
+
 
     @CreationTimestamp
     @Column(name = "create_date", insertable = false, updatable = false)
     private Timestamp createdDate;
+
 
     private Long modifiedBy;
 
@@ -51,8 +52,8 @@ public class TrainingProgram {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User userId;  // map voi bang user(truong id)
+    @JoinColumn(name = "create_by")
+    private User createBy;  // map voi bang user(truong id)
 
 
     @OneToMany(mappedBy = "trainingProgramCode")

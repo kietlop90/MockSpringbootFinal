@@ -36,11 +36,18 @@ public class Syllabus {
 
     private Boolean status;
 
-    private Long createdBy;
+    @ManyToOne
+    @JoinColumn(name = "create_by")
+    private User createdBy; // Lấy id của user
+
+    public String getCreatedBy() {
+        return createdBy.getName();
+    }
 
     @CreationTimestamp
     @Column(name = "create_date", insertable = false, updatable = false)
     private Timestamp createdDate;
+
 
     private Long modifiedBy;
 

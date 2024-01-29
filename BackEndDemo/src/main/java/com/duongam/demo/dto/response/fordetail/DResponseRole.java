@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.lang.reflect.Type;
 
 @AllArgsConstructor
 @NoArgsConstructor

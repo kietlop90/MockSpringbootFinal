@@ -1,23 +1,21 @@
 package com.duongam.demo.dto.response.forlist;
 
-import com.duongam.demo.entities.Role;
+import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ManyToMany;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
 
 public interface LResponseUser {
     Long getId();
     String getName();
     String getEmail();
     String getPhone();
-    List<String> getListOfRoles();
+
+    @Value("#{target.role}")// để xác định kiểu dữ liệu nhận cho getRole() để không bị lỗi
+// không convert được dữ liệu.
+    String getRole();
     LocalDate getDob();
     String getGender();
-    boolean getStatus();
+    Boolean getStatus();
     String getCreatedBy();
     LocalDate getCreatedDate();
     String getModifiedBy();

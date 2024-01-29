@@ -6,8 +6,6 @@ import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.request.forcreate.CRequestUser;
 import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DResponseUser;
-import duongam.training.dto.response.fordetail.DResponseUser;
-import duongam.training.dto.response.forlist.LResponseCustomer;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.service.http.HttpBase;
 import duongam.training.service.http.Token;
@@ -39,10 +37,8 @@ public class HttpUser {
         DResponseUser dResponseUser = httpBase.postToAPI(loginForm, userUrl.login(), DResponseUser.class);
         if (dResponseUser != null) {
             Token.API_KEY = dResponseUser.getToken();
-            List<String> roles = dResponseUser.getListOfRoles();
-            roles.forEach(role -> {
+            String role = dResponseUser.getRole();
                 Token.ROLE.add(ERole.valueOf(role));
-            });
         }
 
         return dResponseUser;

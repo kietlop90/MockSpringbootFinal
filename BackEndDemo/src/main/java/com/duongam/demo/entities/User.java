@@ -1,97 +1,79 @@
 package com.duongam.demo.entities;
 
-import com.duongam.demo.dto.request.forcreate.CRequestUser;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+
+import com.duongam.demo.entities.enums.EGender;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-//@ToString
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
 
-	@Column(name = "name")
-	private String name;
+public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-	@Column(name = "email")
-	private String email;
+    private String name;
 
-	@Column(name = "phone")
-	private String phone;
+    @Column(unique = true)
+    private String username;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	private Set<Role> roles;
+    private String password;
 
-	@Column(name = "dob")
-	private LocalDate dob;
+    private String email;
 
-	@Column(name = "gender")
-	private String gender;
+    private String phone;
 
-	@Column(name = "status", nullable = false,
-			columnDefinition = "boolean DEFAULT true COMMENT 'true: active, false: deactivated'")
-	private boolean status;
+    private LocalDate dob;
 
-	@Column(name = "created_by")
-	private String createdBy;
+    private Boolean status;
 
-	@Column(name = "created_date")
-	private LocalDate createdDate;
+    private String createdBy;
 
-	@Column(name = "modified_by")
-	private String modifiedBy;
+    @CreationTimestamp
+    @Column(name = "create_date", insertable = false, updatable = false)
+    private Timestamp createdDate;
+    private String modifiedBy;
 
-	@Column(name = "modified_date")
-	private LocalDate modifiedDate;
+    @UpdateTimestamp
+    @Column(name = "modified_date", insertable = false, updatable = false)
+    private Timestamp modifiedDate;
 
-	@Column(unique = true)
-	private String username;
+    @Enumerated(EnumType.STRING)
+    private EGender gender;
 
-	@Column(name = "password")
-	private String password;
+    @ManyToOne
+//            (cascade = CascadeType.PERSIST)
+    private Role role;
 
-	@Transient
-	public List<String> getListOfRoles(){
-		ArrayList<String> roleList = new ArrayList<>();
-		roles.forEach(role -> {
-			roleList.add(role.getName().toString());
-		});
-		return roleList;
-	}
 
-	public User(CRequestUser cRequestUser){
-		this.username = cRequestUser.getUsername();
-		this.password = cRequestUser.getPassword();
-	}
+    @OneToMany(mappedBy = "userId")
+    private List<ClassUser> classUser;
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
 
-	// auto setting when insert
-	@PrePersist
-	public void onPrePersist() {
-		createdDate = LocalDate.now();
-		modifiedDate = LocalDate.now();
-	}
+    @OneToMany(mappedBy = "userId")
+    private List<TrainingProgram> trainingProgram;
 
-	// auto setting when update
-	@PreUpdate
-	public void onPreUpdate() {
-		modifiedDate = LocalDate.now();
-	}
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getRole() {
+        return this.role.getName().name();
+    }
 }

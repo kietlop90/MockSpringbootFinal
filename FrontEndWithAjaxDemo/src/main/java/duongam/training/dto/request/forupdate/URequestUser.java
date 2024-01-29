@@ -1,8 +1,6 @@
 package duongam.training.dto.request.forupdate;
 
-import jdk.jfr.BooleanFlag;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;

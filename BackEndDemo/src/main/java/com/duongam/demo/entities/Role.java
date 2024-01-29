@@ -1,7 +1,11 @@
 package com.duongam.demo.entities;
 
+
 import com.duongam.demo.entities.enums.ERole;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,29 +15,35 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-//@ToString
+
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name")
     private ERole name;
 
-    @ManyToMany(mappedBy = "roles")
+    private String description;
+
+
+    @OneToMany(mappedBy = "role",cascade = CascadeType.PERSIST)
     private Set<User> users;
 
     public Role(ERole name) {
         this.name = name;
     }
 
+    public Role(ERole name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+
+
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name=" + name +
-                '}';
+        return  name.toString();
     }
 }

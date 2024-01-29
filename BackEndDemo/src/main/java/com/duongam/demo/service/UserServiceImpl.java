@@ -1,27 +1,24 @@
 package com.duongam.demo.service;
 
+import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
-import com.duongam.demo.entities.enums.ERole;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
 import com.duongam.demo.repositories.RoleRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IUserService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -48,30 +45,33 @@ public class UserServiceImpl implements IUserService {
 		if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
 			return null;
 		}
-		DResponseUser responseUser = modelMapper.map(user, DResponseUser.class);
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		Set<Role> roles = user.getRoles();
-		roles.forEach(role -> {
-			grantedAuthorities.add(new SimpleGrantedAuthority(role.getName().toString()));
-		});
+
+		DResponseUser detailRespondUser = modelMapper.map(user, DResponseUser.class);
+		detailRespondUser.setRole(user.getRole());
+
+		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole());
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>(List.of(grantedAuthority));
+
 		TokenAuthenticationService.addAuthentication(response, user.getUsername(), grantedAuthorities);
 		String authorizationString = response.getHeader("Authorization");
-		responseUser.setToken(authorizationString);
-		return responseUser;
+		detailRespondUser.setToken(authorizationString);
+		return detailRespondUser;
 	}
 
 	@Override
 	public DResponseUser create(RegisterModel registerModel) {
 //		Role role = roleRepository.findById(registerModel.getRoleId()).get();
-		Role role = new Role(ERole.ADMIN);
 		User user = new User();
 		user.setUsername(registerModel.getUsername());
-		user.onPrePersist();
 		user.setPassword(bCryptPasswordEncoder.encode(registerModel.getPassword()));
-		Set<Role> roles = new HashSet<>();
-		roles.add(role);
-		user.setRoles(roles);
-        return modelMapper.map(userRepository.save(user), DResponseUser.class);
+		Long id = Long.valueOf(1);
+		Optional<Role> roleOpt = roleRepository.findById(id);
+		if (roleOpt.isPresent()) {
+			Role role = roleOpt.get();
+			user.setRole(role);
+		}
+
+		return modelMapper.map(userRepository.save(user), DResponseUser.class);
 	}
 
 	@Override

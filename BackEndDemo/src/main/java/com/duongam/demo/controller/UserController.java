@@ -1,22 +1,18 @@
 package com.duongam.demo.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
+import com.duongam.demo.dto.request.authen.LoginModel;
+import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
-import com.duongam.demo.dto.response.forlist.LResponseCustomer;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
+import com.duongam.demo.service.template.IUserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.duongam.demo.dto.request.authen.LoginModel;
-import com.duongam.demo.dto.request.authen.RegisterModel;
-import com.duongam.demo.service.template.IUserService;
-
-import io.swagger.annotations.Api;
-
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Api(tags = "User", description = "User API's")

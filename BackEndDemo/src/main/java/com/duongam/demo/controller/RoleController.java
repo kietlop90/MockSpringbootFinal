@@ -1,8 +1,9 @@
 package com.duongam.demo.controller;
 
-import javax.validation.Valid;
-
+import com.duongam.demo.dto.response.authen.RoleModel;
 import com.duongam.demo.dto.response.fordetail.DResponseRole;
+import com.duongam.demo.service.template.IRoleService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.duongam.demo.dto.response.authen.RoleModel;
-import com.duongam.demo.entities.Role;
-import com.duongam.demo.service.template.IRoleService;
-
-import io.swagger.annotations.Api;
+import javax.validation.Valid;
 
 @Api(tags = "Role", description = "Role API's")
 @RestController

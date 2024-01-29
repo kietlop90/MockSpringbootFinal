@@ -1,14 +1,13 @@
 package com.duongam.demo.service;
 
-import com.duongam.demo.dto.response.fordetail.DResponseRole;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.duongam.demo.dto.response.authen.RoleModel;
+import com.duongam.demo.dto.response.fordetail.DResponseRole;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.repositories.RoleRepository;
 import com.duongam.demo.service.template.IRoleService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RoleServiceImpl implements IRoleService {

@@ -2,8 +2,6 @@ package duongam.training.dto.response.fordetail;
 
 import lombok.*;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -14,7 +12,7 @@ public class DResponseUser {
 
     private String username;
 
-    private List<String> listOfRoles;
+    private String role;
 
     private String token;
 }

@@ -2,9 +2,7 @@ package com.duongam.demo.service.template;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
-import com.duongam.demo.dto.response.forlist.LResponseCustomer;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
-import com.duongam.demo.entities.User;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

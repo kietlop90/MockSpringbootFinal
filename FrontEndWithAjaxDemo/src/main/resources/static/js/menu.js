@@ -2,7 +2,7 @@ $(document).ready(function () {
     let menu = [
         {
             label: "Home",
-            path: "home.html",
+            path: "",
             icon: "icon/navigation-menu/home.png",
         },
         {
@@ -10,11 +10,11 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "View syllabus",
-                    path: "viewSyllabus.html",
+                    path: "/sallybus/list",
                 },
                 {
                     label: "Create syllabus",
-                    path: "createSyllabus.html",
+                    path: "",
                 },
             ],
             icon: "icon/navigation-menu/book-open.png",
@@ -24,11 +24,11 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "View program",
-                    path: "viewProgram.html",
+                    path: "",
                 },
                 {
                     label: "Create program",
-                    path: "createprogram.html",
+                    path: "",
                 },
             ],
             icon: "icon/navigation-menu/biotech.png",
@@ -38,18 +38,18 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "View class",
-                    path: "viewClass.html",
+                    path: "",
                 },
                 {
                     label: "Create class",
-                    path: "createClass.html",
+                    path: "",
                 },
             ],
             icon: "icon/navigation-menu/school.png",
         },
         {
             label: "Training calendar",
-            path: "trainingCalendar.html",
+            path: "",
             icon: "icon/navigation-menu/calendar-today.png",
         },
         {
@@ -57,18 +57,18 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "User list",
-                    path: "userList.html",
+                    path: "/user/list",
                 },
                 {
                     label: "User permission",
-                    path: "userPermission.html",
+                    path: "",
                 },
             ],
             icon: "icon/navigation-menu/group.png",
         },
         {
             label: "Learning materials",
-            path: "learningMaterials.html",
+            path: "",
             icon: "icon/navigation-menu/folder.png",
         },
         {
@@ -76,31 +76,61 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "Calendar",
-                    path: "calendar.html",
+                    path: "",
                 }
             ],
             icon: "icon/navigation-menu/settings.png",
         },
     ]
+    let pathName = window.location.pathname;
     let menuDom = $("#menu")
     for (const item of menu) {
         let itemMenu = $("<div>").addClass("item-menu").addClass("mb-3");
         let parentItemsDom = $("<div>").addClass("parent-menu");
-        let subItemsDom = $("<div>").addClass("sub-menu");
-        parentItemsDom.appendTo(itemMenu);
-        subItemsDom.appendTo(itemMenu);
-
+        parentItemsDom
+            .appendTo(itemMenu);
         parentItemsDom
             .append($("<img>").attr("src", "../" + item.icon).addClass("me-2"))
             .append($("<div>").html(item.label))
-        if (item.subMenu) {
-            parentItemsDom
-                .append($("<img>").attr("src", "../icon/navigation-menu/arrow-default.png"))
-            for (const subItem of item.subMenu) {
-                subItemsDom
-                    .append($("<div>").html(subItem.label))
-            }
+
+        // check curren page to active item menu
+        if (pathName === item.path) {
+            parentItemsDom.addClass("active");
         }
-        itemMenu.appendTo(menuDom);
+
+        if (item.subMenu) {
+            let subItemsDom = $("<div>").addClass("sub-menu");
+            subItemsDom
+                .appendTo(itemMenu);
+            for (const subItem of item.subMenu) {
+                let subItemDom = $("<div>").html(subItem.label)
+                subItemDom.on( "click", function() {
+                    window.location.replace(subItem.path);
+                } );
+                // check curren page to active item menu
+                if (pathName === subItem.path) {
+                    parentItemsDom.toggleClass("open");
+                    subItemsDom.addClass("open");
+                    subItemDom.addClass("active");
+                }
+                subItemsDom
+                    .append(subItemDom)
+            }
+
+            parentItemsDom.on( "click", function() {
+                parentItemsDom.toggleClass("open");
+                subItemsDom.toggleClass("open");
+            } );
+            parentItemsDom
+                .append($("<img>")
+                    .addClass("icon-arrow")
+                    .attr("src", "../icon/navigation-menu/arrow-default.png"))
+        } else {
+            parentItemsDom.on( "click", function() {
+                window.location.replace(item.path);
+            } );
+        }
+        itemMenu
+            .appendTo(menuDom);
     }
 });

@@ -4,7 +4,7 @@
     background-color: #edf2f7;
     overflow: auto;
     color: #285D9A;
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px 0;
 }
 
@@ -19,30 +19,53 @@
     align-items: center;
 }
 
-.item-menu>div {
+.item-menu > div {
     width: 100%;
     cursor: pointer;
     transition: all 0.5s;
 }
 
-.item-menu>div>div {
+.item-menu > div > div {
     width: 100%;
 }
 
-.item-menu>div:first-child {
+.item-menu > div:first-child {
     display: flex;
+    height: 34px;
     padding: 5px 5px 5px 30px;
 }
 
-.item-menu>div:first-child:hover {
+.item-menu > div:first-child:hover {
     background-color: #6598d6d2;
 }
 
-.item-menu .sub-menu>div {
-    padding: 5px 5px 5px 70px;
+.item-menu .icon-arrow {
+    transition: all 0.5s;
+    transform: rotate(90deg);
+}
+
+.item-menu .open.parent-menu .icon-arrow {
+    transform: rotate(0);
+}
+
+.item-menu .sub-menu > div {
+    height: 0;
+    padding: 0 5px 0 70px;
+    overflow: hidden;
     transition: all 0.5s;
 }
 
-.item-menu .sub-menu>div:hover {
+.item-menu .sub-menu > div:hover {
     background-color: #6598d6d2;
+}
+
+.item-menu .open.sub-menu > div {
+    height: 34px;
+    padding: 5px 5px 5px 70px;
+}
+
+.item-menu .active {
+    background-color: #445268;
+    font-weight: bold;
+    color: #ffffff;
 }

@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,6 +36,8 @@ public class Class implements Serializable {
 
     private String location;
 
+    private String FSU;
+
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
@@ -49,22 +52,27 @@ public class Class implements Serializable {
 
     @UpdateTimestamp
     @Column(name = "modified_date", insertable = false, updatable = false)
-    private LocalDateTime modifiedDate;
-
+    private Timestamp modifiedDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "training_program_code")
     private TrainingProgram trainingProgramCode; // map voi training program(truong code) t
 
-
     @OneToMany(mappedBy = "classId")
     private List<ClassUser> classUser; // map voi class user, truong classId
 
+    @Transient
+    public String trainingProgramName() {
+        return trainingProgramCode.getName();
+    }
 
-
-
-
-
-
+    @Transient
+    public ArrayList<String> listOfClass() {
+        ArrayList<String> classUserList = new ArrayList<>();
+        classUser.forEach(user -> {
+            classUserList.add(user.userName());
+        });
+        return classUserList;
+    }
 
 }

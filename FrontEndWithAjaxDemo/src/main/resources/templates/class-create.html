@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Syllabus</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/class-create.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+</head>
+
+<body>
+    <div id="header" th:insert="header.html"></div>
+    <div id="body" class="body">
+        <div id="menu" class="menu"></div>
+        <div class="content">
+            <div class="row mb-2">
+                <div class="col title">
+                    Class
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <label for="input-name-class">
+                        Class name
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" id="input-name-class" placeholder="Type class name">
+                    </div>
+                </div>
+                <div class="col-3 group-btn">
+                    <button type="button" class="btn btn-main" id="btn-create-class">
+                        Create
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" th:insert="footer.html"></div>
+</body>
+
+</html>

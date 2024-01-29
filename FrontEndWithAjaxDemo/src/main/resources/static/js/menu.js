@@ -38,11 +38,13 @@ $(document).ready(function () {
             subMenu: [
                 {
                     label: "View class",
-                    path: "",
+                    path: "/class/list",
+                    pathGroup: ["/class/list", "/class/detail"],
                 },
                 {
                     label: "Create class",
-                    path: "",
+                    path: "/class/add",
+                    pathGroup: ["/class/add", "/class/update"],
                 },
             ],
             icon: "icon/navigation-menu/school.png",
@@ -58,6 +60,7 @@ $(document).ready(function () {
                 {
                     label: "User list",
                     path: "/user/list",
+                    pathGroup: ["/user/list"],
                 },
                 {
                     label: "User permission",
@@ -94,7 +97,7 @@ $(document).ready(function () {
             .append($("<div>").html(item.label))
 
         // check curren page to active item menu
-        if (pathName === item.path) {
+        if (checkActiveItemMenu(item.pathGroup, pathName)) {
             parentItemsDom.addClass("active");
         }
 
@@ -104,11 +107,11 @@ $(document).ready(function () {
                 .appendTo(itemMenu);
             for (const subItem of item.subMenu) {
                 let subItemDom = $("<div>").html(subItem.label)
-                subItemDom.on( "click", function() {
+                subItemDom.on("click", function () {
                     window.location.replace(subItem.path);
-                } );
+                });
                 // check curren page to active item menu
-                if (pathName === subItem.path) {
+                if (checkActiveItemMenu(subItem.pathGroup, pathName)) {
                     parentItemsDom.toggleClass("open");
                     subItemsDom.addClass("open");
                     subItemDom.addClass("active");
@@ -117,20 +120,31 @@ $(document).ready(function () {
                     .append(subItemDom)
             }
 
-            parentItemsDom.on( "click", function() {
+            parentItemsDom.on("click", function () {
                 parentItemsDom.toggleClass("open");
                 subItemsDom.toggleClass("open");
-            } );
+            });
             parentItemsDom
                 .append($("<img>")
                     .addClass("icon-arrow")
                     .attr("src", "../icon/navigation-menu/arrow-default.png"))
         } else {
-            parentItemsDom.on( "click", function() {
+            parentItemsDom.on("click", function () {
                 window.location.replace(item.path);
-            } );
+            });
         }
         itemMenu
             .appendTo(menuDom);
     }
 });
+
+function checkActiveItemMenu(pathGroup, pathName) {
+    if (pathGroup) {
+        for (const path of pathGroup) {
+            if (pathName.includes(path)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

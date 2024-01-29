@@ -23,16 +23,16 @@ public class ClassUser implements Serializable {
 
     private Integer userType; // role of user
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User userId;
-
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "class_id")
     private Class classId;
 
-    
-
+    @Transient
+    public String userName() {
+        return userId.getName();
+    }
 }

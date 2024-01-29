@@ -8,7 +8,6 @@
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
-    <script th:src="@{/js/syllabus-list.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -25,7 +24,7 @@
         <div class="content">
             <div class="row mb-2">
                 <div class="col title">
-                    Users
+                    Training Class
                 </div>
             </div>
             <div class="row">
@@ -39,17 +38,19 @@
                     </div>
                 </div>
                 <div class="col-3 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <img th:src="@{/icon/navigation-menu/calendar-today.png}" alt="">
-                        </span>
-                        <input class="form-control" id="datepicker-filter" placeholder="Create date...">
-                    </div>
+                    <button type="button" class="btn btn-main">
+                        <img th:src="@{/icon/action/filter_list-white.png}" alt="">
+                        Filter
+                    </button>
                 </div>
                 <div class="col-6 group-btn-right">
+                    <button type="button" class="btn btn-orange">
+                        <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
+                        Import
+                    </button>
                     <button type="button" class="btn btn-main">
                         <img th:src="@{/icon/action/add-white.png}" alt="">
-                        Add User
+                        Add Class
                     </button>
                 </div>
 
@@ -71,24 +72,28 @@
                         <table class="table">
                             <thead class="header-table">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Day Of Birth</th>
-                                    <th>Status</th>
-                                    <th>Roles</th>
+                                    <th>Class</th>
+                                    <th>Class Code</th>
+                                    <th>Created on</th>
+                                    <th>Created by</th>
+                                    <th>Duration</th>
+                                    <th>Attendee</th>
+                                    <th>Location</th>
+                                    <th>FSU</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <th:block th:each="item : ${list}">
                                     <tr th:id='${"tr"+ item.id}'>
-                                        <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
                                         <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
-                                        <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
-                                        <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
-                                        <td th:id='${"status"+ item.id}' th:text="${item.status}"></td>
-                                        <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                        <td th:id='${"code"+ item.id}' th:text="${item.code}"></td>
+                                        <td th:id='${"createdDate"+ item.id}' th:text="${item.createdDate}"></td>
+                                        <td th:id='${"createdBy"+ item.id}' th:text="${item.createdBy}"></td>
+                                        <td th:id='${"duration"+ item.id}' th:text="${item.duration}"></td>
+                                        <td th:id='${"trainingProgramName"+ item.id}' th:text="${item.trainingProgramName}"></td>
+                                        <td th:id='${"location"+ item.id}' th:text="${item.location}"></td>
+                                        <td th:id='${"fsu"+ item.id}' th:text="${item.fsu}"></td>
                                         <td th:id='${"action"+ item.id}'>...</td>
                                     </tr>
                                 </th:block>

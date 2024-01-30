@@ -111,20 +111,21 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a id="btn-update-class" class="dropdown-item"
+                                            <a th:id="'btn-update-class-' + ${item.id}" class="dropdown-item btn-update-class"
                                                th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/document-manage/create.png}" alt="">
                                                 <label>Edit class</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a id="btn-copy-class" class="dropdown-item" th:data-id-class="${item.id}">
+                                            <a th:id="'btn-copy-class-' + ${item.id}" class="dropdown-item btn-copy-class"
+                                               th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/document-manage/copy.png}" alt="">
                                                 <label>Duplicate class</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a id="btn-delete-class" class="dropdown-item"
+                                            <a th:id="'btn-delete-class-' + ${item.id}" class="dropdown-item btn-delete-class"
                                                th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/document-manage/delete_forever.png}" alt="">
                                                 <label>Delete class</label>

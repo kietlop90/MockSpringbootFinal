@@ -11,6 +11,7 @@ $(document).ready(function () {
                 {
                     label: "View syllabus",
                     path: "/syllabus/list",
+                    pathGroup: ["/syllabus/list", "/syllabus/detail"],
                 },
                 {
                     label: "Create syllabus",

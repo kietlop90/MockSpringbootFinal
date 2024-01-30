@@ -8,8 +8,8 @@ $(function(){
     $("#btn-add-class").on("click", function () {
         window.location.replace("/class/add");
     })
-    $("#btn-update-class").on("click", function () {
-        let idClass = $("#btn-update-class").attr("data-id-class");
+    $(".btn-update-class").on("click", function () {
+        let idClass = $(this).attr("data-id-class");
         window.location.replace("/class/update/" + idClass);
     })
     $("#btn-copy-class").on("click", function () {

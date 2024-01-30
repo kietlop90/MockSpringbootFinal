@@ -52,7 +52,7 @@ $(document).ready(function () {
         {
             label: "Training calendar",
             path: "",
-            icon: "icon/navigation-menu/calendar-today.png",
+            icon: "icon/navigation-menu/calendar-today-blue.png",
         },
         {
             label: "User management",
@@ -93,7 +93,7 @@ $(document).ready(function () {
         parentItemsDom
             .appendTo(itemMenu);
         parentItemsDom
-            .append($("<img>").attr("src", "../" + item.icon).addClass("me-2"))
+            .append($("<img>").attr("src", "/" + item.icon).addClass("me-2"))
             .append($("<div>").html(item.label))
 
         // check curren page to active item menu
@@ -127,7 +127,7 @@ $(document).ready(function () {
             parentItemsDom
                 .append($("<img>")
                     .addClass("icon-arrow")
-                    .attr("src", "../icon/navigation-menu/arrow-default.png"))
+                    .attr("src", "/icon/navigation-menu/arrow-default.png"))
         } else {
             parentItemsDom.on("click", function () {
                 window.location.replace(item.path);

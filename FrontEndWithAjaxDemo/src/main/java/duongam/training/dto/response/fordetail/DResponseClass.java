@@ -16,9 +16,11 @@ public class DResponseClass {
     private String name;
     private String code;
     private Integer duration;
+    private Integer days;
+    private Integer hours;
     private String status;
     private String location;
-    private String FSU;
+    private String fsu;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Long createdBy;
@@ -26,5 +28,12 @@ public class DResponseClass {
     private Long modifiedBy;
     private Timestamp modifiedDate;
     private String trainingProgramName;
+    private String attendee;
     private ArrayList<String> listOfClass;
+
+    public void formatData() {
+        days = duration != null ? duration : 0;
+        hours = days * 4;
+        attendee = trainingProgramName;
+    }
 }

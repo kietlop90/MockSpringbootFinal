@@ -14,4 +14,5 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class CRequestClass {
     private String name;
+    private String status;
 }

@@ -37,6 +37,7 @@ public class HttpClass {
 
     public DResponseClass add(CRequestClass requestClass) {
         HttpBase<CRequestClass, DResponseClass> httpBase = new HttpBase<>();
+        requestClass.setStatus("Planning");
         return httpBase.postToAPI(requestClass, classUrl.add(), DResponseClass.class);
     }
 

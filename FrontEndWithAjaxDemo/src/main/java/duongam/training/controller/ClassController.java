@@ -10,54 +10,61 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.AttributedString;
 import java.util.List;
 
 @Controller
 @RequestMapping("/class")
 public class ClassController {
-	@Autowired
+    @Autowired
     private HttpClass httpClass;
 
-	@GetMapping("/list")
-	public String list(Model model) {
-		List<LResponseClass> list = httpClass.getAll();
-		model.addAttribute("list", list);
-		return "class-list";
-	}
+    @GetMapping("/list")
+    public String list(Model model) {
+        List<LResponseClass> list = httpClass.getAll();
+        for (LResponseClass item : list) {
+            item.formatData();
+        }
+        model.addAttribute("list", list);
+        return "class-list";
+    }
 
-	@GetMapping("/detail/{id}")
-	@ResponseBody
-	public DResponseClass detail(@PathVariable("id") Long requestId) {
-		return httpClass.getById(requestId);
-	}
+    @GetMapping("/detail/{id}")
+    @ResponseBody
+    public DResponseClass detail(@PathVariable("id") Long requestId) {
+        return httpClass.getById(requestId);
+    }
 
-	@GetMapping("/add")
-	public String addForm(Model model) {
-		return "class-create";
-	}
+    @GetMapping("/add")
+    public String addForm(Model model) {
+        model.addAttribute("aClass", new DResponseClass());
+        return "class-create";
+    }
 
-	@PostMapping("/add")
-	@ResponseBody
-	public DResponseClass addDatabase(@ModelAttribute("request") CRequestClass request) {
-		return httpClass.add(request);
-	}
+    @PostMapping("/add")
+    @ResponseBody
+    public DResponseClass addDatabase(@ModelAttribute("request") CRequestClass request) {
+        return httpClass.add(request);
+    }
 
-	@GetMapping("/update/{id}")
-	@ResponseBody
-	public DResponseClass updateForm(@PathVariable("id") Long requestId) {
-		return httpClass.getById(requestId);
-	}
+    @GetMapping("/update/{id}")
+    public String updateForm(Model model, @PathVariable("id") Long requestId) {
+        DResponseClass aClass = httpClass.getById(requestId);
+        aClass.formatData();
+        model.addAttribute("aClass", aClass);
+        return "class-create";
+    }
 
-	@PostMapping("/update")
-	@ResponseBody
-	public DResponseClass updateDatabase(@ModelAttribute("request") URequestClass request) {
-		return httpClass.update(request);
-	}
+    @PostMapping("/update")
+    @ResponseBody
+    public DResponseClass updateDatabase(@ModelAttribute("request") URequestClass request) {
+        return httpClass.update(request);
+    }
 
-	@PostMapping("/delete/{id}")
-	@ResponseBody
-	public Long delete(@PathVariable("id") Long requestId) {
-		httpClass.deleteById(requestId);
-		return requestId;
-	}
+    @PostMapping("/delete/{id}")
+    @ResponseBody
+    public Long delete(@PathVariable("id") Long requestId) {
+        httpClass.deleteById(requestId);
+        return requestId;
+    }
 }

@@ -1,0 +1,84 @@
+.status-Planning {
+    font-size: 14px;
+    background-color: lightgray;
+    border-radius: 14px;
+    padding: 1px 5px;
+}
+
+.status-Opening {
+    font-size: 14px;
+    background-color: lightgreen;
+    border-radius: 14px;
+    padding: 1px 5px;
+}
+
+.status-Closed {
+    font-size: 14px;
+    background-color: lightcoral;
+    border-radius: 14px;
+    padding: 1px 5px;
+}
+
+hr {
+    margin: 0.5rem;
+}
+
+.group-general {
+    padding: 5px;
+}
+
+.group-general .row-general {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 38px;
+    margin: 3px 0;
+}
+
+.group-general .row-general > div {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.group-general .row-general > div img {
+    margin-right: 0.25rem;
+}
+
+.group-general .row-general > div input,
+.group-general .row-general > div select {
+    width: 100%;
+}
+
+.group-attendee {
+    display: flex;
+}
+
+.group-attendee > div {
+    display: block;
+    width: calc(100% / 3);
+    text-align: center;
+    padding: 10px;
+}
+
+.group-attendee > div:nth-child(1) {
+    border-bottom-left-radius: 8px;
+    border-top: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    background-color: #2d3748;
+    color: #ffffff;
+}
+
+.group-attendee > div:nth-child(2) {
+    border-top: 1px solid #ffffff;
+    background-color: #285D9A;
+    color: #ffffff;
+}
+
+.group-attendee > div:nth-child(3) {
+    border-bottom-right-radius: 8px;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    background-color: #F1F1F1;
+    color: #000000;
+}

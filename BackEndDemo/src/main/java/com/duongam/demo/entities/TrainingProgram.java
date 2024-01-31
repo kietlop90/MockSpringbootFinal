@@ -53,7 +53,7 @@ public class TrainingProgram {
 
     @ManyToOne
     @JoinColumn(name = "create_by")
-    private User createBy;  // map voi bang user(truong id)
+    private User createdBy;  // map voi bang user(truong id)
 
 
     @OneToMany(mappedBy = "trainingProgramCode")

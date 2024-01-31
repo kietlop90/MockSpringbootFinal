@@ -28,14 +28,14 @@ public class LResponseSyllabus {
 
     private String trainingPrinciples;
 
-    private Boolean status;
+    private String status;
 
     private String createdBy; // id of user created syllabus
 
-    private Timestamp createdDate;
+    private String formattedCreatedDate ;
 
     private Long modifiedBy; // id of user modified syllabus
 
-    private Timestamp modifiedDate;
+//    private String modifiedDate;
 
 }

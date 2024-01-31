@@ -1,16 +1,17 @@
 package com.duongam.demo.entities.enums;
 
-public enum ERole {
-    CUSTOMER("CUSTOMER"), ADMIN("ADMIN");
+public enum EThreeStatus {
+
+    active("active"), Inactive("Inactive"), draft("draft");
     private final String text;
 
-    private ERole(final String text) {
+    EThreeStatus(final String text) {
         this.text = text;
     }
 
     @Override
     public String toString() {
-        return text;
+        return super.toString();
     }
 
 

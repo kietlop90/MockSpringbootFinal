@@ -60,13 +60,15 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private EGender gender;
 
+
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
 
     @OneToMany(mappedBy = "userId")
     private List<ClassUser> classUser;
 
-    @OneToMany(mappedBy = "createBy")
+    @OneToMany(mappedBy = "createdBy")
     private List<TrainingProgram> trainingProgram;
 
     @OneToMany(mappedBy = "createdBy")

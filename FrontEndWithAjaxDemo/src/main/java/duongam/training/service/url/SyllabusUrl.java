@@ -11,8 +11,13 @@ public class SyllabusUrl {
     private UrlProperties urlProperties;
 
     private final String GET_ALL = "syllabus.getall";
+    private final String DELETE_BY_ID = "syllabus.deletebyid";
 
-    public String getAll(){
+    public String getAll() {
         return urlProperties.getProperty(GET_ALL);
+    }
+
+    public String delete(String id) {
+        return String.format(urlProperties.getProperty(DELETE_BY_ID), id);
     }
 }

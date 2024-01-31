@@ -20,6 +20,12 @@
     <link rel="stylesheet" th:href="@{/css/menu.css}">
     <link rel="stylesheet" th:href="@{/css/syllabus.css}">
 
+<<<<<<< HEAD
+=======
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+>>>>>>> 6a4edd67bbb0843e63d9cacb595020838faf331d
 </head>
 
 <body>
@@ -135,6 +141,7 @@
                 </div>
             </div>
             <div class="row">
+<<<<<<< HEAD
                 <div class="col-12">
                     <div class="group-pagging">
                         <a class="item-pagging" th:href="@{/syllabus/list(page=0, size=${pageSize})}">
@@ -149,6 +156,44 @@
                                th:href="@{/syllabus/list(page=${pageNum}, size=${pageSize})}"
                                th:classappend="${currentPage == pageNum} ? 'active' : ''"
                                th:text="${pageNum + 1}"></a>
+=======
+                <!-- filter -->
+                <div class="col-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/document-manage/search.png}" alt="">
+                        </span>
+                        <input class="form-control" id="input-filter" placeholder="Search by...">
+                    </div>
+                </div>
+                <div class="col-3 mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/navigation-menu/calendar-today-blue.png}" alt="">
+                        </span>
+                        <input class="form-control" id="datepicker-filter" placeholder="Create date...">
+                    </div>
+                </div>
+                <div class="col-6 group-btn-right">
+                    <button type="button" class="btn btn-orange">
+                        <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
+                        Import
+                    </button>
+                    <button type="button" class="btn btn-main">
+                        <img th:src="@{/icon/action/add-white.png}" alt="">
+                        Add Syllabus
+                    </button>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="group-filter">
+                            <span class="item-filter">
+                                foundation
+                                <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
+                                    alt="">
+                            </span>
+>>>>>>> 6a4edd67bbb0843e63d9cacb595020838faf331d
                         </div>
                         <a class="item-pagging"
                            th:href="@{/syllabus/list(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, size=${pageSize})}">
@@ -159,6 +204,7 @@
                         </a>
 
                     </div>
+<<<<<<< HEAD
 
                     <div class="group-pagging">
 
@@ -169,6 +215,35 @@
                                 <option value="">20</option>
                                 <option value="">30</option>
                             </select>
+=======
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-pagging">
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/first_page.png}" alt="">
+                            </div>
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
+                            </div>
+                            <div class="item-pagging number active">1</div>
+                            <div class="item-pagging number">2</div>
+                            <div class="item-pagging number">3</div>
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
+                            </div>
+                            <div class="item-pagging">
+                                <img th:src="@{/icon/navigator/last_page.png}" alt="">
+                            </div>
+                            <div class="item-per-page">
+                                Rows per page:
+                                <select class="form-control" name="item-per-page" id="item-per-page">
+                                    <option value="">10</option>
+                                    <option value="">20</option>
+                                    <option value="">30</option>
+                                </select>
+                            </div>
+>>>>>>> 6a4edd67bbb0843e63d9cacb595020838faf331d
                         </div>
                     </div>
                 </div>

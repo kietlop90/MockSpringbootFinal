@@ -6,6 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,17 +16,18 @@ import java.time.LocalDate;
 @ToString
 public class URequestClass {
     private Long id;
-    @Size(min = 6, max = 50, message = "Length of firstname should be from 6 to 20")
     private String name;
-    private String email;
-    private String phone;
-    private String role;
-    private LocalDate dob;
-    private String gender;
-    private Boolean status;
-    private String createdBy;
+    private String code;
+    private Integer duration;
+    private String status;
+    private String location;
+    private String FSU;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private Long createdBy;
     private Timestamp createdDate;
-    private String modifiedBy;
+    private Long modifiedBy;
     private Timestamp modifiedDate;
-    private String username;
+    private String trainingProgramName;
+    private ArrayList<String> listOfClass;
 }

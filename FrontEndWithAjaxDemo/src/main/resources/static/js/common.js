@@ -10,13 +10,16 @@ function getItemById(url, id) {
 }
 
 let resultAddItem;
-function addItem(url, data){
+function addItem(url, data, redirect){
     $.ajax({
         type: "POST",
         url: url,
         data: data,
         success: function (result) {
             resultAddItem = result;
+            if (redirect) {
+                window.location.replace(redirect + resultAddItem.id);
+            }
         }
     });
 }

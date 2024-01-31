@@ -46,10 +46,28 @@ body {
 .title {
     font-size: 20px;
     border-bottom: 1px solid;
+<<<<<<< HEAD
 }
 
 /* button */
 .btn {
+=======
+}
+
+.title > div {
+    display: flex;
+    align-items: center;
+}
+
+.title .name {
+    font-size: 32px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* button */
+.btn:not(.cancelBtn):not(.applyBtn) {
+>>>>>>> 6a4edd67bbb0843e63d9cacb595020838faf331d
     display: flex;
     align-items: center;
 }
@@ -72,6 +90,13 @@ body {
 .btn-main:hover {
     background-color: #4a5975 !important;
     color: #FFFFFF;
+<<<<<<< HEAD
+=======
+}
+
+.btn-three-dot::after {
+    display: none;
+>>>>>>> 6a4edd67bbb0843e63d9cacb595020838faf331d
 }
 
 .group-btn {
@@ -164,6 +189,7 @@ body {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 /*Background status*/
 .status-active {
     text-align: center;
@@ -200,3 +226,87 @@ td{
     padding: 2px 10px !important;
 
 }
+=======
+.dropdown-item img,
+.dropdown-item label {
+    cursor: pointer;
+}
+
+.header-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2d3748;
+    color: #ffffff;
+    border: 1px solid #2d3748;
+    border-radius: 8px;
+    padding: 3px 10px;
+    transition: all 0.3s;
+}
+
+.header-form > div {
+    display: flex;
+    align-items: center;
+}
+
+.header-form img {
+    margin-right: 0.25rem;
+}
+
+.header-form[aria-expanded^="true"] {
+    border-radius: 8px 8px 0px 0px;
+}
+
+.header-form > div img {
+    transition: all 0.3s;
+}
+
+.header-form[aria-expanded^="true"] > div:last-child img {
+    transform: rotate(-90deg);
+}
+
+.body-form {
+    background-color: #ffffff;
+    border: 1px solid #2d3748;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.body-form > div {
+    display: flex;
+}
+
+.body-form.collapsing {
+    border-radius: 8px;
+}
+
+/*daterangepicker*/
+.daterangepicker {
+    border-radius: 8px;
+}
+
+.embedded-daterangepicker {
+    width: 100%;
+}
+
+.embedded-daterangepicker .daterangepicker::before,
+.embedded-daterangepicker .daterangepicker::after {
+    display: none;
+}
+
+.embedded-daterangepicker .daterangepicker {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    float: left;
+    width: 100%;
+    margin-top: 0;
+}
+
+.embedded-daterangepicker .daterangepicker .drp-calendar {
+    width: 50%;
+    max-width: 50%;
+}
+>>>>>>> 6a4edd67bbb0843e63d9cacb595020838faf331d

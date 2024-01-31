@@ -20,6 +20,8 @@ public class LResponseClass {
     private String name;
     private String code;
     private Integer duration;
+    private Integer days;
+    private Integer hours;
     private String status;
     private String location;
     private String fsu;
@@ -30,5 +32,12 @@ public class LResponseClass {
     private Long modifiedBy;
     private Timestamp modifiedDate;
     private String trainingProgramName;
+    private String attendee;
     private ArrayList<String> listOfClass;
+
+    public void formatData() {
+        days = duration != null ? duration : 0;
+        hours = days * 4;
+        attendee = trainingProgramName;
+    }
 }

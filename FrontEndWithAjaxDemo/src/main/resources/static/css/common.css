@@ -255,9 +255,50 @@ body {
     float: left;
     width: 100%;
     margin-top: 0;
+    border-radius: 8px;
 }
 
 .embedded-daterangepicker .daterangepicker .drp-calendar {
     width: 50%;
     max-width: 50%;
+}
+
+/*tab*/
+.group-tab {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.group-tab .tab.active {
+    background-color: #2d3748;
+}
+
+.group-tab .tab {
+    background-color: #6D7684;
+    border: 1px solid #ffffff;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color: #ffffff;
+    transition: all 0.3s;
+    width: 200px;
+    padding: 3px 10px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.group-tab-body {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #2d3748;
+    border: 1px solid #ffffff;
+    border-top: none;
+    padding: 20px 1px;
+}
+
+.group-tab-body .header-group {
+    padding: 3px 10px;
+    color: #ffffff;
 }

@@ -88,4 +88,10 @@ $(function () {
     }).on('show.daterangepicker', function(ev, picker) {
         picker.container.find(".calendar-table").hide();
     });
+
+    // input-filter-training-program
+    $("#group-filter-training-program").hide();
+
+    // input-filter-training-program
+    $("#info-training-program").show();
 });

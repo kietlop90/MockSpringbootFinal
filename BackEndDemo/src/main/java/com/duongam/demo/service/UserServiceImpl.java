@@ -1,9 +1,8 @@
 package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
-import com.duongam.demo.dto.request.forcreate.CUser;
+import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
-import com.duongam.demo.dto.response.fordetail.DUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -79,11 +77,10 @@ public class UserServiceImpl implements IUserService {
     }
 
 	@Override
-	public DUser addUser(CUser cuser) {
-		User user = modelMapper.map(cuser, User.class);
+	public void addUser(CRequestUser cUser) {
+		User user = modelMapper.map(cUser, User.class);
 		userRepository.save(user);
-		DUser dUser = modelMapper.map(user, DUser.class);
-		return dUser;
+		DResponseUser dUser = modelMapper.map(user, DResponseUser.class);
 	}
 
 

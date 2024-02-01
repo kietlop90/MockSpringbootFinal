@@ -14,4 +14,11 @@ public class CRequestUser {
     private String password;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
+    private String userType;
+    private String name;
+    private String email;
+    private Integer phone;
+    private String dob;
+    private String gender;
+    private String status;
 }

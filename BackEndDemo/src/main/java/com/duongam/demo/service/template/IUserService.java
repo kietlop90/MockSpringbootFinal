@@ -1,9 +1,8 @@
 package com.duongam.demo.service.template;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
-import com.duongam.demo.dto.request.forcreate.CUser;
+import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
-import com.duongam.demo.dto.response.fordetail.DUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,5 +15,5 @@ public interface IUserService {
 
 	List<LResponseUser> getAll();
 
-	DUser addUser(CUser cuser);
+	void addUser(CRequestUser cUser);
 }

@@ -1,7 +1,9 @@
 package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
+import com.duongam.demo.dto.request.forcreate.CUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
+import com.duongam.demo.dto.response.fordetail.DUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
@@ -75,4 +77,14 @@ public class UserServiceImpl implements IUserService {
 	public List<LResponseUser> getAll() {
         return userRepository.findAllBy();
     }
+
+	@Override
+	public DUser addUser(CUser cuser) {
+		User user = modelMapper.map(cuser, User.class);
+		userRepository.save(user);
+		DUser dUser = modelMapper.map(user, DUser.class);
+		return dUser;
+	}
+
+
 }

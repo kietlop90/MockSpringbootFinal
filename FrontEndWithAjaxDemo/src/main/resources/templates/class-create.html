@@ -95,7 +95,7 @@
                 </ul>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-4">
                 <!--                General-->
                 <div class="mb-3">
@@ -227,6 +227,145 @@
                         <div id="timeFrameDaterangepicker-container" class="embedded-daterangepicker"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!--        Tabs-->
+        <div class="row">
+            <div class="col-12">
+                <div class="group-tab">
+                    <div class="tab active">
+                        Training Program
+                    </div>
+                    <div class="tab">
+                        Attendee list
+                    </div>
+                    <div class="tab">
+                        Budget
+                    </div>
+                    <div class="tab">
+                        Others
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        Tab Training Program body-->
+        <div class="row tab-body active" id="tab-body-1">
+            <div class="col-12">
+                <div class="group-tab-body">
+                    <div class="header-group">
+                        <div id="group-filter-training-program" class="group-filter-training-program">
+                            <label>Training Program name </label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <img th:src="@{/icon/document-manage/search.png}" alt="">
+                                </span>
+                                <input class="form-control" id="input-filter-training-program"/>
+                            </div>
+                        </div>
+                        <div id="info-training-program" class="info-training-program">
+                            <div>
+                                <label>DevOps Foundation</label>
+                                <button class="btn btn-secondary ms-3 btn-sm">
+                                    <img th:src="@{/icon/document-manage/create.png}" alt="">
+                                </button>
+                            </div>
+                            <div>
+                                <div class="pe-3 me-3">
+                                    <label class="duration me-2" th:text="${aClass.days} + ' days'"></label>
+                                    <label class="duration" th:text="${aClass.hours} + ' hours'"></label>
+                                </div>
+                                <div>
+                                    <label>Modified on 23/07/2022 by Warrior Tran</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body-group">
+                        <div>
+                            <div>
+                                <img th:src="@{/icon/indicator/supplier.png}" alt="">
+                            </div>
+                            <div>
+                                <div class="pe-3 me-3">
+                                    <label class="name">Linux</label>
+                                    <label class="status-active">Active</label>
+                                </div>
+                                <div>
+                                    <label>LIN v2.0</label>
+                                    <label>4 days (12 hours)</label>
+                                    <label>on 23/07/2022 by Johny Deep</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <img th:src="@{/icon/indicator/supplier.png}" alt="">
+                            </div>
+                            <div>
+                                <div class="pe-3 me-3">
+                                    <label class="name">AWS Basic</label>
+                                    <label class="status-active">Active</label>
+                                </div>
+                                <div>
+                                    <label>AWB v1.0</label>
+                                    <label>7 days (21 hours)</label>
+                                    <label>on 23/07/2022 by Warrior Tran</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        Tab Attendee list body-->
+        <div class="row tab-body" id="tab-body-2">
+            <div class="col-12">
+                <div class="group-tab-body">
+                    <div class="header-group">
+                        Nothing
+                    </div>
+                    <div class="body-group">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        Tab Budget body-->
+        <div class="row tab-body" id="tab-body-3">
+            <div class="col-12">
+                <div class="group-tab-body">
+                    <div class="header-group">
+                        Nothing
+                    </div>
+                    <div class="body-group">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        Tab Others body-->
+        <div class="row tab-body" id="tab-body-4">
+            <div class="col-12">
+                <div class="group-tab-body">
+                    <div class="header-group">
+                        Nothing
+                    </div>
+                    <div class="body-group">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        group btn footer-->
+        <div class="row mt-3">
+            <div class="col-6 d-flex justify-content-start">
+                <button id="btnBack" class="btn btn-main">Back</button>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <button id="btnCancel" class="btn btn-outline-danger me-2">Cancel</button>
+                <button id="btnSaveAsDraft" class="btn btn-main me-2">Save as draft</button>
+                <button id="btnNext" class="btn btn-main">Next</button>
             </div>
         </div>
     </div>

@@ -19,120 +19,213 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 </head>
 
 <body>
-    <div id="header" th:insert="header.html"></div>
-    <div id="body" class="body">
-        <div id="menu" class="menu"></div>
-        <div class="content">
-            <div class="row mb-2">
-                <div class="col title">
-                    Users
-                </div>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Users
             </div>
-            <div class="row">
-                <!-- filter -->
-                <div class="col-3">
-                    <div class="input-group">
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <div class="col-3">
+                <div class="input-group">
                         <span class="input-group-text">
                             <img th:src="@{/icon/document-manage/search.png}" alt="">
                         </span>
-                        <input class="form-control" id="input-filter" placeholder="Search by name...">
-                    </div>
+                    <input class="form-control" id="input-filter" placeholder="Search by name...">
                 </div>
-                <div class="col-3 mb-2">
-                    <div class="input-group">
+            </div>
+            <div class="col-3 mb-2">
+                <div class="input-group">
                         <span class="input-group-text">
                             <img th:src="@{/icon/navigation-menu/calendar-today-blue.png}" alt="">
                         </span>
-                        <input class="form-control" id="datepicker-filter" placeholder="Create date...">
-                    </div>
+                    <input class="form-control" id="datepicker-filter" placeholder="Create date...">
                 </div>
-                <div class="col-6 group-btn-right">
-                    <button type="button" class="btn btn-main">
-                        <img th:src="@{/icon/action/add-white.png}" alt="">
-                        Add User
-                    </button>
-                </div>
+            </div>
+            <div class="col-6 group-btn-right">
+                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">
+                    <img th:src="@{/icon/action/add-white.png}" alt="">
+                    Add User
+                </button>
+            </div>
 
-                <div class="row mb-2">
-                    <div class="col">
-                        <div class="group-filter">
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="group-filter">
                             <span class="item-filter">
                                 foundation
                                 <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
-                                    alt="">
+                                     alt="">
                             </span>
-                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- table -->
-                <div class="row">
-                    <div class="col">
-                        <table class="table">
-                            <thead class="header-table">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Day Of Birth</th>
-                                    <th>Status</th>
-                                    <th>Roles</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <th:block th:each="item : ${list}">
-                                    <tr th:id='${"tr"+ item.id}'>
-                                        <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
-                                        <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
-                                        <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
-                                        <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
-                                        <td th:id='${"status"+ item.id}' th:text="${item.status}"></td>
-                                        <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
-                                        <td th:id='${"action"+ item.id}'>...</td>
-                                    </tr>
-                                </th:block>
-                            </tbody>
-                        </table>
-                    </div>
+            <!-- table -->
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead class="header-table">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Day Of Birth</th>
+                            <th>Status</th>
+                            <th>Roles</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="item : ${list}">
+                            <tr th:id='${"tr"+ item.id}'>
+                                <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
+                                <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
+                                <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
+                                <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
+                                <td th:id='${"status"+ item.id}' th:text="${item.status}"></td>
+                                <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                <td th:id='${"action"+ item.id}'>...</td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-pagging">
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/first_page.png}" alt="">
-                            </div>
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
-                            </div>
-                            <div class="item-pagging number active">1</div>
-                            <div class="item-pagging number">2</div>
-                            <div class="item-pagging number">3</div>
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
-                            </div>
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/last_page.png}" alt="">
-                            </div>
-                            <div class="item-per-page">
-                                Rows per page:
-                                <select class="form-control" name="item-per-page" id="item-per-page">
-                                    <option value="">10</option>
-                                    <option value="">20</option>
-                                    <option value="">30</option>
-                                </select>
-                            </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="group-pagging">
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/first_page.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging number active">1</div>
+                        <div class="item-pagging number">2</div>
+                        <div class="item-pagging number">3</div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/last_page.png}" alt="">
+                        </div>
+                        <div class="item-per-page">
+                            Rows per page:
+                            <select class="form-control" name="item-per-page" id="item-per-page">
+                                <option value="">10</option>
+                                <option value="">20</option>
+                                <option value="">30</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="footer" th:insert="footer.html"></div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+
+<!-- Add User Modal -->
+<div class="modal" id="addUserModel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add a new user</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>User type</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input id="user-type-input" type="text" class="form-control" placeholder="Enter User type"
+                               autofocus/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Name</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="User name"
+                               autofocus/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Email address</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="Email address"
+                               autofocus/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Phone</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="Phone number"
+                               autofocus/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Date of birth</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="Enter User type"
+                               autofocus/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Gender</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="Enter User type"
+                               autofocus/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Status</b></label>
+                    </div>
+                    <div class="col-9">
+                        <img th:src="@{/icon/status/Active.png}"></im>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btnCancel" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                        </button>
+                        <button id="btnSave" class="btn btn-main me-2">Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

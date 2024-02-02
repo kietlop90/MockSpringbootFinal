@@ -62,8 +62,6 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private EGender gender;
 
-
-
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
 

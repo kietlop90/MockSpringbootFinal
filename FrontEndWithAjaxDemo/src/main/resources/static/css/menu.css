@@ -1,6 +1,6 @@
 .menu {
     height: 100%;
-    width: 300px;
+    width: 250px;
     background-color: #edf2f7;
     overflow: auto;
     color: #285D9A;
@@ -9,7 +9,7 @@
 }
 
 .content {
-    width: calc(100vw - 300px);
+    width: calc(100vw - 250px);
     padding: 10px;
 }
 
@@ -22,7 +22,7 @@
 .item-menu > div {
     width: 100%;
     cursor: pointer;
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 .item-menu > div > div {
@@ -40,7 +40,7 @@
 }
 
 .item-menu .icon-arrow {
-    transition: all 0.5s;
+    transition: all 0.3s;
     transform: rotate(90deg);
 }
 
@@ -52,7 +52,7 @@
     height: 0;
     padding: 0 5px 0 70px;
     overflow: hidden;
-    transition: all 0.5s;
+    transition: all 0.3s;
 }
 
 .item-menu .sub-menu > div:hover {

@@ -9,6 +9,8 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script th:src="@{/js/syllabus-list.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -17,121 +19,186 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/menu.css}">
     <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
 </head>
 
 <body>
-    <div id="header" th:insert="header.html"></div>
-    <div id="body" class="body">
-        <div id="menu" class="menu"></div>
-        <div class="content">
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Syllabus
+            </div>
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <div class="col-3">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/document-manage/search.png}" alt="">
+                        </span>
+                    <input class="form-control" id="input-filter" placeholder="Search by...">
+                </div>
+            </div>
+            <div class="col-3 mb-2">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/navigation-menu/calendar-today-blue.png}" alt="">
+                        </span>
+                    <input type="date" class="form-control" id="datepicker-filter" placeholder="Create date...">
+                </div>
+            </div>
+            <div class="col-6 group-btn-right">
+                <button type="button" class="btn btn-orange">
+                    <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
+                    Import
+                </button>
+                <button type="button" class="btn btn-main">
+                    <img th:src="@{/icon/action/add-white.png}" alt="">
+                    Add Syllabus
+                </button>
+            </div>
+
             <div class="row mb-2">
-                <div class="col title">
-                    Syllabus
+                <div class="col">
+                    <div class="group-filter">
+                            <span class="item-filter">
+                                foundation
+                                <img class="btn-remove"
+                                     th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
+                                     alt="">
+                            </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead class="header-table">
+                        <tr>
+                            <th class="col-3">Syllabus
+                                <a th:href="@{/syllabus/list(sortField='topicName', dir=${dir.equals('desc') && sortField == 'topicName'} ? 'asc' : 'desc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+
+                            <th>Code
+                                <a th:href="@{/syllabus/list(sortField='topicCode', dir=${dir.equals('desc') && sortField == 'topicCode'} ? 'asc' : 'desc')}"> <img th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                               </th>
+                            <th>Created on
+                                <a th:href="@{/syllabus/list(sortField='createdDate', dir=${dir.equals('desc') && sortField == 'createdDate'} ? 'asc' : 'desc')}"> <img th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+                            <th>Created by
+                                <a th:href="@{/syllabus/list(sortField='createdBy', dir=${dir.equals('desc') && sortField == 'createdBy'} ? 'asc' : 'desc')}"> <img th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
+                            <th>Duration
+                                <img th:src="@{/icon/action/sort-white.png}" alt=""></th>
+
+
+                            <th class="col-3">Output standard</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each=" syllabus : ${syllabusList}">
+                            <td style="font-weight: bold" th:text="${syllabus.topicName}"></td>
+                            <td th:text="${syllabus.topicCode}"></td>
+                            <td th:text="${syllabus.getFormatCreatedDate()}"></td>
+                            <td th:text="${syllabus.createdBy}"></td>
+                            <td>john@example.com</td>
+                            <td>
+                                <div class="status-active">abcde</div>
+                            </td>
+                            <td>
+                                <div  th:classappend="${syllabus.status.equals('active') ? 'status-active' :
+                                (syllabus.status.equals('Inactive') ? 'status-inactive' :
+                                (syllabus.status.equals('draft') ? 'status-draft' : ''))}"
+                                      th:text="${syllabus.status}"></div>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn-secondary"
+                                            style="background-color: white; border: 0 " type="button"
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img th:src="@{/icon/action/more_horizontal.png}" alt="First Page">
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item" style="color: #0b5ed7" href="#">
+                                            <img th:src="@{/icon/action/add-blue.png}" alt="First Page">
+                                            Add training program</a></li>
+                                        <li><a class="dropdown-item" style="color: #0b5ed7" href="#">
+                                            <img th:src="@{/icon/document-manage/create.png}" alt="First Page">
+                                            Edit syllabus</a>
+                                        </li>
+                                        <li><a class="dropdown-item" style="color: #0b5ed7" href="#">
+                                            <img th:src="@{/icon/document-manage/copy.png}" alt="First Page">
+                                            Duplicate syllabus</a></li>
+                                        <li><a class="dropdown-item" style="color: #0b5ed7"
+                                               th:href="@{/syllabus/delete/{id}(id = ${syllabus.topicCode})}"
+                                               onclick="if (!(confirm('Are you sure delete this syllabus!!!'))) return false">
+                                            <img th:src="@{/icon/document-manage/delete_forever.png}" alt="First Page">
+                                            Delete syllabus</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="row">
-                <!-- filter -->
-                <div class="col-3">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <img th:src="@{/assets/icon/document-manage/search.png}" alt="">
-                        </span>
-                        <input class="form-control" id="input-filter" placeholder="Search by...">
-                    </div>
-                </div>
-                <div class="col-3 mb-2">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <img th:src="@{/assets/icon/navigation-menu/calendar-today.png}" alt="">
-                        </span>
-                        <input class="form-control" id="datepicker-filter" placeholder="Create date...">
-                    </div>
-                </div>
-                <div class="col-6 group-btn-right">
-                    <button type="button" class="btn btn-orange">
-                        <img th:src="@{/assets/icon/document-manage/upload-white.png}" alt="">
-                        Import
-                    </button>
-                    <button type="button" class="btn btn-main">
-                        <img th:src="@{/assets/icon/action/add-white.png}" alt="">
-                        Add Syllabus
-                    </button>
-                </div>
 
-                <div class="row mb-2">
-                    <div class="col">
-                        <div class="group-filter">
-                            <span class="item-filter">
-                                foundation
-                                <img class="btn-remove" th:src="@{/assets/icon/navigation-menu/menu/menu_open-white.png}"
-                                    alt="">
-                            </span>
+                <div class="col-12">
+                    <div class="group-pagging">
+                        <a class="item-pagging" th:href="@{/syllabus/list(page=0, size=${pageSize})}">
+                            <img th:src="@{/icon/navigator/first_page.png}" alt="First Page">
+                        </a>
+                        <a class="item-pagging"
+                           th:href="@{/syllabus/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="Previous Page">
+
+<!--                            <a th:href="@{/syllabus/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">-->
+                        </a>
+                        <div class="item-pagging" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a class="item-pagging number" style="text-decoration: none;color: white"
+                               th:href="@{/syllabus/list(page=${pageNum}, size=${pageSize}), sortField=${sortField}, dir=${dir}}"
+                               th:classappend="${currentPage == pageNum} ? 'active' : ''"
+                               th:text="${pageNum + 1}"></a>
                         </div>
-                    </div>
-                </div>
+                        <a class="item-pagging"
+                           th:href="@{/syllabus/list(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="Next Page">
+                        </a>
+                        <a class="item-pagging"
+                           th:href="@{/syllabus/list(page=${totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/last_page.png}" alt="Last Page">
+                        </a>
 
-                <!-- table -->
-                <div class="row">
-                    <div class="col">
-                        <table class="table">
-                            <thead class="header-table">
-                                <tr>
-                                    <th>Syllabus</th>
-                                    <th>Code</th>
-                                    <th>Created on</th>
-                                    <th>Created by</th>
-                                    <th>Duration</th>
-                                    <th>Output standard</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each=" syllabus : ${list}">
-                                    <td th:text="${syllabus.topicName}"></td>
-                                    <td th:text="${syllabus.topicCode}"></td>
-                                    <td th:text="${syllabus.createdDate}"></td>
-                                    <td th:text="${syllabus.createdBy}"></td>
-                                    <td>john@example.com</td>
-                                    <td>john@example.com</td>
-                                    <td th:text="${syllabus.status}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-pagging">
-                            <div class="item-pagging">
-                                <img th:src="@{/assets/icon/navigator/first_page.png}" alt="">
-                            </div>
-                            <div class="item-pagging">
-                                <img th:src="@{/assets/icon/navigator/arrow_back_ios.png}" alt="">
-                            </div>
-                            <div class="item-pagging number active">1</div>
-                            <div class="item-pagging number">2</div>
-                            <div class="item-pagging number">3</div>
-                            <div class="item-pagging">
-                                <img th:src="@{/assets/icon/navigator/arrow_forward_ios.png}" alt="">
-                            </div>
-                            <div class="item-pagging">
-                                <img th:src="@{/assets/icon/navigator/last_page.png}" alt="">
-                            </div>
-                            <div class="item-per-page">
-                                Rows per page:
-                                <select class="form-control" name="item-per-page" id="item-per-page">
-                                    <option value="">10</option>
-                                    <option value="">20</option>
-                                    <option value="">30</option>
-                                </select>
-                            </div>
+                    <div class="group-pagging">
+
+                        <div class="item-per-page ">
+                            Rows per page:
+                            <select class="form-control" name="item-per-page" id="item-per-page">
+                                <option value="">10</option>
+                                <option value="">20</option>
+                                <option value="">30</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="footer" th:insert="footer.html"></div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
 </body>
 
 </html>

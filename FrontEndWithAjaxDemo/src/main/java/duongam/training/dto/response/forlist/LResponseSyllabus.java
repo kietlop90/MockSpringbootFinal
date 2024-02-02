@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +29,7 @@ public class LResponseSyllabus {
 
     private String trainingPrinciples;
 
-    private Boolean status;
+    private String status;
 
     private String createdBy; // id of user created syllabus
 
@@ -36,6 +37,15 @@ public class LResponseSyllabus {
 
     private Long modifiedBy; // id of user modified syllabus
 
-    private Timestamp modifiedDate;
+//    private String modifiedDate;
 
+
+    public String getFormatCreatedDate() {
+        if (this.createdDate == null) {
+            return null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        return simpleDateFormat.format(this.createdDate);
+    }
 }

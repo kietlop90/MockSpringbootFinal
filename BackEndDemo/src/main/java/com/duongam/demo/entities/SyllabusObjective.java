@@ -23,6 +23,9 @@ public class SyllabusObjective implements Serializable {
     private String content;
 
 
-    @OneToOne(mappedBy = "syllabusObjective")
-    private Syllabus syllabus;// map voi Syllabus
+    @ManyToOne
+    @JoinColumn(name = "syllabus_code")
+    private Syllabus syllabus;
+
+
 }

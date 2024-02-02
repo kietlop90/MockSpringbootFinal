@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -31,4 +32,5 @@ public class LearningObjective {
     @ManyToOne
     @JoinColumn(name = "training_content_id")
     private TrainingContent trainingContent;
+
 }

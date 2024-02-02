@@ -12,4 +12,6 @@ public enum ERole {
     public String toString() {
         return text;
     }
+
+
 }

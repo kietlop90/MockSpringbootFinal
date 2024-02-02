@@ -1,0 +1,172 @@
+.status-Planning {
+    font-size: 14px;
+    background-color: lightgray;
+    border-radius: 14px;
+    padding: 1px 5px;
+}
+
+.status-Opening {
+    font-size: 14px;
+    background-color: lightgreen;
+    border-radius: 14px;
+    padding: 1px 5px;
+}
+
+.status-Closed {
+    font-size: 14px;
+    background-color: lightcoral;
+    border-radius: 14px;
+    padding: 1px 5px;
+}
+
+hr {
+    margin: 0.5rem;
+}
+
+.group-general {
+    padding: 5px;
+}
+
+.group-general .row-general {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 38px;
+    margin: 3px 0;
+}
+
+.group-general .row-general > div {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.group-general .row-general > div img {
+    margin-right: 0.25rem;
+}
+
+.group-general .row-general > div input,
+.group-general .row-general > div select {
+    width: 100%;
+}
+
+.group-attendee {
+    display: flex;
+}
+
+.group-attendee > div {
+    display: block;
+    width: calc(100% / 3);
+    text-align: center;
+    padding: 10px;
+}
+
+.group-attendee > div:nth-child(1) {
+    border-bottom-left-radius: 8px;
+    border-top: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    background-color: #2d3748;
+    color: #ffffff;
+}
+
+.group-attendee > div:nth-child(2) {
+    border-top: 1px solid #ffffff;
+    background-color: #285D9A;
+    color: #ffffff;
+}
+
+.group-attendee > div:nth-child(3) {
+    border-bottom-right-radius: 8px;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    background-color: #F1F1F1;
+    color: #000000;
+}
+
+.group-tab-body {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: #2d3748;
+    border: 1px solid #ffffff;
+    border-top: none;
+    padding: 20px 1px;
+}
+
+.group-tab-body .header-group {
+    padding: 3px 10px;
+    color: #ffffff;
+}
+
+.group-tab-body .header-group .group-filter-training-program {
+}
+
+.group-tab-body .header-group .info-training-program > div {
+    display: flex;
+    align-items: center;
+}
+
+.group-tab-body .header-group .info-training-program > div:first-child {
+    font-size: 20px;
+}
+
+.group-tab-body .header-group .info-training-program > div:last-child > div:first-child {
+    border-right: 1px solid gray;
+}
+
+.group-tab-body .header-group .input-group {
+    width: 440px;
+}
+
+.group-tab-body .body-group {
+    background-color: #ffffff;
+    padding: 10px 3px;
+    border-radius: 8px;
+}
+
+.group-tab-body .body-group > div {
+    display: flex;
+    margin-bottom: 0.5rem;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.group-tab-body .body-group > div > div:first-child {
+    display: flex;
+    width: 250px;
+    background-color: #2d3748;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.group-tab-body .body-group > div > div:last-child {
+    width: calc(100% - 250px);
+    border: 1px solid #2d3748;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 3px 10px;
+}
+
+.group-tab-body .body-group > div > div:last-child .name {
+    font-size: 16px;
+    font-weight: bold;
+    border-right: none;
+}
+
+.group-tab-body .body-group > div > div:last-child .status-active {
+    color: #ffffff;
+    border-radius: 10px;
+    background-color: #2d3748;
+    padding: 2px 7px;
+}
+
+.group-tab-body .body-group > div > div:last-child label {
+    font-size: 12px;
+    border-right: 1px solid gray;
+    padding-right: 1rem;
+    margin-right: 1rem;
+}
+
+.group-tab-body .body-group > div > div:last-child label:last-child {
+    border-right: none;
+}

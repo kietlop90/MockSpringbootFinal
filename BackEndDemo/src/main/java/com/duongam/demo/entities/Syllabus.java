@@ -1,5 +1,7 @@
 package com.duongam.demo.entities;
 
+import com.duongam.demo.entities.enums.EGender;
+import com.duongam.demo.entities.enums.EThreeStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Entity
@@ -34,7 +37,9 @@ public class Syllabus {
 
     private String trainingPrinciples;
 
-    private Boolean status;
+
+    @Enumerated(EnumType.STRING)
+    private EThreeStatus status;
 
     @ManyToOne
     @JoinColumn(name = "create_by")
@@ -45,25 +50,38 @@ public class Syllabus {
     }
 
     @CreationTimestamp
-    @Column(name = "create_date", insertable = false, updatable = false)
+    @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;
 
 
     private Long modifiedBy;
 
     @UpdateTimestamp
-    @Column(name = "modified_date", insertable = false, updatable = false)
+    @Column(name = "modified_date", updatable = false)
     private Timestamp modifiedDate;
 
     @OneToMany(mappedBy = "syllabusCode")
     private List<TrainingProgramSyllabus> trainingProgramSyllabus;// map voi TopicCode
 
 
-    @OneToOne
-    @JoinColumn(name = "syllabus_object_id")
-    private SyllabusObjective syllabusObjective;// map voi syllabusObjective
+    @OneToMany(mappedBy = "syllabus")
+    private List<SyllabusObjective> syllabusObjectives;// map voi syllabusObjective
 
 
     @OneToMany(mappedBy = "syllabus")
-    private List<TrainingUnit> trainingUnit;
+    private List<TrainingUnit> trainingUnits;
+
+    public String getStatus() {
+        return status.name();
+    }
+
+
+
+
+
+//    public String getModifiedDate() {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+//
+//        return simpleDateFormat.format(this.modifiedDate);
+//    }
 }

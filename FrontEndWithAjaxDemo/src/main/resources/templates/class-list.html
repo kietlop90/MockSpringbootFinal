@@ -16,125 +16,162 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/class.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 </head>
 
 <body>
-    <div id="header" th:insert="header.html"></div>
-    <div id="body" class="body">
-        <div id="menu" class="menu"></div>
-        <div class="content">
-            <div class="row mb-2">
-                <div class="col title">
-                    Training Class
-                </div>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Training Class
             </div>
-            <div class="row">
-                <!-- filter -->
-                <div class="col-3">
-                    <div class="input-group">
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <div class="col-3">
+                <div class="input-group">
                         <span class="input-group-text">
                             <img th:src="@{/icon/document-manage/search.png}" alt="">
                         </span>
-                        <input class="form-control" id="input-filter" placeholder="Search by name...">
-                    </div>
+                    <input class="form-control" id="input-filter" placeholder="Search by name...">
                 </div>
-                <div class="col-3 mb-2">
-                    <button type="button" class="btn btn-main" id="btn-filter-class">
-                        <img th:src="@{/icon/action/filter_list-white.png}" alt="">
-                        Filter
-                    </button>
-                </div>
-                <div class="col-6 group-btn-right">
-                    <button type="button" class="btn btn-orange" id="btn-import-class">
-                        <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
-                        Import
-                    </button>
-                    <button type="button" class="btn btn-main" id="btn-add-class">
-                        <img th:src="@{/icon/action/add-white.png}" alt="">
-                        Add Class
-                    </button>
-                </div>
+            </div>
+            <div class="col-3 mb-2">
+                <button type="button" class="btn btn-main" id="btn-filter-class">
+                    <img th:src="@{/icon/action/filter_list-white.png}" alt="">
+                    Filter
+                </button>
+            </div>
+            <div class="col-6 group-btn-right">
+                <button type="button" class="btn btn-orange" id="btn-import-class">
+                    <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
+                    Import
+                </button>
+                <button type="button" class="btn btn-main" id="btn-add-class">
+                    <img th:src="@{/icon/action/add-white.png}" alt="">
+                    Add Class
+                </button>
+            </div>
 
-                <div class="row mb-2">
-                    <div class="col">
-                        <div class="group-filter">
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="group-filter">
                             <span class="item-filter">
                                 foundation
                                 <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
-                                    alt="">
+                                     alt="">
                             </span>
-                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- table -->
-                <div class="row">
-                    <div class="col">
-                        <table class="table">
-                            <thead class="header-table">
-                                <tr>
-                                    <th>Class</th>
-                                    <th>Class Code</th>
-                                    <th>Created on</th>
-                                    <th>Created by</th>
-                                    <th>Duration</th>
-                                    <th>Attendee</th>
-                                    <th>Location</th>
-                                    <th>FSU</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <th:block th:each="item : ${list}">
-                                    <tr th:id='${"tr"+ item.id}'>
-                                        <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
-                                        <td th:id='${"code"+ item.id}' th:text="${item.code}"></td>
-                                        <td th:id='${"createdDate"+ item.id}' th:text="${item.createdDate}"></td>
-                                        <td th:id='${"createdBy"+ item.id}' th:text="${item.createdBy}"></td>
-                                        <td th:id='${"duration"+ item.id}' th:text="${item.duration}"></td>
-                                        <td th:id='${"trainingProgramName"+ item.id}' th:text="${item.trainingProgramName}"></td>
-                                        <td th:id='${"location"+ item.id}' th:text="${item.location}"></td>
-                                        <td th:id='${"fsu"+ item.id}' th:text="${item.fsu}"></td>
-                                        <td th:id='${"action"+ item.id}'>...</td>
-                                    </tr>
-                                </th:block>
-                            </tbody>
-                        </table>
-                    </div>
+            <!-- table -->
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead class="header-table">
+                        <tr>
+                            <th>Class</th>
+                            <th>Class Code</th>
+                            <th>Created on</th>
+                            <th>Created by</th>
+                            <th>Duration</th>
+                            <th>Attendee</th>
+                            <th>Status</th>
+                            <th>Location</th>
+                            <th>FSU</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="item : ${list}">
+                            <tr th:id='${"tr"+ item.id}'>
+                                <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
+                                <td th:id='${"code"+ item.id}' th:text="${item.code}"></td>
+                                <td th:id='${"createdDate"+ item.id}' th:text="${item.createdDate}"></td>
+                                <td th:id='${"createdBy"+ item.id}' th:text="${item.createdBy}"></td>
+                                <td th:id='${"duration"+ item.id}' th:text="${item.duration}"></td>
+                                <td th:id='${"attendee"+ item.id}' th:text="${item.attendee}"></td>
+                                <td th:id='${"status"+ item.id}'>
+                                    <label th:class="${'status-' + item.status}" th:text="${item.status}"></label>
+                                </td>
+                                <td th:id='${"location"+ item.id}' th:text="${item.location}"></td>
+                                <td th:id='${"fsu"+ item.id}' th:text="${item.fsu}"></td>
+                                <td th:id='${"action"+ item.id}'>
+                                    <button class="btn btn-three-dot dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a th:id="'btn-update-class-' + ${item.id}" class="dropdown-item btn-update-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/document-manage/create.png}" alt="">
+                                                <label>Edit class</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-copy-class-' + ${item.id}" class="dropdown-item btn-copy-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/document-manage/copy.png}" alt="">
+                                                <label>Duplicate class</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-delete-class-' + ${item.id}" class="dropdown-item btn-delete-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/document-manage/delete_forever.png}" alt="">
+                                                <label>Delete class</label>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-pagging">
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/first_page.png}" alt="">
-                            </div>
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
-                            </div>
-                            <div class="item-pagging number active">1</div>
-                            <div class="item-pagging number">2</div>
-                            <div class="item-pagging number">3</div>
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
-                            </div>
-                            <div class="item-pagging">
-                                <img th:src="@{/icon/navigator/last_page.png}" alt="">
-                            </div>
-                            <div class="item-per-page">
-                                Rows per page:
-                                <select class="form-control" name="item-per-page" id="item-per-page">
-                                    <option value="">10</option>
-                                    <option value="">20</option>
-                                    <option value="">30</option>
-                                </select>
-                            </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="group-pagging">
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/first_page.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging number active">1</div>
+                        <div class="item-pagging number">2</div>
+                        <div class="item-pagging number">3</div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/last_page.png}" alt="">
+                        </div>
+                        <div class="item-per-page">
+                            Rows per page:
+                            <select class="form-control" name="item-per-page" id="item-per-page">
+                                <option value="">10</option>
+                                <option value="">20</option>
+                                <option value="">30</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="footer" th:insert="footer.html"></div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
 </body>
 
 </html>

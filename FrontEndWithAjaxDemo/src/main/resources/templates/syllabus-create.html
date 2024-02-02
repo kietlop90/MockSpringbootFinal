@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Syllabus</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
+
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div id="create-content" class="content">
+        <div class="row mb-2 title pb-3">
+            <div class=" col-2" id="head-syllabus">
+                Syllabus
+
+            </div>
+            <div class="col-5">
+                <img id="phase-general" class="w-75" th:src="@{/icon/range/Phase-General.png}" alt="phase">
+                <img id="phase-outline" class="w-75" th:src="@{/icon/range/Phase-Outline.png}" alt="phase"
+                     style="display: none">
+                <img id="phase-other" class="w-75" th:src="@{/icon/range/Phase-Other.png}" alt="phase"
+                     style="display: none">
+                <img id="phase-done" class="w-75" th:src="@{/icon/range/Phase-Done.png}" alt="phase"
+                     style="display: none">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-5">
+                <label class="w-25" for="topicName"> <b>Syllabus Name*</b></label>
+                <input class="w-50" id="topicName"/>
+            </div>
+            <div class="col-2">
+                <div><b>Code</b> <span>NPL
+               </span></div>
+
+            </div>
+            <div class="col-2">
+                <div><b>Version</b>
+                    <span>1.0
+                   </span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--        Tag body-->
+        <div class="row">
+            <div class="col-9">
+                <!--        Tabs-->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="group-tab">
+                            <div class="tab active">
+                                General
+                            </div>
+                            <div class="tab">
+                                Outline
+                            </div>
+                            <div class="tab">
+                                Training material
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--        Tab Training Program body-->
+                <div class="row tab-body active" id="tab-body-1">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div class="row mb-3">
+                                    <div class="col-1">
+                                        <label class="form-label"><b>Level</b></label>
+                                    </div>
+                                    <div class="col-4">
+                                        <select class="w-100 form-control">
+                                            <option>Auto detect</option>
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-2">
+                                        <label class="form-label"><b>Attendee numbber</b></label>
+                                    </div>
+                                    <div class="col-3">
+                                        <!--                                        Syllabus.training_audience-->
+                                        <select class="w-100 form-control">
+                                            <option>Auto detect</option>
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div><p><b>Technical Requirement(s)</b></p>
+                                    </div>
+                                    <div class="border" style="border-radius: 5px">
+                                        <!--                                     Syllabus.tectnical_group-->
+                                        <ul>
+                                            Trainees’ PCs need to have following software installed & run without any
+                                            issues:
+                                            <li>
+                                                Microsoft SQL Server 2005 Express (in which the trainees can create &
+                                                manipulate on their own database
+                                            </li>
+                                            <li>Microsoft Visual Studio 2017</li>
+                                            <li>Microsoft Office 2007 (Visio, Word, PowerPoint)</li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="margin: 10px 0">
+                                        <p><b>Course Objectives</b></p>
+                                    </div>
+                                    <div id="full-editor">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-3" style=" margin-top: 28.6px;">
+                <div>
+                    <div class="tab-Chart w-100" style="background-color: #2d3748; padding: 10px;
+                    border-bottom: #2d3748; border-left: #2d3748; border-right: #2d3748">
+                        Time allocation
+                    </div>
+                </div>
+                <div class="w-100" style="border: 1px solid #2d3748; padding: 0 25%;
+                                    border-bottom-left-radius: 20px;
+                                    border-bottom-right-radius: 20px" >
+                    <div class="mb-3">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                    <div>
+                        <div class="row">
+                            <div class="col-3">
+                            </div>
+
+                            <div class="col-9">
+                                <p>Assignment/Lab<br>(54%)</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                hinh tron
+                            </div>
+
+                            <div class="col-9">
+                                <p>Concept/Lecture <br>(29%)</p>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                hinh tron
+                            </div>
+
+                            <div class="col-9">
+                                <p>Guide/Review<br>(9%)</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                hinh tron
+                            </div>
+
+                            <div class="col-9">
+                                <p>Test/Quiz<br>(1%)</p>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                hinh tron
+                            </div>
+
+                            <div class="col-9">
+                                <p>Exam<br>(6%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+
+</body>
+
+</html>

@@ -168,7 +168,7 @@
                         </a>
                         <div class="item-pagging" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
                             <a class="item-pagging number" style="text-decoration: none;color: white"
-                               th:href="@{/syllabus/list(page=${pageNum}, size=${pageSize}), sortField=${sortField}, dir=${dir}}"
+                               th:href="@{/syllabus/list(page=${pageNum}, size=${pageSize}, sortField=${sortField}, dir=${dir})}"
                                th:classappend="${currentPage == pageNum} ? 'active' : ''"
                                th:text="${pageNum + 1}"></a>
                         </div>

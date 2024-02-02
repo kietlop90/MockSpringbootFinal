@@ -15,7 +15,8 @@ $(document).ready(function () {
                 },
                 {
                     label: "Create syllabus",
-                    path: "",
+                    path: "/syllabus/create",
+                    pathGroup: ["/syllabus/create","/syllabus/update"],
                 },
             ],
             icon: "icon/navigation-menu/book-open.png",

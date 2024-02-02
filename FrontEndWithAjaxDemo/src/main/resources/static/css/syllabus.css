@@ -1,0 +1,21 @@
+#head-syllabus{
+  color: #2D3748;
+    font-family: Inter;
+    letter-spacing: 5px;
+    font-size: 24px;
+    width: 133px;
+    height: 36px;
+    line-height: 36px;
+    margin-right: 20px;
+    padding-bottom: 15px ;
+}
+
+.group-tab-body {
+  background-color: white;
+  border: 1px solid #2d3748;
+}
+
+#full-editor{
+  border-radius: 5px;
+}
+

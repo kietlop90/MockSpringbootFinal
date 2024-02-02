@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Id;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class DResponseUser {
+    @Id
     private Long id;
 
     private String username;
@@ -24,5 +27,4 @@ public class DResponseUser {
 
     private String gender;
 
-    private String type;
 }

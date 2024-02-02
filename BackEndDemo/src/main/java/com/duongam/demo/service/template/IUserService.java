@@ -15,5 +15,11 @@ public interface IUserService {
 
 	List<LResponseUser> getAll();
 
-	void addUser(CRequestUser cUser);
+	void save(CRequestUser cUser);
+
+	void update(CRequestUser cUser);
+
+	DResponseUser findById(Long id);
+
+	void deleteById(Long id);
 }

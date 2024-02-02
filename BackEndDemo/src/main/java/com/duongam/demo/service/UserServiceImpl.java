@@ -6,20 +6,26 @@ import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
+import com.duongam.demo.entities.enums.EGender;
 import com.duongam.demo.entities.enums.ERole;
 import com.duongam.demo.repositories.RoleRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IUserService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -77,11 +83,42 @@ public class UserServiceImpl implements IUserService {
     }
 
 	@Override
-	public void addUser(CRequestUser cUser) {
+	public void save(CRequestUser cUser) {
 		User user = modelMapper.map(cUser, User.class);
+		Role role = roleRepository.findByName(cUser.getRole()).orElse(null);
+		user.setRole(role);
 		userRepository.save(user);
-		DResponseUser dUser = modelMapper.map(user, DResponseUser.class);
 	}
 
+	@Override
+	public void update(CRequestUser cUser) {
+		User existingUser = userRepository.findById(cUser.getId()).orElse(null);
+		String date = cUser.getDob();
+		if (existingUser != null){
+			existingUser.setName(cUser.getName());
+			existingUser.setPhone(cUser.getPhone());
+			existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			existingUser.setGender(EGender.valueOf(cUser.getGender()));
+			existingUser.setStatus(Boolean.valueOf(cUser.getStatus()));
+		}
+		userRepository.save(existingUser);
+	}
+
+	@Override
+	public DResponseUser findById(Long id) {
+		Optional<User> user = userRepository.findById(id);
+		return user.map(value ->{
+			DResponseUser responseUser = modelMapper.map(value, DResponseUser.class);
+			responseUser.setRole(value.roleName());
+			responseUser.setGender(value.genderText());
+			responseUser.setDob(value.dobText());
+			return responseUser;
+		}).orElse(null);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		userRepository.deleteById(id);
+	}
 
 }

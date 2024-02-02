@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Getter
@@ -14,11 +15,13 @@ public class CRequestUser {
     private String password;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
-    private String userType;
+    private String role;
     private String name;
     private String email;
-    private Integer phone;
+    private String phone;
     private String dob;
     private String gender;
     private String status;
+    @Id
+    private Long id;
 }

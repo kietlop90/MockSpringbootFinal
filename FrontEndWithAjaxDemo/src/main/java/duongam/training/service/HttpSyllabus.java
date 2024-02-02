@@ -26,9 +26,14 @@ public class HttpSyllabus {
     @Autowired
     private ModelMapper modelMapper;
 
-    public PaginatedResponse<LResponseSyllabus> getAll(int page, int size) {
+    public PaginatedResponse<LResponseSyllabus> getAll(int page, int size,
+                                                       String sortField, String dir) {
         RestTemplate restTemplate = new RestTemplate();
         String urlWithParam = syllabusUrl.getAll() + "?page=" + page + "&size=" + size;
+
+        if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
+            urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+        }
 
         ResponseEntity<PaginatedResponse<LResponseSyllabus>> response = restTemplate.exchange(
                 urlWithParam,
@@ -39,10 +44,10 @@ public class HttpSyllabus {
         );
 
         return response.getBody();
-    }
+}
 
-    public LResponseSyllabus delete(String id) {
-        HttpBase<LResponseSyllabus, LResponseSyllabus> httpBase = new HttpBase<>();
-        return httpBase.deleteFromAPI(syllabusUrl.delete(id), LResponseSyllabus.class);
-    }
+public LResponseSyllabus delete(String id) {
+    HttpBase<LResponseSyllabus, LResponseSyllabus> httpBase = new HttpBase<>();
+    return httpBase.deleteFromAPI(syllabusUrl.delete(id), LResponseSyllabus.class);
+}
 }

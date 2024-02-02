@@ -32,8 +32,8 @@ public interface LResponseSyllabus {
     @Value("#{target.createdBy}")
     String getCreatedBy();
 
-    @Value("#{target.formattedCreatedDate}")
-    String getFormattedCreatedDate();
+
+    Timestamp getCreatedDate();
 
     Long getModifiedBy();
 

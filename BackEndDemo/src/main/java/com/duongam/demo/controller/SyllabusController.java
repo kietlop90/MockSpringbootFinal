@@ -23,14 +23,17 @@ public class SyllabusController {
 
     @GetMapping("/list")
     public ResponseEntity<PaginatedResponse<LResponseSyllabus>> list(@RequestParam(defaultValue = "0") int page,
-                                                                     @RequestParam(defaultValue = "10") int size) {
-        Page<LResponseSyllabus> responseSyllabi = syllabusService.getAll(page, size);
+                                                                     @RequestParam(defaultValue = "10") int size,
+                                                                     @RequestParam(required = false) String sortField,
+                                                                     @RequestParam(defaultValue = "desc") String dir) {
+        Page<LResponseSyllabus> responseSyllabi = syllabusService.getAll(page, size, sortField, dir);
         PaginatedResponse<LResponseSyllabus> paginatedResponse = new PaginatedResponse<>();
         paginatedResponse.setContent(responseSyllabi.getContent());
         paginatedResponse.setTotalPages(responseSyllabi.getTotalPages());
         paginatedResponse.setTotalElements(responseSyllabi.getTotalElements());
         paginatedResponse.setCurrentPage(responseSyllabi.getNumber());
         paginatedResponse.setSize(responseSyllabi.getSize());
+
         return ResponseEntity.ok().body(paginatedResponse);
     }
 
@@ -39,4 +42,12 @@ public class SyllabusController {
         DResponseSyllabus lResponseSyllabus = syllabusService.delete(id);
         return ResponseEntity.ok().body(lResponseSyllabus);
     }
+
+
+//    @GetMapping("/search")
+//    public ResponseEntity<Page<LResponseSyllabus>> search(){
+//
+//        Page<LResponseSyllabus> responseSyllabi ;
+//        return ResponseEntity.ok().body(responseSyllabi);
+//    }
 }

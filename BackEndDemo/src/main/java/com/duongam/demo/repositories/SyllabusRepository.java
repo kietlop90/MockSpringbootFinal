@@ -13,4 +13,10 @@ import java.util.List;
 public interface SyllabusRepository extends JpaRepository<Syllabus, String> {
 
     Page<LResponseSyllabus> findAllBy(Pageable pageable);
+
+//    Page<LResponseSyllabus> findByNameContainingIgnoreCase(String name, Pageable pageable);
+//
+//    Page<LResponseSyllabus> findByNameContainingIgnoreCaseAndCreatedAt(String name, String createdDate, Pageable pageable);
+//
+//    Page<LResponseSyllabus> findByCreatedAt(String createdDate, Pageable pageable);
 }

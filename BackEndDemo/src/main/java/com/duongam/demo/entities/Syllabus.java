@@ -50,14 +50,14 @@ public class Syllabus {
     }
 
     @CreationTimestamp
-    @Column(name = "create_date", insertable = false, updatable = false)
+    @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;
 
 
     private Long modifiedBy;
 
     @UpdateTimestamp
-    @Column(name = "modified_date", insertable = false, updatable = false)
+    @Column(name = "modified_date", updatable = false)
     private Timestamp modifiedDate;
 
     @OneToMany(mappedBy = "syllabusCode")
@@ -76,15 +76,8 @@ public class Syllabus {
     }
 
 
-    public String getFormattedCreatedDate() {
 
-        if (this.createdDate == null) {
-            return null;
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        return simpleDateFormat.format(this.createdDate);
-    }
 
 //    public String getModifiedDate() {
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");

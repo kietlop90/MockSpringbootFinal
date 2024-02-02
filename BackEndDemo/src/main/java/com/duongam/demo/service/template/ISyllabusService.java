@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ISyllabusService {
 
-    Page<LResponseSyllabus> getAll(int page, int size);
+    Page<LResponseSyllabus> getAll(int page, int size, String sort, String dir);
 
     DResponseSyllabus delete(String id);
 }

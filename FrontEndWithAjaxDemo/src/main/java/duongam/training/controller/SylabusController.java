@@ -23,12 +23,17 @@ public class SylabusController {
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "0") int page,
-                       @RequestParam(defaultValue = "10") int size) {
-        PaginatedResponse<LResponseSyllabus> syllabusPage = httpSyllabus.getAll(page, size);
+                       @RequestParam(defaultValue = "10") int size,
+                       @RequestParam(required = false) String sortField,
+                       @RequestParam(defaultValue = "desc") String dir) {
+        PaginatedResponse<LResponseSyllabus> syllabusPage = httpSyllabus.getAll(page, size, sortField, dir);
         model.addAttribute("syllabusList", syllabusPage.getContent());
         model.addAttribute("totalPages", syllabusPage.getTotalPages());
         model.addAttribute("currentPage", syllabusPage.getCurrentPage());
         model.addAttribute("pageSize", syllabusPage.getSize());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("dir", dir);
         return "syllabus-list";
     }
 

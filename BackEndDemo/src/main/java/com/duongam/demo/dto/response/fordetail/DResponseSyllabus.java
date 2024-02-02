@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -31,7 +33,7 @@ public class DResponseSyllabus {
 
     private String createdBy; // id of user created syllabus
 
-    private String formattedCreatedDate  ;
+    private Timestamp createdDate  ;
 
     private Long modifiedBy; // id of user modified syllabus
 
@@ -45,7 +47,7 @@ public class DResponseSyllabus {
         this.trainingPrinciples = syllabus.getTrainingPrinciples();
         this.status = syllabus.getStatus();
         this.createdBy = syllabus.getCreatedBy();
-        this.formattedCreatedDate = syllabus.getFormattedCreatedDate();
+        this.createdDate = syllabus.getCreatedDate();
         this.modifiedBy = syllabus.getModifiedBy();
     }
 

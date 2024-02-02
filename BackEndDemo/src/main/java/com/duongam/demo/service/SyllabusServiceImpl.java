@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +26,17 @@ public class SyllabusServiceImpl implements ISyllabusService {
     private ModelMapper modelMapper;
 
     @Override
-    public Page<LResponseSyllabus> getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<LResponseSyllabus> getAll(int page, int size, String sortField, String dir) {
+        Pageable pageable;
+        if (sortField == null || sortField.isEmpty()) {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString("desc"), "createdDate");
+        } else {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString(dir), sortField);
+        }
         return syllabusRepository.findAllBy(pageable).
                 map(entity -> modelMapper.map(entity, LResponseSyllabus.class));
     }
+
 
     @Override
     public DResponseSyllabus delete(String id) {

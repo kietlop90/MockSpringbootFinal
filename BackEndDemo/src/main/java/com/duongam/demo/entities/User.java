@@ -49,12 +49,12 @@ public class User implements Serializable {
     private String createdBy;
 
     @CreationTimestamp
-    @Column(name = "create_date", insertable = false, updatable = false)
+    @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;
     private String modifiedBy;
 
     @UpdateTimestamp
-    @Column(name = "modified_date", insertable = false, updatable = false)
+    @Column(name = "modified_date", updatable = false)
     private Timestamp modifiedDate;
 
     @Enumerated(EnumType.STRING)

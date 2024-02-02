@@ -35,14 +35,14 @@ public class TrainingProgram {
 
 
     @CreationTimestamp
-    @Column(name = "create_date", insertable = false, updatable = false)
+    @Column(name = "create_date", insertable = true, updatable = false)
     private Timestamp createdDate;
 
 
     private Long modifiedBy;
 
     @UpdateTimestamp
-    @Column(name = "modified_date", insertable = false, updatable = false)
+    @Column(name = "modified_date")
     private Timestamp modifiedDate;
 
     // lien ket voi class
@@ -58,4 +58,6 @@ public class TrainingProgram {
 
     @OneToMany(mappedBy = "trainingProgramCode")
     private List<TrainingProgramSyllabus> topicCode;
+
+
 }

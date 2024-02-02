@@ -19,8 +19,8 @@ public interface ITrainingProgramService {
 
     DReponseTrainingProgram findTrainingProgrammById(String id);
 
-    @Transactional
-    List<DReponseTrainingProgram> searchALlTrainingProgram(String name);
+//    @Transactional
+//    List<DReponseTrainingProgram> searchALlTrainingProgram(String name);
 
 //    DReponseTrainingProgram save( requestTrainingProgramCreate);
     DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate);

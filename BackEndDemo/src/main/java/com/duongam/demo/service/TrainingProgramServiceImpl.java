@@ -62,7 +62,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             trainingProgram1.setDuration(trainingProgram.getDuration());
             trainingProgram1.setStatus(trainingProgram.getStatus());
             trainingProgram1.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            trainingProgram1.setCreateBy(trainingProgram.getCreateBy());
+//            trainingProgram1.setCreateBy(trainingProgram.getCreateBy());
             trainingProgramRepository.save(trainingProgram1);
 
             return new DReponseTrainingProgram(trainingProgram1);
@@ -107,14 +107,14 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     }
 
 
-    @Override
-    @Transactional
-    public List<DReponseTrainingProgram> searchALlTrainingProgram(String name) {
-        List<TrainingProgram> trainingProgramList = trainingProgramRepository.findByNameLike(name);
-        return trainingProgramList.stream().map(value -> {
-            return new DReponseTrainingProgram(value);
-        }).collect(Collectors.toList());
-    }
+//    @Override
+//    @Transactional
+//    public List<DReponseTrainingProgram> searchALlTrainingProgram(String name) {
+//        List<TrainingProgram> trainingProgramList = trainingProgramRepository.findByNameLike(name);
+//        return trainingProgramList.stream().map(value -> {
+//            return new DReponseTrainingProgram(value);
+//        }).collect(Collectors.toList());
+//    }
 
 
     @Override

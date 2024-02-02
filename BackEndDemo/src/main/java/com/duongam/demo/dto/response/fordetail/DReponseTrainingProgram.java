@@ -28,7 +28,7 @@ public class DReponseTrainingProgram {
         this.ProgramName = trainingProgram.getName();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         this.CreatedOn = simpleDateFormat.format(trainingProgram.getCreatedDate());
-        this.CreatedBy = trainingProgram.getCreateBy().getName();
+//        this.CreatedBy = trainingProgram.getCreateBy().getName();
         this.duration = trainingProgram.getDuration() + " days";
 
         if (trainingProgram.getStatus() == 1) {

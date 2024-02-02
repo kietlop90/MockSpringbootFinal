@@ -2,6 +2,7 @@ package com.duongam.demo.controller;
 
 import com.duongam.demo.dto.request.authen.LoginModel;
 import com.duongam.demo.dto.request.authen.RegisterModel;
+import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.service.template.IUserService;
@@ -10,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = "User", description = "User API's")
@@ -28,6 +31,15 @@ public class UserController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	@PostMapping("/add")
+	public ResponseEntity<DResponseUser> add(@Valid @RequestBody CRequestUser cRequestUser, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(null);
+		}
+		DResponseUser dResponseUser = userService.save(cRequestUser);
+		return ResponseEntity.ok().body(dResponseUser);
+	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<Object> loginUser(@RequestBody LoginModel loginModel, HttpServletResponse response) {
 		String username = loginModel.getUsername();
@@ -40,9 +52,9 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<DResponseUser> register(@RequestBody RegisterModel registerModel) {
-		DResponseUser result = userService.create(registerModel);
-		return ResponseEntity.ok().body(result);
-	}
+//	@RequestMapping(value = "/register", method = RequestMethod.POST)
+//	public ResponseEntity<DResponseUser> register(@RequestBody RegisterModel registerModel) {
+//		DResponseUser result = userService.create(registerModel);
+//		return ResponseEntity.ok().body(result);
+//	}
 }

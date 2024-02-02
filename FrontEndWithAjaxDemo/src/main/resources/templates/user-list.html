@@ -8,7 +8,7 @@
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
-    <script th:src="@{/js/syllabus-list.js}"></script>
+    <script th:src="@{/js/user.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -138,91 +138,105 @@
 <div class="modal" id="addUserModel">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Add a new user</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>User type</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input id="user-type-input" type="text" class="form-control" placeholder="Enter User type"
-                               autofocus/>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>Name</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" class="form-control" placeholder="User name"
-                               autofocus/>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>Email address</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" class="form-control" placeholder="Email address"
-                               autofocus/>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>Phone</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" class="form-control" placeholder="Phone number"
-                               autofocus/>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>Date of birth</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" class="form-control" placeholder="Enter User type"
-                               autofocus/>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>Gender</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" class="form-control" placeholder="Enter User type"
-                               autofocus/>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-type-input"><b>Status</b></label>
-                    </div>
-                    <div class="col-9">
-                        <img th:src="@{/icon/status/Active.png}"></im>
-                    </div>
+            <form method="POST" th:object="${registerForm}" th:action="@{register}">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add a new user</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-            </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>User type</b></label>
+                        </div>
+                        <div class="col-9">
+                            <select id="user-type-input" class="form-control">
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="TRAINER">TRAINER</option>
+                                <option value="STUDENT">STUDENT</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Name</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input id="user-name-input" type="text" class="form-control" placeholder="User name"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Email address</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input id="email-address-input" type="text" class="form-control" placeholder="Email address"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Password</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input id="password-input" type="text" class="form-control" placeholder="Email address"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Phone</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input id="phone-input" type="text" class="form-control" placeholder="Phone number"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Date of birth</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input id="dob-input" type="text" class="form-control" placeholder="Enter User type"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Gender</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input id="gender-input" type="text" class="form-control" placeholder="Enter User type"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Status</b></label>
+                        </div>
+                        <div class="col-9">
+                            <img th:src="@{/icon/status/Active.png}"></im>
+                        </div>
+                    </div>
 
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <div class="row mt-3">
-                    <div class="col-12 d-flex justify-content-end">
-                        <button id="btnCancel" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
-                        </button>
-                        <button id="btnSave" class="btn btn-main me-2">Save</button>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="row mt-3">
+                        <div class="col-12 d-flex justify-content-end">
+                            <button id="btn-cancel-user" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button id="btn-add-user" class="btn btn-main me-2">Save</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </form>
         </div>
     </div>
 </div>

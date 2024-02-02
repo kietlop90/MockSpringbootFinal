@@ -5,15 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class RegisterModel {
-	private String username;
-
 	private String password;
-
-	private Long roleId;
-
+	private LocalDate createdDate;
+	private LocalDate modifiedDate;
+	private String roleId;
+	private String name;
+	private String email;
+	private String phone;
+	private String dob;
+	private String gender;
+	private String status;
 }

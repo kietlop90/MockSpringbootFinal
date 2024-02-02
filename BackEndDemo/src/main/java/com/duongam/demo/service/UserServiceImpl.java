@@ -2,8 +2,12 @@ package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.request.forcreate.CRequestUser;
+import com.duongam.demo.dto.request.forupdate.URequestClass;
+import com.duongam.demo.dto.request.forupdate.URequestUser;
+import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
+import com.duongam.demo.entities.Class;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
 import com.duongam.demo.entities.enums.EGender;
@@ -12,9 +16,7 @@ import com.duongam.demo.repositories.RoleRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IUserService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -68,11 +70,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public DResponseUser create(RegisterModel registerModel) {
 //		Role role = roleRepository.findById(registerModel.getRoleId()).get();
-		Role role = new Role(ERole.ADMIN);
+//		Role role = new Role(ERole.ADMIN);
 		User user = new User();
-		user.setUsername(registerModel.getUsername());
+//		user.setUsername(registerModel.getUsername());
 		user.onPrePersist();
-		user.setRole(role);
+//		user.setRole(role);
 		user.setPassword(bCryptPasswordEncoder.encode(registerModel.getPassword()));
 		return modelMapper.map(userRepository.save(user), DResponseUser.class);
 	}
@@ -83,25 +85,17 @@ public class UserServiceImpl implements IUserService {
     }
 
 	@Override
-	public void save(CRequestUser cUser) {
-		User user = modelMapper.map(cUser, User.class);
-		Role role = roleRepository.findByName(cUser.getRole()).orElse(null);
+	public DResponseUser save(CRequestUser cRequestUser) {
+		User user = modelMapper.map(cRequestUser, User.class);
+		Role role = roleRepository.findByName(cRequestUser.getRoleId()).orElse(null);
 		user.setRole(role);
-		userRepository.save(user);
+		return modelMapper.map(userRepository.save(user), DResponseUser.class);
 	}
 
 	@Override
-	public void update(CRequestUser cUser) {
-		User existingUser = userRepository.findById(cUser.getId()).orElse(null);
-		String date = cUser.getDob();
-		if (existingUser != null){
-			existingUser.setName(cUser.getName());
-			existingUser.setPhone(cUser.getPhone());
-			existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-			existingUser.setGender(EGender.valueOf(cUser.getGender()));
-			existingUser.setStatus(Boolean.valueOf(cUser.getStatus()));
-		}
-		userRepository.save(existingUser);
+	public DResponseUser update(URequestUser uRequestUser) {
+		User user = modelMapper.map(uRequestUser, User.class);
+		return modelMapper.map(userRepository.save(user), DResponseUser.class);
 	}
 
 	@Override
@@ -117,8 +111,10 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public DResponseUser deleteById(Long id) {
+		DResponseUser dResponseUser = findById(id);
 		userRepository.deleteById(id);
+		return dResponseUser;
 	}
 
 }

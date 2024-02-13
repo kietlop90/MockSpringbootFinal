@@ -35,7 +35,7 @@ public class TrainingProgram {
 
 
     @CreationTimestamp
-    @Column(name = "create_date", insertable = true, updatable = false)
+    @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;
 
 

@@ -23,6 +23,19 @@ public class HttpTrainingProgram {
     @Autowired
     private TrainingProgramUrl trainingProgramUrl;
 
+
+    public String deleteSearchTag(String nameTag) {
+        HttpBase<String, String> httpBase = new HttpBase<>();
+        return httpBase.putStringToAPI(trainingProgramUrl.getDeleteSearchTag(nameTag), String.class);
+    }
+
+    public List<String> getAllSearchTag() {
+        HttpBase<String[], String[]> httpBase = new HttpBase<>();
+        String[] list = httpBase.getFromAPI(trainingProgramUrl.getGetAllSearchTag(), String[].class);
+        return Arrays.asList(list);
+    }
+
+
     public List<DReponseTrainingProgram> getAll() {
         HttpBase<DReponseTrainingProgram[], DReponseTrainingProgram[]> httpBase = new HttpBase<>();
         DReponseTrainingProgram[] list = httpBase.getFromAPI(trainingProgramUrl.getAll(), DReponseTrainingProgram[].class);

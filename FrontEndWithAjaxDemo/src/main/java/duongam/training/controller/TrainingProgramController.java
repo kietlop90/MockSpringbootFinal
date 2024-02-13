@@ -24,6 +24,8 @@ public class TrainingProgramController {
     @GetMapping("/list")
     public String list(Model model) {
         List<DReponseTrainingProgram> list = httpTrainingProgram.getAll();
+//        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+//        model.addAttribute("listTagSearch", listTagSearch);
         model.addAttribute("list", list);
         return "trainingProgram-list";
     }
@@ -31,14 +33,30 @@ public class TrainingProgramController {
     @GetMapping("/search")
     public String search(Model model,@RequestParam("name") String name) {
         if (name.isEmpty()) {
-            List<DReponseTrainingProgram> list = httpTrainingProgram.getAll();
+            List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName("asdfghjkl");
+            List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+            model.addAttribute("listTagSearch", listTagSearch);
             model.addAttribute("list", list);
             return "trainingProgram-list";
         }
         List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName(name);
+        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+        model.addAttribute("listTagSearch", listTagSearch);
         model.addAttribute("list", list);
         return "trainingProgram-list";
     }
+
+    @GetMapping("/deleteTagSearch/{tag}")
+    public String deleteTagSearch(Model model,@PathVariable("tag") String tagName) {
+        httpTrainingProgram.deleteSearchTag(tagName);
+        List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName("asdfghjkl");
+        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+        model.addAttribute("listTagSearch", listTagSearch);
+        model.addAttribute("list", list);
+        return "trainingProgram-list";
+    }
+
+
 
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") String requestId,  Model model) {
@@ -55,8 +73,18 @@ public class TrainingProgramController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") String requestId) {
+    public String delete(Model model,@PathVariable("id") String requestId) {
         httpTrainingProgram.deleteById(requestId);
+        List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName("asdfghjkl");
+        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+        model.addAttribute("listTagSearch", listTagSearch);
+        model.addAttribute("list", list);notify();
+        return "trainingProgram-list";
+    }
+
+    @GetMapping("/deleteSearchTag/{id}")
+    public String deleteSearchTag(@PathVariable("id-SearchTag") String requestId) {
+        httpTrainingProgram.deleteSearchTag(requestId);
         return "redirect:/trainingProgram/list";
     }
 

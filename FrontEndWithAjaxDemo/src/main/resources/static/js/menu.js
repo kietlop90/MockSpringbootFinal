@@ -28,7 +28,7 @@ $(document).ready(function () {
                     path: "/trainingProgram/list",
                 },
                 {
-                    label: "View program",
+                    label: "Create program",
                     path: "",
                 },
             ],

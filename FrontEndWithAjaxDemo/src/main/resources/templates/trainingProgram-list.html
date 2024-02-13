@@ -57,15 +57,16 @@
 
             <div class="row mb-2">
                 <div class="col">
-                    <div class="group-filter">
-                            <span class="item-filter">
-                                foundation
-                                <img class="btn-remove" th:src="@{/assets/icon/navigation-menu/menu/menu_open-white.png}"
-                                     alt="">
-                            </span>
+                    <div class="group-filter d-flex" th:each="tag : ${listTagSearch}">
+            <span class="item-filter" th:text="${tag}">
+                <img class="btn-remove" th:src="@{/assets/icon/navigation-menu/menu/menu_open-white.png}" alt="">
+            </span>
+                        <a th:href="@{/trainingProgram/deleteTagSearch/{tag}(tag=${tag})}">X</a>
                     </div>
                 </div>
             </div>
+
+
 
             <!-- table -->
             <div class="row">

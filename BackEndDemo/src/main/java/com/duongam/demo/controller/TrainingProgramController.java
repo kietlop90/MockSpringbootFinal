@@ -4,6 +4,7 @@ package com.duongam.demo.controller;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
+import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
 import com.duongam.demo.repositories.TrainingProgramRepository;
 import com.duongam.demo.service.template.ITrainingProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,32 @@ public class TrainingProgramController {
     }
 
 
+    @GetMapping("/getListTagsSearch")
+    public ResponseEntity<List<String>> listAllTagsSearch() {
+        List<String> listTags = trainingProgramService.getListSearch();
+        return ResponseEntity.ok().body(listTags);
+    }
+
+
 
     @GetMapping("/search/{name}")
     public ResponseEntity<List<DReponseTrainingProgram>> searchTrainingProgram(@PathVariable String name) {
         List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
         return ResponseEntity.ok().body(reponseTrainingProgramList);
     }
+
+    @GetMapping("/remove-tag/{tag}")
+    public ResponseEntity<List<DReponseTrainingProgram>> removeTagAndSearch(@PathVariable String tag) {
+        trainingProgramService.removeTagAndSearch(tag);
+        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram("");
+        return ResponseEntity.ok().body(reponseTrainingProgramList);
+    }
+
+//    @GetMapping("/deleteSearchTag/{name}")
+//    public ResponseEntity<List<DReponseTrainingProgram>> deleteSearchTag(@PathVariable String name) {
+//        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
+//        return ResponseEntity.ok().body(reponseTrainingProgramList);
+//    }
 
 
     @GetMapping("/duplicate/{id}")
@@ -64,6 +85,12 @@ public class TrainingProgramController {
     public ResponseEntity<DReponseTrainingProgram> deActiveTrainingProgram(@PathVariable("id") String id) {
         DReponseTrainingProgram responseTrainingProgram = trainingProgramService.deActiveTrainingProgram(id);
         return ResponseEntity.ok().body(responseTrainingProgram);
+    }
+
+    @GetMapping("/getAllSyllabus/{id}")
+    public ResponseEntity<List<DResponseSyllabus>> getALlSyllabus(@PathVariable("id") String id) {
+        List<DResponseSyllabus> dResponseSyllabusList = trainingProgramService.getAllSyllabusByTrainingProgramCode(id);
+        return ResponseEntity.ok().body(dResponseSyllabusList);
     }
 
 

@@ -2,18 +2,20 @@ package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
+import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
+import com.duongam.demo.entities.Syllabus;
 import com.duongam.demo.entities.TrainingProgram;
-import com.duongam.demo.entities.User;
 import com.duongam.demo.repositories.TrainingProgramRepository;
+import com.duongam.demo.repositories.TrainingProgramSyllabusRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.ITrainingProgramService;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -25,7 +27,35 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     private TrainingProgramRepository trainingProgramRepository;
 
     @Autowired
+    private TrainingProgramSyllabusRepository trainingProgramSyllabusRepository;
+
+
+    @Autowired
     private UserRepository userRepository;
+
+    private List<String> listSearch = new ArrayList<>();
+
+
+    @Override
+    public List<DResponseSyllabus> getAllSyllabusByTrainingProgramCode(String code) {
+        List<Syllabus> syllabusList = trainingProgramSyllabusRepository.getAllSyllabusCodesByTrainingProgramCode(code);
+        return syllabusList.stream().map(value -> {
+            DResponseSyllabus dResponseSyllabus = new DResponseSyllabus();
+            dResponseSyllabus.setTopicCode(value.getTopicCode());
+            dResponseSyllabus.setStatus(value.getStatus());
+            dResponseSyllabus.setCreatedBy(value.getCreatedBy());
+            dResponseSyllabus.setVersion(value.getVersion());
+            dResponseSyllabus.setTrainingMaterials(value.getTrainingMaterials());
+            dResponseSyllabus.setTechnicalGroup(value.getTechnicalGroup());
+            dResponseSyllabus.setTopicName(value.getTopicName());
+            dResponseSyllabus.setTopicOutline(value.getTopicOutline());
+            dResponseSyllabus.setTrainingPrinciples(value.getTrainingPrinciples());
+            dResponseSyllabus.setCreatedDate(value.getCreatedDate());
+            dResponseSyllabus.setModifiedBy(value.getModifiedBy());
+            return dResponseSyllabus;
+        }).collect(Collectors.toList());
+    }
+
 
     @Override
     @Transactional
@@ -43,7 +73,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
 
     public DReponseTrainingProgram deleteTrainingProgramById(String id) {
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
-        assert trainingProgram != null;
+        assert trainingProgram != null : "Training program not found";
         DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(trainingProgram);
         trainingProgramRepository.deleteById(id);
         return reponseTrainingProgram;
@@ -62,7 +92,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             trainingProgram1.setDuration(trainingProgram.getDuration());
             trainingProgram1.setStatus(trainingProgram.getStatus());
             trainingProgram1.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-            trainingProgram1.setCreateBy(trainingProgram.getCreateBy());
+            trainingProgram1.setCreatedBy(trainingProgram.getCreatedBy());
             trainingProgramRepository.save(trainingProgram1);
 
             return new DReponseTrainingProgram(trainingProgram1);
@@ -76,7 +106,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Transactional
     public DReponseTrainingProgram deActiveTrainingProgram(String id) {
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
-        assert trainingProgram != null : "trainingProgram must not be found";
+        assert trainingProgram != null;
         if (trainingProgram.getStatus() == 1) {
             trainingProgram.setStatus(2);
         } else {
@@ -95,6 +125,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         return reponseTrainingProgram;
     }
 
+
     private String generateRandomLetter(String input) {
         if (input != null && !input.isEmpty()) {
             char randomLetter1 = (char) ('A' + (int) (Math.random() * 26));
@@ -106,15 +137,78 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         }
     }
 
+    @Override
+    @Transactional
+    public void removeTagAndSearch(String tagToRemove) {
+        listSearch.remove(tagToRemove);
+    }
+
+    @Override
+    @Transactional
+    public List<String> getListSearch() {
+        return listSearch;
+    }
 
     @Override
     @Transactional
     public List<DReponseTrainingProgram> searchALlTrainingProgram(String name) {
-        List<TrainingProgram> trainingProgramList = trainingProgramRepository.findByNameLike(name);
-        return trainingProgramList.stream().map(value -> {
-            return new DReponseTrainingProgram(value);
-        }).collect(Collectors.toList());
+
+        if (Objects.equals(name, "asdfghjkl")) {
+            name = "";
+        } else {
+            for (String tag : listSearch) {
+                if (tag.contains(name)) {
+                    name = "";
+                    break;
+                }
+            }
+        }
+
+        if (!Objects.equals(name, "")) {
+            listSearch.add(name);
+        }
+
+        if (listSearch.isEmpty()) {
+            return listAllTrainingPrograms();
+        }
+
+        if (listSearch.size() > 4) {
+            listSearch.remove(name);
+        }
+
+        List<TrainingProgram> trainingProgramList;
+
+        switch (listSearch.size()) {
+            case 1:
+                trainingProgramList = trainingProgramRepository.findByNameLike1tag(listSearch.get(0));
+                break;
+            case 2:
+                trainingProgramList = trainingProgramRepository.findBy2Tags(listSearch.get(0), listSearch.get(1));
+                break;
+            case 3:
+                trainingProgramList = trainingProgramRepository.findBy3Tags(listSearch.get(0), listSearch.get(1), listSearch.get(2));
+                break;
+            case 4:
+                try {
+                    Integer durationForSearch = Integer.parseInt(listSearch.get(3));
+                    trainingProgramList = trainingProgramRepository.findBy4Tags(
+                            listSearch.get(0), listSearch.get(1), listSearch.get(2), durationForSearch);
+                } catch (NumberFormatException e) {
+                    // Handle the case when the duration is not a valid integer
+                    e.printStackTrace();
+                    return Collections.emptyList();
+                }
+                break;
+            default:
+                return Collections.emptyList();
+        }
+
+        return trainingProgramList.stream()
+                .map(DReponseTrainingProgram::new)
+                .collect(Collectors.toList());
     }
+
+
 
 
     @Override

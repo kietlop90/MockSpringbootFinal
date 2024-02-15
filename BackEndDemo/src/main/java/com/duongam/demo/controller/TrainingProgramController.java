@@ -4,6 +4,7 @@ package com.duongam.demo.controller;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
+import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
 import com.duongam.demo.repositories.TrainingProgramRepository;
 import com.duongam.demo.service.template.ITrainingProgramService;
@@ -26,6 +27,7 @@ public class TrainingProgramController {
         List<DReponseTrainingProgram> reponseTrainingProgramPage = trainingProgramService.listAllTrainingPrograms();
         return ResponseEntity.ok().body(reponseTrainingProgramPage);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<DReponseTrainingProgram> deleteTrainingProgram(@PathVariable String id) {
@@ -58,6 +60,13 @@ public class TrainingProgramController {
     public ResponseEntity<List<DReponseTrainingProgram>> searchTrainingProgram(@PathVariable String name) {
         List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
         return ResponseEntity.ok().body(reponseTrainingProgramList);
+    }
+
+
+    @GetMapping("/getDetail/{code}")
+    public ResponseEntity<List<DResponseClass>> getALlClassOfTrainingProgram(@PathVariable String code) {
+        List<DResponseClass> dResponseClassList = trainingProgramService.getALlClassOfTrainingProgram(code);
+        return ResponseEntity.ok().body(dResponseClassList);
     }
 
     @GetMapping("/remove-tag/{tag}")

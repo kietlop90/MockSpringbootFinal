@@ -2,6 +2,7 @@ package com.duongam.demo.service.template;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
+import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseRole;
 import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
 
@@ -20,6 +21,8 @@ public interface ITrainingProgramService {
     DReponseTrainingProgram deActiveTrainingProgram(String id);
 
     DReponseTrainingProgram findTrainingProgrammById(String id);
+
+    List<DResponseClass> getALlClassOfTrainingProgram(String code);
 
     List<DResponseSyllabus> getAllSyllabusByTrainingProgramCode(String code);
 

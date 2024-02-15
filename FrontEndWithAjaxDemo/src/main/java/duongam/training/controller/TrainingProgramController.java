@@ -5,6 +5,7 @@ import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.fordetail.DResponseClass;
+import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.service.HttpClass;
 import duongam.training.service.HttpTrainingProgram;
@@ -78,13 +79,13 @@ public class TrainingProgramController {
         List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName("asdfghjkl");
         List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
         model.addAttribute("listTagSearch", listTagSearch);
-        model.addAttribute("list", list);notify();
+        model.addAttribute("list", list);
         return "trainingProgram-list";
     }
 
     @GetMapping("/deleteSearchTag/{id}")
-    public String deleteSearchTag(@PathVariable("id-SearchTag") String requestId) {
-        httpTrainingProgram.deleteSearchTag(requestId);
+    public String deleteSearchTag(@PathVariable String id) {
+        httpTrainingProgram.deleteSearchTag(id);
         return "redirect:/trainingProgram/list";
     }
 
@@ -98,5 +99,14 @@ public class TrainingProgramController {
     public String deActive(@PathVariable("id") String requestId) {
         httpTrainingProgram.deActive(requestId);
         return "redirect:/trainingProgram/list";
+    }
+
+    @GetMapping("/getDetailTrainingProgram/{id}")
+    public String getDetailTraining(@PathVariable("id") String requestId, Model model) {
+        List<DResponseClass> dResponseClassList = httpTrainingProgram.getALlClassTraining(requestId);
+        List<DResponseSyllabus> dResponseSyllabusList = httpTrainingProgram.getALlSyllabusTraining(requestId);
+        model.addAttribute("classList",dResponseClassList );
+        model.addAttribute("sylabusList", dResponseSyllabusList );
+        return "view-trainingProgramDetail";
     }
 }

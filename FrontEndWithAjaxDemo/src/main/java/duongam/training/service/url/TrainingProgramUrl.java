@@ -17,6 +17,10 @@ public class TrainingProgramUrl {
 
     private static final String GET_BY_ID = "trainingProgram.getbyid";
     private static final String SEARCH_BY_NAME = "trainingProgram.searchbyname";
+
+    private static final String GET_ALL_SYLASBUS_TRAINING = "trainingProgram.getAllSylasbusTrainingProgram";
+
+    private static final String GET_ALL_CLASS_TRAINING = "trainingProgram.getAllClassTrainingProgram";
     private static final String DELETE_BY_ID = "trainingProgram.deletebyid";
     private static final String DUPLICATE_URL = "trainingProgram.duplicate";
 
@@ -25,6 +29,13 @@ public class TrainingProgramUrl {
 
     private static final String GET_ALL_SEARCH_TAG = "trainingProgram.getAllTagsSearch";
 
+    public String getGetAllSylasbusTraining(String nameTag) {
+        return String.format(urlProperties.getProperty(GET_ALL_SYLASBUS_TRAINING), nameTag);
+    }
+
+    public String getGetAllClassTraining(String nameTag) {
+        return String.format(urlProperties.getProperty(GET_ALL_CLASS_TRAINING), nameTag);
+    }
 
     public String getGetAllSearchTag() {
         return urlProperties.getProperty(GET_ALL_SEARCH_TAG);

@@ -5,6 +5,8 @@ import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
+import duongam.training.dto.response.fordetail.DResponseClass;
+import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.service.http.HttpBase;
 import duongam.training.service.url.ClassUrl;
@@ -52,6 +54,18 @@ public class HttpTrainingProgram {
         return httpBase.putStringToAPI(trainingProgramUrl.deActive(id), DReponseTrainingProgram.class);
     }
 
+    public List<DResponseClass> getALlClassTraining(String id) {
+        HttpBase<DResponseClass[], DResponseClass[]> httpBase = new HttpBase<>();
+        DResponseClass[] list = httpBase.getFromAPI(trainingProgramUrl.getGetAllClassTraining(id), DResponseClass[].class);
+        return Arrays.asList(list);
+    }
+
+    public List<DResponseSyllabus> getALlSyllabusTraining(String id) {
+        HttpBase<DResponseSyllabus[], DResponseSyllabus[]> httpBase = new HttpBase<>();
+        DResponseSyllabus[] list = httpBase.getFromAPI(trainingProgramUrl.getGetAllSylasbusTraining(id), DResponseSyllabus[].class);
+        return Arrays.asList(list);
+    }
+
     public DReponseTrainingProgram deleteById(String id) {
         HttpBase<DReponseTrainingProgram, DReponseTrainingProgram> httpBase = new HttpBase<>();
         return httpBase.deleteFromAPI(trainingProgramUrl.deleteById(id), DReponseTrainingProgram.class);
@@ -67,6 +81,7 @@ public class HttpTrainingProgram {
         HttpBase<DReponseTrainingProgram, DReponseTrainingProgram> httpBase = new HttpBase<>();
         return httpBase.getFromAPI(trainingProgramUrl.getById(id), DReponseTrainingProgram.class);
     }
+
 
 //
 //    public DReponseTrainingProgram getByName(String name) {

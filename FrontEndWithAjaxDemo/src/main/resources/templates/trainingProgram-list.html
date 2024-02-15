@@ -87,7 +87,7 @@
                         <tbody>
                         <tr th:each=" trainingProgram : ${list}">
                             <td th:text="${trainingProgram.id}"></td>
-                            <td th:text="${trainingProgram.programName}"></td>
+                            <td><a th:href="@{/trainingProgram/getDetailTrainingProgram/{id}(id=${trainingProgram.id})}" th:text="${trainingProgram.programName}"></a></td>
                             <td th:text="${trainingProgram.createdOn}"></td>
                             <td th:text="${trainingProgram.createdBy}"></td>
                             <td th:text="${trainingProgram.duration}"></td>

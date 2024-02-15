@@ -2,9 +2,12 @@ package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
+import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
+import com.duongam.demo.entities.Class;
 import com.duongam.demo.entities.Syllabus;
 import com.duongam.demo.entities.TrainingProgram;
+import com.duongam.demo.repositories.ClassRepository;
 import com.duongam.demo.repositories.TrainingProgramRepository;
 import com.duongam.demo.repositories.TrainingProgramSyllabusRepository;
 import com.duongam.demo.repositories.UserRepository;
@@ -29,11 +32,23 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Autowired
     private TrainingProgramSyllabusRepository trainingProgramSyllabusRepository;
 
+    @Autowired
+    private ClassRepository classRepository;
 
     @Autowired
     private UserRepository userRepository;
 
     private List<String> listSearch = new ArrayList<>();
+
+    @Override
+    @Transactional
+    public List<DResponseClass> getALlClassOfTrainingProgram(String code) {
+        List<Class> classList = classRepository.getALlClassByTrainingProgramCode(code);
+        return classList.stream()
+                .map(value -> {
+                    return new DResponseClass(value);
+                }).collect(Collectors.toList());
+    }
 
 
     @Override
@@ -207,9 +222,6 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                 .map(DReponseTrainingProgram::new)
                 .collect(Collectors.toList());
     }
-
-
-
 
     @Override
     @Transactional

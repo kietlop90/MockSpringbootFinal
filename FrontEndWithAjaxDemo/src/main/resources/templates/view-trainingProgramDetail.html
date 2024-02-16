@@ -4,13 +4,20 @@
     <title>Training Program</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Add Bootstrap JavaScript dependencies -->
     <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Add your custom JavaScript files -->
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script th:src="@{/js/syllabus-list.js}"></script>
 
+    <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Add custom CSS files -->
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
@@ -23,35 +30,38 @@
 <div id="header" th:insert="header.html"></div>
 <div id="body" class="body">
     <div id="menu" class="menu"></div>
-    <div class="content">
+    <div class="content container">
         <div class="row mb-2">
-            <div class="col title">
-                Training Program
+            <div class="col-12 title">
+                <h2>Training Program</h2>
             </div>
         </div>
         <div class="row">
-            <h3>Content</h3>
-            <div th:each="syllabus : ${sylabusList}">
-                <div>
-                    <p th:text="${syllabus.topicName}"></p>
-                    <p th:text="${syllabus.topicCode}"></p>
-                    <p th:text="${syllabus.createdDate}"></p>
-                    <p th:text="${syllabus.createdBy}"></p>
-                    <p th:text="${syllabus.status}"></p>
+            <div class="col-md-6">
+                <h3>Syllabus List</h3>
+                <div th:each="syllabus : ${sylabusList}" class="card mb-3">
+                    <div class="card-body">
+                        <a th:text="${syllabus.topicName}" th:href="@{/trainingProgram/getAllTrainingUnit/{code}(code=${syllabus.topicCode})}" class="card-title"></a>
+                        <p class="card-text"><strong>Topic Code:</strong> <span th:text="${syllabus.topicCode}"></span></p>
+                        <p class="card-text"><strong>Created Date:</strong> <span th:text="${syllabus.createdDate}"></span></p>
+                        <p class="card-text"><strong>Created By:</strong> <span th:text="${syllabus.createdBy}"></span></p>
+                        <p class="card-text"><strong>Status:</strong> <span th:text="${syllabus.status}"></span></p>
+                    </div>
                 </div>
             </div>
-
-            <h3>List of Class</h3>
-            <div th:each="classes : ${classList}">
-                <div>
-                    <p th:text="${classes.name}"></p>
-                    <p th:text="${classes.code}"></p>
-                    <p th:text="${classes.createdDate}"></p>
-                    <p th:text="${classes.createdBy}"></p>
-                    <p th:text="${classes.duration}"></p>
-                    <p th:text="${classes.status}"></p>
-                    <p th:text="${classes.location}"></p>
-                    <p th:text="${classes.fsu}"></p>
+            <div class="col-md-6">
+                <h3>Class List</h3>
+                <div th:each="classes : ${classList}" class="card mb-3">
+                    <div class="card-body">
+                        <p class="card-text"><strong>Name:</strong> <span th:text="${classes.name}"></span></p>
+                        <p class="card-text"><strong>Code:</strong> <span th:text="${classes.code}"></span></p>
+                        <p class="card-text"><strong>Created Date:</strong> <span th:text="${classes.createdDate}"></span></p>
+                        <p class="card-text"><strong>Created By:</strong> <span th:text="${classes.createdBy}"></span></p>
+                        <p class="card-text"><strong>Duration:</strong> <span th:text="${classes.duration}"></span></p>
+                        <p class="card-text"><strong>Status:</strong> <span th:text="${classes.status}"></span></p>
+                        <p class="card-text"><strong>Location:</strong> <span th:text="${classes.location}"></span></p>
+                        <p class="card-text"><strong>FSU:</strong> <span th:text="${classes.fsu}"></span></p>
+                    </div>
                 </div>
             </div>
         </div>

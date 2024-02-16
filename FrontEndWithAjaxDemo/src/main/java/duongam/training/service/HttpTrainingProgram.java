@@ -3,10 +3,8 @@ package duongam.training.service;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
+import duongam.training.dto.response.fordetail.*;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
-import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
-import duongam.training.dto.response.fordetail.DResponseClass;
-import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.service.http.HttpBase;
 import duongam.training.service.url.ClassUrl;
@@ -49,6 +47,11 @@ public class HttpTrainingProgram {
         return httpBase.putStringToAPI(trainingProgramUrl.Dduplicate(id), DReponseTrainingProgram.class);
     }
 
+    public DResponseSyllabus getOneSyllabus(String id) {
+        HttpBase<String, DResponseSyllabus> httpBase = new HttpBase<>();
+        return httpBase.putStringToAPI(trainingProgramUrl.getOneSyllabus(id), DResponseSyllabus.class);
+    }
+
     public DReponseTrainingProgram deActive(String id) {
         HttpBase<String, DReponseTrainingProgram> httpBase = new HttpBase<>();
         return httpBase.putStringToAPI(trainingProgramUrl.deActive(id), DReponseTrainingProgram.class);
@@ -57,6 +60,12 @@ public class HttpTrainingProgram {
     public List<DResponseClass> getALlClassTraining(String id) {
         HttpBase<DResponseClass[], DResponseClass[]> httpBase = new HttpBase<>();
         DResponseClass[] list = httpBase.getFromAPI(trainingProgramUrl.getGetAllClassTraining(id), DResponseClass[].class);
+        return Arrays.asList(list);
+    }
+
+    public List<DReponseTrainingUnit> getALlTrainingUnit(String id) {
+        HttpBase<DReponseTrainingUnit[], DReponseTrainingUnit[]> httpBase = new HttpBase<>();
+        DReponseTrainingUnit[] list = httpBase.getFromAPI(trainingProgramUrl.getGetAllTrainingUnit(id), DReponseTrainingUnit[].class);
         return Arrays.asList(list);
     }
 

@@ -25,15 +25,15 @@ $(document).ready(function () {
             label: "Training program",
             subMenu: [
                 {
-                    label: "View program",
-                    path: "",
+                    label: "List program",
+                    path: "/trainingProgram/list",
                 },
                 {
                     label: "Create program",
                     path: "",
                 },
             ],
-            icon: "icon/navigation-menu/biotech.png",
+            icon: "icon/navigation-menu/group.png"
         },
         {
             label: "Class",
@@ -150,3 +150,5 @@ function checkActiveItemMenu(pathGroup, pathName) {
     }
     return false;
 }
+
+

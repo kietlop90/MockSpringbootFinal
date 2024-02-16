@@ -12,10 +12,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 import javax.persistence.*;
+import javax.swing.text.DateFormatter;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,8 +62,6 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private EGender gender;
 
-
-
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
 
@@ -77,6 +77,17 @@ public class User implements Serializable {
     @Transient
     public String roleName() {
         return role.getName().toString();
+    }
+
+    @Transient
+    public String genderText(){
+        return gender.toString();
+    }
+
+    @Transient
+    public String dobText(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dob.format(formatter);
     }
 
     public User(CRequestUser cRequestUser) {

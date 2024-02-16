@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Training Program</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Training Program
+            </div>
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <form th:action="@{/trainingProgram/update}" method="post" th:object="${training}" onsubmit="return validateForm()">
+                <div class="mb-3">
+                    <input type="hidden" th:field="*{id}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Program name</label>
+                    <input th:field="*{programName}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div th:if="${#fields.hasErrors('programName')}" th:errors="*{programName}" class="text-danger"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Duration</label>
+                    <input th:field="*{duration}" type="text" class="form-control" id="exampleInputPassword1">
+                    <div th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger"></div>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <label for="status" class="form-label">Status</label>
+                    <select th:field="*{status}" class="form-control" id="status">
+                        <option value="active">Active</option>
+                        <option value="inactive">InActive</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="text-danger"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+</body>
+<script>
+    function validateForm() {
+        var durationInput = document.getElementById('exampleInputPassword1').value;
+
+        // Kiểm tra định dạng "số + dấu cách + days"
+        var regex = /^\d+\s+days$/;
+
+        if (!regex.test(durationInput)) {
+            alert('Định dạng của trường Duration không hợp lệ. Vui lòng nhập theo định dạng "số + dấu cách + days".');
+            return false; // Ngăn form submit nếu có lỗi
+        }
+
+        return true; // Cho phép submit form nếu không có lỗi
+    }
+</script>
+</html>

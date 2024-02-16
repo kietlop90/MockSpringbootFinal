@@ -1,5 +1,6 @@
 package com.duongam.demo.dto.response.fordetail;
 
+import com.duongam.demo.entities.Class;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 @Getter
 @Setter
 public class DResponseClass {
-    private Long id;
+    private String id;
     private String name;
     private String code;
     private Integer duration;
@@ -29,4 +30,15 @@ public class DResponseClass {
     private Timestamp modifiedDate;
     private String trainingProgramName;
     private ArrayList<String> listOfClass;
+
+    public DResponseClass(Class classes) {
+        this.name = classes.getName();
+        this.code = classes.getCode();
+        this.createdBy = classes.getCreatedBy();
+        this.fsu = classes.getFSU();
+        this.createdDate = classes.getCreatedDate();
+        this.duration = classes.getDuration();
+        this.status = classes.getStatus();
+        this.location = classes.getLocation();
+    }
 }

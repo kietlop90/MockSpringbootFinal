@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Training Program</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Training Program
+            </div>
+        </div>
+        <div class="row">
+            <h3>Content</h3>
+            <div th:each="syllabus : ${sylabusList}">
+                <div>
+                    <p th:text="${syllabus.topicName}"></p>
+                    <p th:text="${syllabus.topicCode}"></p>
+                    <p th:text="${syllabus.createdDate}"></p>
+                    <p th:text="${syllabus.createdBy}"></p>
+                    <p th:text="${syllabus.status}"></p>
+                </div>
+            </div>
+
+            <h3>List of Class</h3>
+            <div th:each="classes : ${classList}">
+                <div>
+                    <p th:text="${classes.name}"></p>
+                    <p th:text="${classes.code}"></p>
+                    <p th:text="${classes.createdDate}"></p>
+                    <p th:text="${classes.createdBy}"></p>
+                    <p th:text="${classes.duration}"></p>
+                    <p th:text="${classes.status}"></p>
+                    <p th:text="${classes.location}"></p>
+                    <p th:text="${classes.fsu}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.duongam.demo.service.template;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
+import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 
@@ -13,4 +14,12 @@ public interface IUserService {
 	DResponseUser create(RegisterModel registerModel);
 
 	List<LResponseUser> getAll();
+
+	void save(CRequestUser cUser);
+
+	void update(CRequestUser cUser);
+
+	DResponseUser findById(Long id);
+
+	void deleteById(Long id);
 }

@@ -14,31 +14,38 @@
     <link rel="stylesheet" th:href="@{/css/common.css}">
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 
 <body>
-    <div id="header" th:insert="header.html"></div>
-    <div id="body" class="body">
-        <form method="POST" th:object="${loginForm}" th:action="@{login}" class="form-signin">
-            <h2 class="form-heading">Log in</h2>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <img th:src="@{/img/login-background.png}" alt="logo" class="back-login">
+    <form id="form-login" method="POST" th:object="${loginForm}" th:action="@{login}" class="form-signin"
+          onsubmit="setUserName()">
+        <h2 class="form-heading">FPT Fresh Academy</h2>
+        <h2 class="form-heading">Training Management</h2>
+        <div id="contact">
+            <label>If you don’t have the account, please contact</label>
+            <a href="https://fsoft-academy.edu.vn/">FA.HCM@fsoft.com.vn</a>
+        </div>
 
-            <div class="form-group">
-                <input th:field="*{username}" type="text" value="aumauduong"
-                       class="form-control" placeholder="Username" autofocus/>
-                <input
-                        th:field="*{password}" type="password" value="aumauduong" class="form-control"
-                        placeholder="Password"/>
+        <div class="form-group">
+            <input id="username-input" th:field="*{username}" type="text" value="aumauduong"
+                   class="form-control mb-2" placeholder="Enter Email" autofocus/>
+            <input id="password-input" th:field="*{password}" type="password" value="aumauduong" class="form-control"
+                   placeholder="Password"/>
 
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Log
-                    In
-                </button>
-                <h4 class="text-center">
-                    <a th:href="@{register}">Create an account</a>
-                </h4>
-            </div>
-        </form>
-    </div>
-    <div id="footer" th:insert="footer.html"></div>
+            <h4 class="text-center">
+                <a th:href="@{register}">Create an account</a>
+            </h4>
+            <button class="btn w-100 justify-content-center btn-main" type="submit">
+                Sign In
+            </button>
+        </div>
+    </form>
+</div>
+<div id="footer" th:insert="footer.html"></div>
 </body>
 
 </html>

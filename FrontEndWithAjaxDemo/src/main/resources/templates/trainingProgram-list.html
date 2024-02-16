@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Training Program</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Training Program
+            </div>
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <div class="col-3">
+                <div class="input-group">
+                    <form th:action="@{/trainingProgram/search}" method="get" class="d-flex" >
+                        <span class="input-group-text">
+                            <img th:src="@{/assets/icon/document-manage/search.png}" alt="">
+                        </span>
+
+                        <input class="form-control" id="name" name="name" placeholder="Search by...">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-6 group-btn-right">
+                <button type="button" class="btn btn-orange">
+                    <img th:src="@{/assets/icon/document-manage/upload-white.png}" alt="">
+                    Import
+                </button>
+                <button type="button" class="btn btn-main">
+                    <img th:src="@{/assets/icon/action/add-white.png}" alt="">
+                    Add Syllabus
+                </button>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="group-filter d-flex" th:each="tag : ${listTagSearch}">
+            <span class="item-filter" th:text="${tag}">
+                <img class="btn-remove" th:src="@{/assets/icon/navigation-menu/menu/menu_open-white.png}" alt="">
+            </span>
+                        <a th:href="@{/trainingProgram/deleteTagSearch/{tag}(tag=${tag})}">X</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- table -->
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead class="header-table">
+                        <tr>
+                            <th class="sortable" data-sort="id">ID</th>
+                            <th class="sortable" data-sort="programName">Program name</th>
+                            <!-- Add the same for other headers -->
+                            <th>Created on</th>
+                            <th>Created by</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each=" trainingProgram : ${list}">
+                            <td th:text="${trainingProgram.id}"></td>
+                            <td><a th:href="@{/trainingProgram/getDetailTrainingProgram/{id}(id=${trainingProgram.id})}" th:text="${trainingProgram.programName}"></a></td>
+                            <td th:text="${trainingProgram.createdOn}"></td>
+                            <td th:text="${trainingProgram.createdBy}"></td>
+                            <td th:text="${trainingProgram.duration}"></td>
+                            <td th:text="${trainingProgram.status}"></td>
+                            <td><div class="dropdown">
+                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ...
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Training Material</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/trainingProgram/update/{id}(id=${trainingProgram.id})}">Edit Program</a>
+                                    </li>
+
+                                    <li><a th:href="@{/trainingProgram/duplicate/{id}(id=${trainingProgram.id})}"
+                                           onclick="if (!(confirm('Are you sure you want to duplicate this Content?'))) return false">
+                                        Duplicate Program
+                                    </a></li>
+                                    <li><a th:href="@{/trainingProgram/deActive/{id}(id=${trainingProgram.id})}"
+                                           onclick="if (!(confirm('Are you sure you want to duplicate this Content?'))) return false">
+                                        De-Active Program
+                                    </a></li>
+                                    <li>
+                                    <li>
+                                        <a th:href="@{/trainingProgram/delete/{id}(id=${trainingProgram.id})}"
+                                           onclick="if (!(confirm('Are you sure you want to delete this Content?'))) return false">
+                                            Delete Program
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Button trigger modal -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="group-pagging">
+                        <div class="item-pagging">
+                            <img th:src="@{/assets/icon/navigator/first_page.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/assets/icon/navigator/arrow_back_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging number active">1</div>
+                        <div class="item-pagging number">2</div>
+                        <div class="item-pagging number">3</div>
+                        <div class="item-pagging">
+                            <img th:src="@{/assets/icon/navigator/arrow_forward_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/assets/icon/navigator/last_page.png}" alt="">
+                        </div>
+                        <div class="item-per-page">
+                            Rows per page:
+                            <select class="form-control" name="item-per-page" id="item-per-page">
+                                <option value="">10</option>
+                                <option value="">20</option>
+                                <option value="">30</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+</body>
+<script>
+    $(document).ready(function () {
+        $('.sortable').click(function () {
+            var column = $(this).data('sort');
+            var order = $(this).hasClass('asc') ? 'desc' : 'asc';
+
+            // Send the sorting information to the server or implement sorting logic here
+
+            // For demonstration, you can console.log the sorting information
+            console.log('Sort Column:', column, 'Sort Order:', order);
+
+            // Toggle sorting classes
+            $('.sortable').removeClass('asc desc');
+            $(this).addClass(order);
+        });
+    });
+</script>
+<script>
+
+</script>
+</html>

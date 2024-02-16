@@ -25,6 +25,10 @@ $(document).ready(function(){
             }
         }
     }
+
+    // set info user
+    let userName = localStorage.getItem("user_name");
+    $("#user-name").html(userName);
 });
 
 let resultGetItemById;
@@ -74,4 +78,9 @@ function deleteItem(url, id){
             resultDeleteItem = result;
         }
     });
+}
+
+function logout() {
+    localStorage.removeItem("user-item");
+    window.location.replace("/user/login");
 }

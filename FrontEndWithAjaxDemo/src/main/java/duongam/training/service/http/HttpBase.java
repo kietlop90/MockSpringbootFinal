@@ -30,6 +30,21 @@ public class HttpBase<T, K> {
 		return results;
 	}
 
+	public K putStringToAPI(String url, Class<K> responseType) {
+		HttpEntity<T> requestEntity = new HttpEntity<T>(getHttpHeader());
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		ResponseEntity<K> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, responseType);
+
+		HttpStatus statusCode = response.getStatusCode();
+		K results = null;
+		if (statusCode == HttpStatus.OK) {
+			results = response.getBody();
+		}
+		return results;
+	}
+
 	public K deleteFromAPI(String url, Class<K> responseType) {
 		HttpEntity<T> requestEntity = new HttpEntity<T>(getHttpHeader());
 

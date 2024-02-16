@@ -1,0 +1,48 @@
+.back-login {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: calc(100vh - 132px);
+    width: 100%;
+}
+
+#body {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+#form-login {
+    background-color: white;
+    height: 70%;
+    padding: 20px;
+    margin: 20px;
+}
+
+.form-heading {
+    font-size: 20px;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+#contact {
+    font-size: 10px;
+    margin: 20px;
+}
+
+.form-group {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.form-group input {
+    font-size: 14px;
+}
+
+.form-group h4{
+    font-size: 10px;
+    display: flex;
+    justify-content: end;
+    font-style: italic;
+}

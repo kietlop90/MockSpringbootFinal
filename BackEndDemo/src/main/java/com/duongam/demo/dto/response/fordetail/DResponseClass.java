@@ -24,7 +24,7 @@ public class DResponseClass {
     private String fsu;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Long createdBy;
+    private String createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;
     private Timestamp modifiedDate;
@@ -34,7 +34,7 @@ public class DResponseClass {
     public DResponseClass(Class classes) {
         this.name = classes.getName();
         this.code = classes.getCode();
-        this.createdBy = classes.getCreatedBy();
+        this.createdBy = classes.getCreatedBy().getName();
         this.fsu = classes.getFSU();
         this.createdDate = classes.getCreatedDate();
         this.duration = classes.getDuration();

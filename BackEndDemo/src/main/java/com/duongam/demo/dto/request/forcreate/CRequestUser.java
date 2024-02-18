@@ -21,7 +21,5 @@ public class CRequestUser {
     private String phone;
     private String dob;
     private String gender;
-    private String status;
-    @Id
-    private Long id;
+    private Boolean status;
 }

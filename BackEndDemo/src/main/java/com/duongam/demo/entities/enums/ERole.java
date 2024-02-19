@@ -1,7 +1,7 @@
 package com.duongam.demo.entities.enums;
 
 public enum ERole {
-    CUSTOMER("CUSTOMER"), ADMIN("ADMIN"), SUPERADMIN("SUPERADMIN");
+    CUSTOMER("CUSTOMER"), ADMIN("ADMIN");
     private final String text;
 
     private ERole(final String text) {

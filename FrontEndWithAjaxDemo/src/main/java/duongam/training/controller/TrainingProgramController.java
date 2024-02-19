@@ -4,6 +4,7 @@ import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
+import duongam.training.dto.response.fordetail.DReponseTrainingUnit;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseClass;
@@ -93,6 +94,15 @@ public class TrainingProgramController {
     public String duplicate(@PathVariable("id") String requestId) {
         httpTrainingProgram.duplicate(requestId);
         return "redirect:/trainingProgram/list";
+    }
+
+    @GetMapping("/getAllTrainingUnit/{code}")
+    public String getAllTrainingUnit(@PathVariable String code, Model model) {
+        DResponseSyllabus dResponseSyllabusList = httpTrainingProgram.getOneSyllabus(code);
+        List<DReponseTrainingUnit> dReponseTrainingUnitList = httpTrainingProgram.getALlTrainingUnit(code);
+        model.addAttribute("sylabus", dResponseSyllabusList );
+        model.addAttribute("listTrainingUnit", dReponseTrainingUnitList);
+        return "view-trainingUnitAndContentDetail";
     }
 
     @GetMapping("/deActive/{id}")

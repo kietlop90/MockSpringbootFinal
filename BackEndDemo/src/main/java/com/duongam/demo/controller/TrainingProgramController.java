@@ -4,8 +4,10 @@ package com.duongam.demo.controller;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
+import com.duongam.demo.dto.response.fordetail.DReponseTrainingUnit;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
+import com.duongam.demo.entities.TrainingUnit;
 import com.duongam.demo.repositories.TrainingProgramRepository;
 import com.duongam.demo.service.template.ITrainingProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,18 @@ public class TrainingProgramController {
     public ResponseEntity<List<DReponseTrainingProgram>> listTrainingPrograms() {
         List<DReponseTrainingProgram> reponseTrainingProgramPage = trainingProgramService.listAllTrainingPrograms();
         return ResponseEntity.ok().body(reponseTrainingProgramPage);
+    }
+
+//    @GetMapping("/listAllTrainingUnit/{code}")
+//    public ResponseEntity<List<DReponseTrainingUnit>> listAllTrainingUnit(@PathVariable String code) {
+//        List<DReponseTrainingUnit> reponseTrainingUnits = trainingProgramService.getAllTrainingUnitBySyllabusCode(code);
+//        return ResponseEntity.ok().body(reponseTrainingUnits);
+//    }
+
+    @GetMapping("/getAllTrainingUnit/{code}")
+    public ResponseEntity<List<DReponseTrainingUnit>> getAllTrainingUnit(@PathVariable String code) {
+        List<DReponseTrainingUnit> reponseTrainingUnits = trainingProgramService.findALlUnit(code);
+        return ResponseEntity.ok().body(reponseTrainingUnits);
     }
 
 
@@ -99,6 +113,12 @@ public class TrainingProgramController {
     @GetMapping("/getAllSyllabus/{id}")
     public ResponseEntity<List<DResponseSyllabus>> getALlSyllabus(@PathVariable("id") String id) {
         List<DResponseSyllabus> dResponseSyllabusList = trainingProgramService.getAllSyllabusByTrainingProgramCode(id);
+        return ResponseEntity.ok().body(dResponseSyllabusList);
+    }
+
+    @GetMapping("/getOneSyllabus/{id}")
+    public ResponseEntity<DResponseSyllabus> getOneSyllabus(@PathVariable("id") String id) {
+        DResponseSyllabus dResponseSyllabusList = trainingProgramService.getSylabusByCode(id);
         return ResponseEntity.ok().body(dResponseSyllabusList);
     }
 

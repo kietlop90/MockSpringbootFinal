@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Training Program</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content container">
+        <div class="row mb-2">
+            <div class="col-12">
+                <h2 class="text-center">Training Program</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div th:object="${sylabus}" class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Syllabus Information</h5>
+                        <p class="card-text"><strong>Topic Name:</strong> <span th:text="${sylabus.topicName}"></span></p>
+                        <p class="card-text"><strong>Topic Code:</strong> <span th:text="${sylabus.topicCode}"></span></p>
+                        <p class="card-text"><strong>Created Date:</strong> <span th:text="${sylabus.createdDate}"></span></p>
+                        <p class="card-text"><strong>Created By:</strong> <span th:text="${sylabus.createdBy}"></span></p>
+                        <p class="card-text"><strong>Status:</strong> <span th:text="${sylabus.status}"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <h3>Training Content</h3>
+                <div th:each="trainingUnit, status : ${listTrainingUnit}">
+                    <div>
+                        <!-- Display dayNumber only if it's the first element or if it has changed -->
+                        <p th:if="${status.index == 0 or #strings.equals(trainingUnit.dayNumber, listTrainingUnit[status.index - 1].dayNumber) == false}" class="font-weight-bold" style="margin-top: 10px;" th:text="${trainingUnit.dayNumber}"></p>
+                        <p class="font-weight-bold" th:text="${trainingUnit.name}"></p>
+
+                        <div th:each="trainingContent : ${trainingUnit.DReponseTrainingContentList}">
+                            <div class="card">
+                                <div class="card-body row">
+                                    <div class="col-md-3">
+                                        <p class="card-text"><strong>Format:</strong> <span th:text="${trainingContent.trainingFormat}"></span></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="card-text"><strong>Delivery Type:</strong> <span th:text="${trainingContent.deliveryType}"></span></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="card-text"><strong>Duration:</strong> <span th:text="${trainingContent.duration}"></span></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="card-text"><strong>Note:</strong> <span th:text="${trainingContent.note}"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer" th:insert="footer.html"></div>
+</body>
+</html>

@@ -27,7 +27,20 @@ public class TrainingProgramUrl {
     private static final String DELETE_SEARCH_TAG = "trainingProgram.deleteSearchTag";
     private static final String DE_ACTIVE_URL = "trainingProgram.deactive";
 
+    private static final String GET_ALL_TRAINING_UNIT_AND_CONTENT = "trainingProgram.getALlTrainingUnitAndContent";
+
     private static final String GET_ALL_SEARCH_TAG = "trainingProgram.getAllTagsSearch";
+
+    private static final String GET_ONE_SYLLABUS = "trainingProgram.getOneSyllabus";
+
+    public String getOneSyllabus(String code) {
+        return String.format(urlProperties.getProperty(GET_ONE_SYLLABUS), code);
+    }
+
+
+    public String getGetAllTrainingUnit(String code) {
+        return String.format(urlProperties.getProperty(GET_ALL_TRAINING_UNIT_AND_CONTENT), code);
+    }
 
     public String getGetAllSylasbusTraining(String nameTag) {
         return String.format(urlProperties.getProperty(GET_ALL_SYLASBUS_TRAINING), nameTag);

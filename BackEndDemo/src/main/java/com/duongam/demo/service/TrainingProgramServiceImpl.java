@@ -1,26 +1,17 @@
 package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
-import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
-import com.duongam.demo.dto.response.fordetail.DResponseClass;
-import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
+import com.duongam.demo.dto.response.fordetail.*;
+import com.duongam.demo.entities.*;
 import com.duongam.demo.entities.Class;
-import com.duongam.demo.entities.Syllabus;
-import com.duongam.demo.entities.TrainingProgram;
-import com.duongam.demo.repositories.ClassRepository;
-import com.duongam.demo.repositories.TrainingProgramRepository;
-import com.duongam.demo.repositories.TrainingProgramSyllabusRepository;
-import com.duongam.demo.repositories.UserRepository;
+import com.duongam.demo.repositories.*;
 import com.duongam.demo.service.template.ITrainingProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +29,27 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private SyllabusRepository syllabusRepository;
+
+    @Autowired
+    private TrainingUnitRepository trainingUnitRepository;
+
+    @Autowired
+    private TrainingContentRepository trainingContentRepository;
+
     private List<String> listSearch = new ArrayList<>();
+
+    @Override
+    @Transactional
+    public DResponseSyllabus getSylabusByCode(String code) {
+        Syllabus syllabus = syllabusRepository.findByTopicCode(code).orElse(null);
+        if (syllabus != null) {
+            return new DResponseSyllabus(syllabus);
+        }
+        return null;
+    }
+
 
     @Override
     @Transactional
@@ -78,8 +89,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         List<TrainingProgram> trainingProgramList = trainingProgramRepository.getAllBy();
         return trainingProgramList.stream()
                 .map(value -> {
-                    DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(value);
-                    return reponseTrainingProgram;
+                    return new DReponseTrainingProgram(value);
                 }).collect(Collectors.toList());
     }
 
@@ -139,9 +149,32 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Override
     @Transactional
     public DReponseTrainingProgram findTrainingProgrammById(String id) {
+
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
-        DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(trainingProgram);
-        return reponseTrainingProgram;
+        return new DReponseTrainingProgram(trainingProgram);
+    }
+
+    @Override
+    public List<DReponseTrainingUnit> findALlUnit(String code) {
+        List<TrainingUnit> trainingUnitList = trainingUnitRepository.findALlTrainingUnitBySyllabusCode(code);
+        return trainingUnitList.stream().map(value -> {
+            DReponseTrainingUnit dReponseTrainingUnit = new DReponseTrainingUnit();
+            dReponseTrainingUnit.setDayNumber("Days " + value.getDayNumber());
+            dReponseTrainingUnit.setName(value.getName());
+
+            List<TrainingContent> trainingContentList = trainingContentRepository.findALlTrainingContentByTrainingUnitId(value.getUnitCode());
+            List<DReponseTrainingContent> dReponseTrainingContentList = trainingContentList.stream().map(value1 -> {
+                DReponseTrainingContent dReponseTrainingContent = new DReponseTrainingContent();
+                dReponseTrainingContent.setTrainingFormat(value1.getTrainingFormat());
+                dReponseTrainingContent.setDuration(value1.getDuration() + " mins");
+                dReponseTrainingContent.setNote(value1.getNote());
+                dReponseTrainingContent.setDeliveryType(value1.getDeliveryType());
+                return dReponseTrainingContent;
+            }).collect(Collectors.toList());
+
+            dReponseTrainingUnit.setDReponseTrainingContentList(dReponseTrainingContentList);
+            return dReponseTrainingUnit;
+        }).collect(Collectors.toList());
     }
 
 

@@ -13,13 +13,14 @@ import java.time.LocalDate;
 @Setter
 public class RegisterModel {
 	private String password;
-	private LocalDate createdDate;
-	private LocalDate modifiedDate;
 	private String roleId;
 	private String name;
+	private String username;
 	private String email;
 	private String phone;
 	private String dob;
 	private String gender;
-	private String status;
+	private Boolean status;
+	private String createdBy;
+	private LocalDate createdDate;
 }

@@ -19,4 +19,6 @@ public class CRequestUser {
     private String dob;
     private String gender;
     private Boolean status;
+    private String createdBy;
+    private LocalDate createdDate;
 }

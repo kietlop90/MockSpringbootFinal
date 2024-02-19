@@ -78,6 +78,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Full name</th>
+                            <th>User name</th>
                             <th>Email</th>
                             <th>Day Of Birth</th>
                             <th>Gender</th>
@@ -90,6 +91,7 @@
                             <tr th:id='${"tr"+ item.id}'>
                                 <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
                                 <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
+                                <td th:id='${"username"+ item.id}' th:text="${item.username}"></td>
                                 <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
                                 <td th:id="${'status' + item.id}">
@@ -202,48 +204,57 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <label for="user-type-input"><b>Name</b></label>
+                        <label for="name-input"><b>Name</b></label>
                     </div>
                     <div class="col-9">
-                        <input type="text" class="form-control" placeholder="User name"
+                        <input type="text" id="name-input" class="form-control" placeholder="Name"
                                autofocus required/>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <label for="user-type-input"><b>Email address</b></label>
+                        <label for="user-name-input"><b>User Name</b></label>
                     </div>
                     <div class="col-9">
-                        <input type="text" class="form-control" placeholder="Email address"
+                        <input type="text" id="user-name-input" class="form-control" placeholder="User name"
+                               required/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="email-address-input"><b>Email address</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" id="email-address-input" class="form-control" placeholder="Email address"
                                autofocus required pattern=".*\S.*"/>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <label for="user-type-input"><b>Phone</b></label>
+                        <label for="phone-input"><b>Phone</b></label>
                     </div>
                     <div class="col-9">
-                        <input type="text" class="form-control" placeholder="Phone number"
+                        <input type="text" id="phone-input" class="form-control" placeholder="Phone number"
                                autofocus required/>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <label for="user-type-input"><b>Date of birth</b></label>
+                        <label for="dob-input"><b>Date of birth</b></label>
                     </div>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="date" class="form-control" required>
+                            <input type="date" id="dob-input" class="form-control" required>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <label for="user-type-input"><b>Gender</b></label>
+                        <label for="gender-input"><b>Gender</b></label>
                     </div>
                     <div class="col-9">
                         <label>
-                            <input type="radio" name="gender" value="MALE" style="accent-color: #0a3622" checked>
+                            <input type="radio" id="gender-input" name="gender" value="MALE" style="accent-color: #0a3622" checked>
                             Male
                         </label>
                         <label>

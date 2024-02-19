@@ -4,9 +4,10 @@ $(document).ready(function(){
     })
     $("#btn-add-user").on("click", function () {
         let roleId = $("#user-type-input").val();
-        let name = $("#user-name-input").val(); // ten that
+        let name = $("#name-input").val(); // ten that
+        let username = $("#user-name-input").val(); // ten that
         let email = $("#email-address-input").val();
-        let password = $("#password-input").val();
+        // let password = $("#password-input").val();
         let phone = $("#phone-input").val();
         let dob = $("#dob-input").val();
         let gender = $("#gender-input").val();
@@ -14,7 +15,7 @@ $(document).ready(function(){
             roleId: "ADMIN",
             name: name,
             username: email,
-            password: password,
+            password: '123456789',
             email: email,
             phone: phone,
             dob: dob,

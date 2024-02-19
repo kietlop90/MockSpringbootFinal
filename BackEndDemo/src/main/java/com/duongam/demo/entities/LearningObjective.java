@@ -16,10 +16,10 @@ import java.util.List;
 
 public class LearningObjective {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "learningObjective_id")
+    @GeneratedValue
     private Long id;
 
+    @Column(name = "learningObjective_code")
     private String code;
 
     private String name;

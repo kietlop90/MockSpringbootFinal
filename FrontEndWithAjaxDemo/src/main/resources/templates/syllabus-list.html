@@ -59,10 +59,10 @@
                     <img th:src="@{/icon/document-manage/upload-white.png}" alt="">
                     Import
                 </button>
-                <button type="button" class="btn btn-main">
+                <a th:href="@{/syllabus/create}" class="btn btn-main">
                     <img th:src="@{/icon/action/add-white.png}" alt="">
                     Add Syllabus
-                </button>
+                </a>
             </div>
 
             <div class="row mb-2">
@@ -108,8 +108,14 @@
                         </thead>
                         <tbody>
                         <tr th:each=" syllabus : ${syllabusList}">
-                            <td style="font-weight: bold" th:text="${syllabus.topicName}"></td>
-                            <td th:text="${syllabus.topicCode}"></td>
+                            <td style="font-weight: bold" >
+                                <a style="text-decoration: none; color: black"
+                                   th:href="@{/syllabus/details}" th:text="${syllabus.topicName}"></a>
+                            </td>
+                            <td>
+                                <a style="text-decoration: none; color: black"
+                                   th:href="@{/syllabus/details}" th:text="${syllabus.topicCode}"></a>
+                            </td>
                             <td th:text="${syllabus.getFormatCreatedDate()}"></td>
                             <td th:text="${syllabus.createdBy}"></td>
                             <td>john@example.com</td>

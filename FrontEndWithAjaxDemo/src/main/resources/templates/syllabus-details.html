@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Syllabus</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-details.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus-details.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
+
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div id="create-content" class="content" style="padding-left: 20px">
+        <div class="row mb-2 title pb-3">
+            <div class=" col-2 head-syllabus">
+                Syllabus
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class=" col-11">
+                    <div class="col-6">
+                        <b class="head-syllabus">C# Programming Language</b>
+                        <span style="font-size: 12px" class="status-active">Active</span>
+                    </div>
+                </div>
+                <div class="col-1 d-flex justify-content-end">
+                    <button class="btn-secondary"
+                            style="background-color: white; border: 0 " type="button"
+                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img th:src="@{/icon/action/more_horizontal.png}" alt="First Page">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="dropdown-item" style="color: #2D3748;">Manage</li>
+                        <li><a class="dropdown-item" style="color: #2D3748" href="#">
+                            <img th:src="@{/icon/document-manage/create.png}" alt="First Page">
+                            Edit syllabus</a>
+                        </li>
+                        <li><a class="dropdown-item" style="color: #2D3748" href="#">
+                            <img th:src="@{/icon/document-manage/copy.png}" alt="First Page">
+                            Duplicate syllabus</a></li>
+                        <li><a class="dropdown-item" style="color: #2D3748" href="#">
+                            <img th:src="@{/icon/action/visibility_off.png}" alt="First Page">
+                            De-activate syllabus</a></li>
+                        <li><a class="dropdown-item" style="color: #8B8B8B;" href="#">
+                            <img style="width: 19px; padding-left: 4px; margin-right: 5px"
+                                 th:src="@{/icon/document-manage/delete-gray.png}" alt="First Page">
+                            Delete syllabus</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div style="font-size: 15px" class="col-5 row pt-2">
+                    <div class=" col-1">
+                        <p>NPL</p>
+                    </div>
+                    <div class="col-1">
+                        <span>v1.0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        <form th:method="post">-->
+        <div style="color: #2D3748;" class="row mb-3">
+            <div class="mb-2 pt-3 d-flex">
+                <h4>8</h4>
+                <span style="align-self: center; margin: 0 5px">days</span>
+                <span style="font-style: italic;align-self: center"> (68 hours)</span>
+            </div>
+            <div>
+                Modified on 23/07/2022 by <b>Warrior Tran</b>
+            </div>
+        </div>
+
+
+        <!--        Tag body-->
+        <div class="row">
+            <div class="col-12" id="body-content">
+                <!--        Tabs-->
+                <div class="row">
+                    <div class="col-12" style="border-bottom: 2px solid #2d3748 ">
+                        <div class="group-tab">
+                            <div class="tab active" onclick="transform()" id="tab-general">
+                                General
+                            </div>
+                            <div class="tab" onclick="transform()" id="tab-outline">
+                                Outline
+                            </div>
+                            <div class="tab" onclick="transform()" id="tab-other">
+                                Others
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--        Tab Syllabus body-->
+                <div class="row tab-body active" id="tab-body-1">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div class="col-12 d-flex" style="margin-bottom: 50px">
+                                    <div class="col-5 p-3 d-flex flex-column justify-content-center" style="border: 2px solid #2D3748;
+                                                    border-radius: 20px;">
+                                        <div class="row mb-3">
+                                            <div class="col-5 ">
+                                                <img style="margin-right: 9px" th:src="@{/icon/other/star.png}" alt="">
+                                                <b>Level</b>
+                                            </div>
+                                            <div style="padding-top: 3px" class="col-7">
+                                                All Levels
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-5 ">
+                                                <img style="margin-right: 9px" th:src="@{/icon/other/double-person.png}"
+                                                     alt="">
+                                                <b>Attendee number</b>
+                                            </div>
+                                            <div style="padding-top: 3px" class="col-7">
+                                                20
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-5 ">
+                                                <img style="margin-right: 9px"
+                                                     th:src="@{/icon/indicator/verified-bluebold.png}" alt="">
+                                                <b>Output standard</b>
+                                            </div>
+                                            <div style="padding-top: 3px" class="col-7">
+                                                <span style="font-size: 12px" class="status-active">H4SD</span>
+                                                <span style="font-size: 12px" class="status-active">K6SD</span>
+                                                <span style="font-size: 12px" class="status-active">H6SD</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-7 p-3" style="border: 2px solid #2D3748;
+                                                    border-radius: 20px;
+                                                        margin-left: 10px">
+                                        <div class="mb-3">
+                                            <img style="margin-right: 9px"
+                                                 th:src="@{/icon/navigation-menu/setting-bluebold.png}" alt="">
+                                            <b>Technical Requirement(s) </b>
+                                        </div>
+                                        <div>
+                                            <p>Trainees’ PCs need to have following software installed & run without any
+                                                issues:</p>
+                                            <ul>
+                                                <li>Microsoft SQL Server 2005 Express</li>
+                                                <li>Microsoft Visual Studio 2017</li>
+                                                <li>Microsoft Office 2007 (Visio, Word, PowerPoint)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex mb-3">
+                                        <img style="margin-right: 10px" th:src="@{/icon/indicator/filter-bluebold.png}"
+                                             alt="">
+                                        <span><b>Course objectives</b></span>
+                                    </div>
+                                    <div>
+                                        <p>This topic is to introduce about C# programming language knowledge; adapt
+                                            trainees with skills, lessons and practices which is specifically used in
+                                            the Fsoft projects.</p>
+                                        <p>In details, after completing the topic, trainees will:</p>
+                                        <ul class="custom-list">
+                                            <li>Understand basic concepts of high-level programming languages (keyword,
+                                                statement, operator, control-of-flow)
+                                            </li>
+                                            <li>Understand and distinguish two concepts: class (Class) and object
+                                                (Object)
+                                            </li>
+                                            <li>Understand and apply object-oriented programming knowledge to resolve
+                                                simple problems (Inheritance, Encapsulation, Abstraction, Polymorphism)
+                                            </li>
+                                            <li>Working with some of the existing data structures in C# (List,
+                                                ArrayList, HashTable, Dictionary)
+                                            </li>
+                                            <li>Know how to control program errors (use try ... catch..finally, throw,
+                                                throws)
+                                            </li>
+                                            <li>Be able to working with concurrency and multi-thread in C#
+                                            </li>
+                                            <li>Be able to working with common classes in ADO.net: SqlConnection,
+                                                SqlCommand, SqlParameter, SqlDataAdapter, SqlDataReader
+                                            </li>
+                                            <li>Be able to manipulate SQL data from Window Form Application via 4
+                                                basic commands: Add, Update, Delete, Select
+                                            </li>
+                                            <li>Know how to design UI screen in Window Form Application
+                                            </li>
+                                            <li>Know how to use approciate controls for each field/data type: Textbox,
+                                                Label, Combobox, Radio, DateTimePicker, NumericUpDown, RichTextBox
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row tab-body" id="tab-body-2">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div style="border-bottom: 15px solid #2D3748; border-radius: 10px">
+                                    <div class="accordion">
+                                        <div class="accordion-item">
+                                            <div class="accordion-toggle btn-main">
+                                                <span>Day 1</span>
+                                            </div>
+
+                                            <div class="accordion-content">
+                                                <div class="row" style="border-bottom: 1px solid black">
+                                                    <div class="col-1 " style="padding-top: 20px; padding-bottom: 20px">
+                                                        Unit 5
+                                                    </div>
+                                                    <div class="col-11" style="padding-top: 20px;padding-bottom: 20px">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                                <span style="margin-right: 5px">.NET Introduction</span>
+                                                                <p style="font-size: 12px;" class="fst-italic">7hrs</p>
+                                                            </div>
+                                                            <div>
+                                                                <img th:src="@{/icon/action/arrow-circle-blue.png}"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row info-content">
+                                                            <div class="col-7 ">
+                                                                .Net Introduction
+                                                            </div>
+                                                            <div class="col-1">HS4D</div>
+                                                            <div class="col-1">30mins</div>
+                                                            <div class="col-1">Online</div>
+                                                            <div class="col-1">
+                                                                <img th:src="@{/icon/delivery-types/concept/lecture.png}"
+                                                                     alt="">
+                                                            </div>
+                                                            <div class="col-1" style="cursor: pointer">
+                                                                <img data-bs-target="#training-materials"
+                                                                     data-bs-toggle="modal"
+                                                                     th:src="@{/icon/navigation-menu/folder.png}"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="add-unit"
+                                                     style="padding: 10px 0; border-bottom: 1px solid black; display: none">
+                                                    <div class="col-1">
+                                                        Unit++
+                                                    </div>
+                                                    <div class=" col-11 ">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="d-flex">
+                                                                <input style="border-radius: 5px; padding: 2px 0"
+                                                                       type="text" placeholder="Unit name"/>
+                                                                <button style="margin: 0 10px" type="button"
+                                                                        class="btn btn-main"> Create
+                                                                </button>
+                                                            </div>
+                                                            <div>
+                                                                <img th:src="@{/icon/action/arrow-circle-blue.png}"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <div class="accordion-toggle btn-main">
+                                                <span>Day 2</span>
+                                            </div>
+                                            <div class="accordion-content">
+                                                <div>
+                                                    asdsad
+                                                    adasdj
+                                                    123124
+                                                    as;djaposdjsa
+                                                    asdsad
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <div class="accordion-toggle btn-main">
+                                                <span>Day 3</span>
+                                            </div>
+                                            <div class="accordion-content">
+                                                <!-- Nội dung của Day 3 -->
+                                            </div>
+                                        </div>
+                                        <!-- Thêm các accordion-item khác tại đây nếu cần -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row tab-body" id="tab-body-3">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div class="row mb-3">
+                                    <div class="col-5" style="text-align: center; ">
+                                        <div style="background-color: #2D3748; color: white;
+                                           border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                                            Time allocation
+                                        </div>
+
+                                        <div class="d-flex" style="border: 1px solid #2d3748;
+                                                    border-bottom-left-radius: 20px;
+                                                     border-bottom-right-radius: 20px;
+                                                     padding: 28px 0">
+                                            <div class="col-6" style="padding-left: 10px;text-align: center">
+                                                <canvas id="myChart1"></canvas>
+                                            </div>
+                                            <div class="col-6">
+                                                <ul class=" chart-legend">
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color assignment"></span>Assignment/Lab
+                                                        (54%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color concept"></span>Concept/Lecture
+                                                        (29%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color guide"></span>Guide/Review
+                                                        (9%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color test"></span>Test/Quiz (1%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color exam"></span>Exam (6%)
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-7 ">
+                                        <div style="background-color: #2D3748; color: white; text-align: center;
+                                           border-top-left-radius: 50px; border-top-right-radius: 50px;">
+                                            Assessment scheme
+                                        </div>
+                                        <div style="border: 1px solid #2d3748;
+                                                    border-bottom-left-radius: 20px;
+                                                     border-bottom-right-radius: 20px;">
+                                            <div class="p-4">
+                                                <div style="margin: 0 70px" class="mb-3">
+                                                    <div class=" p-3"
+                                                         style="border: 1px solid black;border-radius: 10px">
+                                                        <div class="row mb-3">
+                                                            <div class="col-7">
+                                                                <b>Quiz</b>
+                                                                <span>15%</span>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <b>Assignment </b>
+                                                                <span>15%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-7">
+                                                                <b>Final</b>
+                                                                <span>70%</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="margin: 0 70px">
+                                                    <div class=" p-3"
+                                                         style="border: 1px solid black;border-radius: 10px">
+                                                        <div class="row mb-3">
+                                                            <div class="col-7">
+                                                                <b>Passing criteria</b>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-7">
+                                                                <b>GPA * </b>
+                                                                <span>70%</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="p-1" style="background-color: #2D3748; color: white; text-align: center;
+                                           border-top-left-radius: 50px; border-top-right-radius: 50px;">
+                                        Training delivery principle
+                                    </div>
+                                    <div style="border: 1px solid #2d3748;  border-bottom-left-radius: 20px;
+                                                     border-bottom-right-radius: 20px;">
+                                        <div class="p-4">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <img src="/icon/indicator/verified_user.png" alt="">
+                                                    <b>Training</b>
+                                                </div>
+                                                <div class="col-10">
+                                                    <ul>
+                                                        <li>Trainee who actively complete online learning according to MOOC
+                                                            links provided
+                                                        </li>
+                                                        <li>At the end of the day, students complete Daily Quiz for 30
+                                                            minutes
+                                                        </li>
+                                                        <li>Trainer/Mentor supports answering questions, guiding exercises
+                                                            1.5-2.0h/day
+                                                        </li>
+                                                        <li>Trainer conduct the workshops</li>
+                                                        <li>Trainees complete Assignments and Labs</li>
+                                                        <li>Trainees have 1 final test in 4 hours (1 hour theory + 3 hours
+                                                            of practice)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <img src="/icon/indicator/verified_user.png" alt="">
+                                                    <b>Re-test</b>
+                                                </div>
+                                                <div class="col-10">
+                                                    <ul>
+                                                        <li>Only allow each student to retake the test up to 2 times</li>
+                                                        <li>Re-exam the same structure as the Final Test</li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <img src="/icon/indicator/verified_user.png" alt="">
+                                                    <b>Marking</b>
+                                                </div>
+                                                <div class="col-10">
+                                                    <ul>
+                                                        <li>Mentor review students on 2 Assignments</li>
+                                                        <li>Mentor marks the 3 Quizzes and Final Exam Theory</li>
+                                                        <li>Trainer marks the Final Exam Practice</li>
+                                                        <li>
+                                                            <ul>If the trainees have to retake test, the score will be calculated:
+                                                                <li>The score >=6, the score will be 6</li>
+                                                                <li>The score <6, the score will be that score</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <img src="/icon/indicator/verified_user.png" alt="">
+                                                    <b>Waiver Criteria</b>
+                                                </div>
+                                                <div class="col-10">
+                                                    <ul>
+                                                        <li>Students pass the quick test</li>
+                                                        <li>Trainer Audit: rank B</li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <img src="/icon/indicator/verified_user.png" alt="">
+                                                    <b>Others</b>
+                                                </div>
+                                                <div class="col-10">
+                                                    <ul>
+                                                        <p>Trainers can allow students to complete homework and submit the next day</p>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="chart" class="col-2" style="display: none ;margin-top: 28.6px;">
+                <div>
+                    <div class="tab-Chart w-100" style="background-color: #2d3748; padding: 10px;
+                    border-bottom: #2d3748; border-left: #2d3748; border-right: #2d3748">
+                        Time allocation
+                    </div>
+                </div>
+                <div class="w-100" style="border: 1px solid #2d3748; padding: 10%;
+                                    border-bottom-left-radius: 20px;
+                                    border-bottom-right-radius: 20px">
+                    <div class="mb-3">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                    <ul class="chart-legend">
+                        <li class="chart-legend-item"><span class="chart-legend-color assignment"></span>Assignment/Lab
+                            (54%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color concept"></span>Concept/Lecture
+                            (29%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color guide"></span>Guide/Review
+                            (9%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color test"></span>Test/Quiz (1%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color exam"></span>Exam (6%)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <button type="submit" style="display: none"></button>
+        <!--        </form>-->
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+
+<!--training-materials modal-->
+<div class="modal" id="training-materials">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 115%">
+            <!-- Modal Header -->
+            <div class="d-flex " style="background-color: #2D3748; justify-content: space-between;
+                    padding: 5px 5px">
+                <h4 class="modal-title" style="font-size: 15px; color: white;margin-left: 20px">Day 1</h4>
+                <button type="button" class="btn-main" style="border: 0" data-bs-dismiss="modal">
+                    <img th:src="@{/icon/other/close-modal.png}" alt=""></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="margin: 0 10px">
+                <div class="row">
+                    <div class="col-2">
+                        Unit 5
+                    </div>
+                    <div class="col-10">
+                        .NET Introduction
+                    </div>
+                </div>
+                <div class="row " style="background-color:  #DFDEDE; font-size: 14px; border-radius: 5px;
+                        padding: 10px 0">
+
+                    <div> .NET Introduction</div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="#">.NET Introduction overview.pdf</a>
+                        </div>
+                        <div>
+                            <span style="margin-right: 3px;">by Joseph on 12/03/2012</span>
+                            <img style="width: 15px; margin-right: 3px"
+                                 th:src="@{/icon/document-manage/pencil-blue-test.png}" alt="">
+                            <img style="width: 14px" th:src="@{/icon/document-manage/delete-bluebold.png}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="#">.NET Introduction pattern in lorem.pdf</a>
+                        </div>
+
+                        <div>
+                            <span style="margin-right: 3px;">by Warrior Tran on 02/08/2022</span>
+                            <img style="width: 15px; margin-right: 3px"
+                                 th:src="@{/icon/document-manage/pencil-blue-test.png}" alt="">
+                            <img style="width: 14px" th:src="@{/icon/document-manage/delete-bluebold.png}" alt="">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer d-flex justify-content-center">
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <button class="btn btn-main me-2">Upload new</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const accordionContent = button.nextElementSibling;
+
+            button.classList.toggle('active');
+
+            if (button.classList.contains('active')) {
+                accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+            } else {
+                accordionContent.style.maxHeight = 0;
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab');
+        const content = document.getElementById('body-content');
+        const chart = document.getElementById('chart');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+
+                tabs.forEach(innerTab => innerTab.classList.remove('active'));
+                tab.classList.add('active');
+                switch (tab.id) {
+                    case 'tab-general':
+                    case 'tab-other':
+                        content.className = 'col-12';
+                        chart.style.display = 'none';
+                        break;
+                    case 'tab-outline':
+                        content.className = 'col-10';
+                        chart.style.display = 'block';
+                        break;
+                    default:
+                        content.className = 'col-12';
+                        chart.style.display = 'none';
+                        break;
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+
+</html>

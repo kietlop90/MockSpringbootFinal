@@ -18,6 +18,7 @@ public interface TrainingProgramRepository extends JpaRepository<TrainingProgram
 
     Optional<TrainingProgram> findByCode(String code);
 
+
     @Query("SELECT u FROM TrainingProgram u WHERE u.name LIKE %:searchTerm% OR u.createdBy.name LIKE %:searchTerm% or u.code like %:searchTerm%" )
     List<TrainingProgram> findByNameLike1tag(@Param("searchTerm") String searchTerm);
 
@@ -48,6 +49,7 @@ public interface TrainingProgramRepository extends JpaRepository<TrainingProgram
             @Param("searchTerm2") String searchTerm2,
             @Param("searchTerm3") String searchTerm3,
             @Param("searchTerm4") Integer searchTerm4);
+
 
 
 

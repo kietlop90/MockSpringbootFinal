@@ -10,7 +10,6 @@ public class UserUrl {
     @Autowired
     private UrlProperties urlProperties;
     private static final String LOGIN = "user.login";
-    private static final String REGISTER = "user.register";
     private static final String GET_ALL = "user.getall";
     private static final String ADD = "user.add";
     private static final String UPDATE = "user.update";
@@ -20,10 +19,6 @@ public class UserUrl {
 
     public String login() {
         return urlProperties.getProperty(LOGIN);
-    }
-
-    public String register() {
-        return urlProperties.getProperty(REGISTER);
     }
 
     public String getAll() {

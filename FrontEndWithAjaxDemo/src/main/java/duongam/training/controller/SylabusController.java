@@ -48,4 +48,10 @@ public class SylabusController {
 
         return "syllabus-create";
     }
+
+    @GetMapping("/details")
+    public String syllabusDetails(Model model) {
+
+        return "syllabus-details";
+    }
 }

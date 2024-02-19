@@ -1,0 +1,13 @@
+ul li{
+    padding-bottom: 10px;
+}
+
+ul.custom-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul.custom-list li::before {
+    content: "- ";
+    padding-right: 0.5em;
+}

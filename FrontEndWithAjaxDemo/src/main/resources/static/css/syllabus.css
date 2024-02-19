@@ -1,4 +1,4 @@
-#head-syllabus{
+.head-syllabus{
   color: #2D3748;
     font-family: Inter;
     letter-spacing: 5px;
@@ -10,12 +10,139 @@
     padding-bottom: 15px ;
 }
 
+
 .group-tab-body {
   background-color: white;
-  border: 1px solid #2d3748;
 }
 
 #full-editor{
   border-radius: 5px;
 }
+
+
+.chart-legend {
+  list-style-type: none;
+  padding: 0;
+}
+.chart-legend-item {
+  display: flex;
+  margin-bottom: 5px;
+}
+.chart-legend-color {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.assignment { background-color: #4c51bf; }
+.concept { background-color: #ecc94b; }
+.guide { background-color: #48bb78; }
+.test { background-color: #f56565; }
+.exam { background-color: #ed8936; }
+
+.buttonNextDraft p{
+  text-align: center;
+  margin: 5px;
+  justify-content: flex-end !important;
+}
+
+#buttonPrev{
+  opacity: 0 ;
+  justify-content: flex-start !important;
+}
+
+.btn{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.btn-draft:hover{
+  color: white;
+  background-color: #7a7a7a !important;
+}
+
+.cancel:hover{
+  text-decoration: underline;
+  color: #ff7070 !important;
+}
+
+.accordion-toggle {
+  cursor: pointer;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: background-color 0.2s ease;
+}
+
+.accordion-content {
+  padding: 0 15px;
+  max-height: 0;
+  overflow: auto;
+  transition: max-height 0.2s ease;
+}
+
+.accordion-toggle.active + .accordion-content {
+  max-height: 500px;
+}
+
+.group-tab-body{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 500px;
+}
+
+.info-content{
+background-color: #DFDEDE;
+border-radius: 50px;
+  padding: 5px 0;
+}
+
+.btn-gray{
+  background-color: #474747;
+  color: white;
+;
+}
+
+.btn:hover{
+  background-color: #797979;
+  color: white;
+}
+
+.select-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.select-option {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  user-select: none;
+  cursor: pointer;
+}
+
+.select-option.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.remove-btn {
+  margin-left: 8px;
+  color: #999;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  color: #666;
+}
+
 

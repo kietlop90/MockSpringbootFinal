@@ -21,6 +21,8 @@ public class DResponseSyllabus {
 
     private String technicalGroup;
 
+    private Integer attendeeNumber;
+
     private String version;
 
     private String topicOutline;

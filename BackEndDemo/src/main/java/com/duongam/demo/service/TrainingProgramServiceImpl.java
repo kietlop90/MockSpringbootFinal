@@ -70,7 +70,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             dResponseSyllabus.setTopicCode(value.getTopicCode());
             dResponseSyllabus.setStatus(value.getStatus());
             dResponseSyllabus.setCreatedBy(value.getCreatedBy());
-            dResponseSyllabus.setVersion(value.getVersion());
+            dResponseSyllabus.setVersion(String.valueOf(value.getVersion()));
             dResponseSyllabus.setTrainingMaterials(value.getTrainingMaterials());
             dResponseSyllabus.setTechnicalGroup(value.getTechnicalGroup());
             dResponseSyllabus.setTopicName(value.getTopicName());

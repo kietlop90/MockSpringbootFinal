@@ -27,4 +27,12 @@ $(document).ready(function(){
     $(".btn-update-user").on("click", function () {
         //TO DO
     })
+
+    document.querySelectorAll('.type').forEach(function(type) {
+        if (type.textContent.trim() === 'TRAINER') {
+            type.classList.add('type-trainee');
+        } else {
+            type.classList.add('type-admin');
+        }
+    });
 });

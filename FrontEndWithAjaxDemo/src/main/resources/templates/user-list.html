@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Syllabus</title>
+    <title>User</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/user.js}"></script>
     <script th:src="@{/js/syllabus-list.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -76,22 +77,39 @@
                     <table class="table">
                         <thead class="header-table">
                         <tr>
-                            <th>ID</th>
-                            <th>Full name</th>
-                            <th>User name</th>
-                            <th>Email</th>
-                            <th>Day Of Birth</th>
-                            <th>Gender</th>
-                            <th>Type</th>
+                            <th>ID
+                                <a th:href="@{/user/list(sortField='id', dir=${dir.equals('asc') && sortField == 'id'} ? 'desc' : 'asc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+                            <th>Full name
+                                <a th:href="@{/user/list(sortField='name', dir=${dir.equals('desc') && sortField == 'name'} ? 'asc' : 'desc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+                            <th>Email
+                                <a th:href="@{/user/list(sortField='email', dir=${dir.equals('desc') && sortField == 'email'} ? 'asc' : 'desc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+                            <th>Date of birth
+                                <a th:href="@{/user/list(sortField='dob', dir=${dir.equals('desc') && sortField == 'dob'} ? 'asc' : 'desc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+                            <th>Gender
+                                <a th:href="@{/user/list(sortField='gender', dir=${dir.equals('desc') && sortField == 'gender'} ? 'asc' : 'desc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
+                            <th>Type
+                                <a th:href="@{/user/list(sortField='role', dir=${dir.equals('desc') && sortField == 'role'} ? 'asc' : 'desc')}"><img
+                                        th:src="@{/icon/action/sort-white.png}" alt=""></a>
+                            </th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="item : ${list}">
+
+                        <th:block th:each="item : ${userList}">
                             <tr th:id='${"tr"+ item.id}'>
                                 <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
                                 <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
-                                <td th:id='${"username"+ item.id}' th:text="${item.username}"></td>
                                 <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
                                 <td th:id="${'status' + item.id}">
@@ -99,7 +117,7 @@
                                     <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
                                          alt="Female">
                                 </td>
-                                <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                <td class="type" th:id='${"type"+ item.id}' th:text="${item.role}"></td>
                                 <td th:id='${"action"+ item.id}'>
                                     <button class="btn btn-three-dot dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -107,28 +125,32 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a th:id="'btn-update-class-' + ${item.id}" class="dropdown-item btn-update-class"
+                                            <a th:id="'btn-update-class-' + ${item.id}"
+                                               class="dropdown-item btn-update-class"
                                                th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/other/create.png}" alt="">
                                                 <label style="color: #2C5282">Edit user</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-update-class-' + ${item.id}" class="dropdown-item btn-update-class"
+                                            <a th:id="'btn-update-class-' + ${item.id}"
+                                               class="dropdown-item btn-update-class"
                                                th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/other/role-black.png}" alt="">
                                                 <label style="color: #2C5282">Change role</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-copy-class-' + ${item.id}" class="dropdown-item btn-copy-class"
+                                            <a th:id="'btn-copy-class-' + ${item.id}"
+                                               class="dropdown-item btn-copy-class"
                                                th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/other/visibility_off.png}" alt="">
                                                 <label style="color: #2C5282">De-activate user</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-delete-class-' + ${item.id}" class="dropdown-item btn-delete-class"
+                                            <a th:id="'btn-delete-class-' + ${item.id}"
+                                               class="dropdown-item btn-delete-class"
                                                th:data-id-class="${item.id}">
                                                 <img th:src="@{/icon/other/delete_forever.png}" alt="">
                                                 <label style="color: #8B8B8B">Delete user</label>
@@ -143,24 +165,38 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+
+                <div class="col-12 d-flex justify-content-between">
+                    <div></div>
                     <div class="group-pagging">
-                        <div class="item-pagging">
-                            <img th:src="@{/icon/navigator/first_page.png}" alt="">
+                        <a class="item-pagging" th:href="@{/user/list(page=0, size=${pageSize})}">
+                            <img th:src="@{/icon/navigator/first_page.png}" alt="First Page">
+                        </a>
+                        <div class="item-pagging"
+                             th:href="@{/user/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="Previous Page">
+
+                            <a th:href="@{/user/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            </a>
+                            <div class="item-pagging" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                                <a class="item-pagging number" style="text-decoration: none;color: white"
+                                   th:href="@{/user/list(page=${pageNum}, size=${pageSize}, sortField=${sortField}, dir=${dir})}"
+                                   th:classappend="${currentPage == pageNum} ? 'active' : ''"
+                                   th:text="${pageNum + 1}"></a>
+                            </div>
+                            <a class="item-pagging"
+                               th:href="@{/user/list(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                                <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="Next Page">
+                            </a>
+                            <a class="item-pagging"
+                               th:href="@{/user/list(page=${totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                                <img th:src="@{/icon/navigator/last_page.png}" alt="Last Page">
+                            </a>
                         </div>
-                        <div class="item-pagging">
-                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
-                        </div>
-                        <div class="item-pagging number active">1</div>
-                        <div class="item-pagging number">2</div>
-                        <div class="item-pagging number">3</div>
-                        <div class="item-pagging">
-                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
-                        </div>
-                        <div class="item-pagging">
-                            <img th:src="@{/icon/navigator/last_page.png}" alt="">
-                        </div>
-                        <div class="item-per-page">
+                    </div>
+                    <div class="group-pagging">
+
+                        <div class="item-per-page ">
                             Rows per page:
                             <select class="form-control" name="item-per-page" id="item-per-page">
                                 <option value="">10</option>
@@ -188,7 +224,7 @@
             </div>
 
             <!-- Modal body -->
-<!--            <form action="@{/user/add}" method="post" th:object=""></form>-->
+            <!--            <form action="@{/user/add}" method="post" th:object=""></form>-->
             <div class="modal-body">
                 <div class="row mb-2">
                     <div class="col-3">
@@ -254,7 +290,8 @@
                     </div>
                     <div class="col-9">
                         <label>
-                            <input type="radio" id="gender-input" name="gender" value="MALE" style="accent-color: #0a3622" checked>
+                            <input type="radio" id="gender-input" name="gender" value="MALE"
+                                   style="accent-color: #0a3622" checked>
                             Male
                         </label>
                         <label>
@@ -288,6 +325,7 @@
         </div>
     </div>
 </div>
+
 </body>
 
 </html>

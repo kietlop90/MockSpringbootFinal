@@ -27,7 +27,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class User implements Serializable {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -76,6 +76,7 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "createdBy")
     private List<Class> classList;
+
 
     @Transient
     public String roleName() {

@@ -5,6 +5,7 @@ import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.request.forupdate.URequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
+import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -14,7 +15,7 @@ public interface IUserService {
 
 	DResponseUser create(RegisterModel registerModel);
 
-	List<LResponseUser> getAll();
+	Page<LResponseUser> getAll(int page, int size, String sort, String dir);
 
 	DResponseUser save(CRequestUser cUser);
 

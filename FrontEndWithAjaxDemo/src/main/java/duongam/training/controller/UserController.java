@@ -6,7 +6,9 @@ import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forcreate.CRequestUser;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
+import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
+import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,40 +22,49 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	@Autowired
+    @Autowired
     private HttpUser httpUser;
 
-	@GetMapping("/list")
-	public String list(Model model) {
-		List<LResponseUser> list = httpUser.getAll();
-		model.addAttribute("list", list);
-		return "user-list";
-	}
+    @GetMapping("/list")
+    public String list(Model model, @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "10") int size,
+                       @RequestParam(required = false) String sortField,
+                       @RequestParam(defaultValue = "desc") String dir) {
+        PaginatedResponse<LResponseUser> lResponseUsers = httpUser.getAll(page, size, sortField, dir);
+        model.addAttribute("userList", lResponseUsers.getContent());
+        model.addAttribute("totalPages", lResponseUsers.getTotalPages());
+        model.addAttribute("currentPage", lResponseUsers.getCurrentPage());
+        model.addAttribute("pageSize", lResponseUsers.getSize());
 
-	@PostMapping("/add")
-	@ResponseBody
-	public DResponseUser addDatabase(@ModelAttribute("request") CRequestUser request) {
-		return httpUser.add(request);
-	}
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("dir", dir);
+        return "user-list";
+    }
 
-	@GetMapping("/login")
-	public String getLogin(Model model, String error, String logout) {
-		if (error != null)
-			model.addAttribute("error", "Your username and password is invalid.");
+    @PostMapping("/add")
+    @ResponseBody
+    public DResponseUser addDatabase(@ModelAttribute("request") CRequestUser request) {
+        return httpUser.add(request);
+    }
 
-		if (logout != null)
-			model.addAttribute("message", "You have been logged out successfully.");
+    @GetMapping("/login")
+    public String getLogin(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Your username and password is invalid.");
 
-		model.addAttribute("loginForm", new LoginForm());
-		return "login";
-	}
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
 
-	@PostMapping("/login")
-	public String postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
-		DResponseUser dResponseUser = httpUser.login(loginForm);
-		if(dResponseUser == null){
-			return "redirect:/user/login";
-		}
-		return "redirect:/user/list";
-	}
+        model.addAttribute("loginForm", new LoginForm());
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
+        DResponseUser dResponseUser = httpUser.login(loginForm);
+        if (dResponseUser == null) {
+            return "redirect:/user/login";
+        }
+        return "redirect:/user/list";
+    }
 }

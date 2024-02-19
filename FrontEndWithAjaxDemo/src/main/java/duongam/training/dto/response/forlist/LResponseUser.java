@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +20,13 @@ public class LResponseUser {
     private String email;
     private String phone;
     private String role;
-    private LocalDate dob;
+    private String dob;
     private String gender;
     private Boolean status;
     private String createdBy;
     private Timestamp createdDate;
     private String modifiedBy;
     private Timestamp modifiedDate;
+
+
 }

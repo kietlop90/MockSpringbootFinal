@@ -23,8 +23,7 @@ public class SyllabusObjective implements Serializable {
     private String content;
 
 
-    @ManyToOne
-    @JoinColumn(name = "syllabus_code")
+    @OneToOne(mappedBy = "syllabusObjectives")
     private Syllabus syllabus;
 
 

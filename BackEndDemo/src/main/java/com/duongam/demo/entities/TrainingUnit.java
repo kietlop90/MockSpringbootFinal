@@ -16,6 +16,9 @@ import java.util.List;
 
 public class TrainingUnit {
     @Id
+    @GeneratedValue
+    private Long id;
+
     @Column(name = "training_unit_code")
     private String unitCode;
 

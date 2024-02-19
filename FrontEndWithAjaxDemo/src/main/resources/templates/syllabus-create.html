@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Syllabus</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/syllabus.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
+
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div id="create-content" class="content">
+        <div class="row mb-2 title pb-3">
+            <div class=" col-2" id="head-syllabus">
+                Syllabus
+
+            </div>
+            <div class="col-5">
+                <img id="phase-general" class="w-75" th:src="@{/icon/range/Phase-General.png}" alt="phase">
+                <img id="phase-outline" class="w-75" th:src="@{/icon/range/Phase-Outline.png}" alt="phase"
+                     style="display: none">
+                <img id="phase-other" class="w-75" th:src="@{/icon/range/Phase-Other.png}" alt="phase"
+                     style="display: none">
+                <img id="phase-done" class="w-75" th:src="@{/icon/range/Phase-Done.png}" alt="phase"
+                     style="display: none">
+            </div>
+        </div>
+        <!--        <form th:method="post">-->
+        <div class="row mb-3">
+            <div class="col-5">
+                <label class="w-25" for="topicName"> <b>Syllabus Name*</b></label>
+                <input class="w-50" id="topicName"/>
+            </div>
+            <div class="col-2">
+                <div><b>Code</b> <span>NPL
+               </span></div>
+
+            </div>
+            <div class="col-2">
+                <div><b>Version</b>
+                    <span>1.0
+                   </span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--        Tag body-->
+        <div class="row">
+            <div class="col-10">
+                <!--        Tabs-->
+                <div class="row">
+                    <div class="col-12" style="border-bottom: 2px solid #2d3748 ">
+                        <div class="group-tab">
+                            <div class="tab active" onclick="changeGeneral()" id="tab-general">
+                                General
+                            </div>
+                            <div class="tab" onclick="changeOutline()" id="tab-outline">
+                                Outline
+                            </div>
+                            <div class="tab" onclick="changeOther()" id="tab-other">
+                                Other
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--        Tab Syllabus body-->
+                <div class="row tab-body active" id="tab-body-1">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div class="row mb-3">
+                                    <div class="col-1">
+                                        <label class="form-label"><b>Level</b></label>
+                                    </div>
+                                    <div class="col-4">
+                                        <select class="w-100 form-control">
+                                            <option selected disabled hidden value="">Auto detect</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-2">
+                                        <label class="form-label"><b>Attendee numbber</b></label>
+                                    </div>
+                                    <div class="col-3">
+                                        <!--                                        Syllabus.training_audience-->
+                                        <input class="w-100 form-control"/>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div><p><b>Technical Requirement(s)</b></p>
+                                    </div>
+                                    <div class="border" style="border-radius: 5px">
+                                        <!--                                     Syllabus.tectnical_group-->
+                                        <ul>
+                                            Trainees’ PCs need to have following software installed & run without
+                                            any
+                                            issues:
+                                            <li>
+                                                Microsoft SQL Server 2005 Express (in which the trainees can create
+                                                &
+                                                manipulate on their own database
+                                            </li>
+                                            <li>Microsoft Visual Studio 2017</li>
+                                            <li>Microsoft Office 2007 (Visio, Word, PowerPoint)</li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="margin: 10px 0">
+                                        <p><b>Course Objectives</b></p>
+                                    </div>
+                                    <div id="full-editor"
+                                         style=" height: 200px; overflow: auto;">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row tab-body" id="tab-body-2">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div style="border-bottom: 15px solid #2D3748; border-radius: 10px">
+                                    <div class="accordion">
+                                        <div class="accordion-item">
+                                            <div class="accordion-toggle btn-main">
+                                                <span>Day 1</span>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#delete-day"
+                                                   onclick="handleDelete(event)"><img
+                                                        th:src="@{/icon/action/delete-day.png}" alt=""></a>
+
+
+                                            </div>
+
+                                            <div class="accordion-content">
+                                                <div class="row" style="border-bottom: 1px solid black">
+                                                    <div class="col-1 " style="padding-top: 20px; padding-bottom: 20px">
+                                                        Unit 5
+                                                    </div>
+                                                    <div class="col-11" style="padding-top: 20px;padding-bottom: 20px">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                                <span style="margin-right: 5px">.NET Introduction</span>
+                                                                <img style="width: 15px; padding-bottom: 5px"
+                                                                     th:src="@{/icon/action/pencil-update.png}" alt="">
+                                                                <p style="font-size: 12px;" class="fst-italic">7hrs</p>
+                                                            </div>
+                                                            <div>
+                                                                <img th:src="@{/icon/action/arrow-circle-blue.png}"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row info-content">
+                                                            <div class="col-7 ">
+                                                                .Net Introduction
+                                                            </div>
+                                                            <div class="col-1">HS4D</div>
+                                                            <div class="col-1">30mins</div>
+                                                            <div class="col-1">Online</div>
+                                                            <div class="col-1">
+                                                                <img th:src="@{/icon/delivery-types/concept/lecture.png}"
+                                                                     alt="">
+                                                            </div>
+                                                            <div class="col-1" style="cursor: pointer">
+                                                                <img data-bs-target="#training-materials"
+                                                                     data-bs-toggle="modal"
+                                                                     th:src="@{/icon/navigation-menu/folder.png}"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <img data-bs-target="#add-unit-item" data-bs-toggle="modal"
+                                                                 th:src="@{/icon/action/add-blue.png}" alt=""
+                                                                 style="cursor: pointer">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="add-unit"
+                                                     style="padding: 10px 0; border-bottom: 1px solid black; display: none">
+                                                    <div class="col-1">
+                                                        Unit++
+                                                    </div>
+                                                    <div class=" col-11 ">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="d-flex">
+                                                                <input style="border-radius: 5px; padding: 2px 0"
+                                                                       type="text" placeholder="Unit name"/>
+                                                                <button style="margin: 0 10px" type="button"
+                                                                        class="btn btn-main"> Create
+                                                                </button>
+                                                            </div>
+                                                            <div>
+                                                                <img th:src="@{/icon/action/arrow-circle-blue.png}"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <button onclick="addUnit()" style="margin: 10px 0" type="button"
+                                                        class="btn btn-gray">
+                                                    <img th:src="@{/icon/action/add-white.png}" alt="">
+                                                    Add unit
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <div class="accordion-toggle btn-main">
+                                                <span>Day 2</span>
+                                                <a href="#" onclick="handleDelete(event)"><img
+                                                        th:src="@{/icon/action/delete-day.png}" alt=""></a>
+                                            </div>
+                                            <div class="accordion-content">
+                                                <div>
+                                                    asdsad
+                                                    adasdj
+                                                    123124
+                                                    as;djaposdjsa
+                                                    asdsad
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <div class="accordion-toggle btn-main">
+                                                <span>Day 3</span>
+                                                <a href="#" onclick="handleDelete(event)"><img
+                                                        th:src="@{/icon/action/delete-day.png}" alt=""></a>
+                                            </div>
+                                            <div class="accordion-content">
+                                                <!-- Nội dung của Day 3 -->
+                                            </div>
+                                        </div>
+                                        <!-- Thêm các accordion-item khác tại đây nếu cần -->
+                                    </div>
+
+                                    <div style="margin: 10px 0">
+                                        <button style="padding: 5px" type="button" class="btn btn-main">
+                                            <img th:src="@{/icon/action/add-white.png}" alt="">
+                                            Add day
+                                        </button>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row tab-body" id="tab-body-3">
+                    <div class="col-12">
+                        <div class="group-tab-body">
+                            <div class="header-group">
+
+                            </div>
+                            <div class="body-group" style="background-color: white; margin: 0 10px">
+                                <div class="row mb-3">
+                                    <div class="col-5" style="text-align: center; ">
+                                        <div style="background-color: #2D3748; color: white;
+                                           border-top-left-radius: 20px; border-top-right-radius: 20px;">
+                                            Time allocation
+                                        </div>
+
+                                        <div class="d-flex" style="border: 1px solid #2d3748;
+                                                    border-bottom-left-radius: 20px;
+                                                     border-bottom-right-radius: 20px;
+                                                     padding: 94.5px 0">
+                                            <div class="col-6" style="padding-left: 10px;text-align: center">
+                                                <canvas id="myChart1"></canvas>
+                                            </div>
+                                            <div class="col-6">
+                                                <ul class=" chart-legend">
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color assignment"></span>Assignment/Lab
+                                                        (54%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color concept"></span>Concept/Lecture
+                                                        (29%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color guide"></span>Guide/Review
+                                                        (9%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color test"></span>Test/Quiz (1%)
+                                                    </li>
+                                                    <li class="chart-legend-item"><span
+                                                            class="chart-legend-color exam"></span>Exam (6%)
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-7 ">
+                                        <div style="background-color: #2D3748; color: white; text-align: center;
+                                           border-top-left-radius: 50px; border-top-right-radius: 50px;">
+                                            Assessment scheme
+                                        </div>
+                                        <div style="border: 1px solid #2d3748;
+                                                    border-bottom-left-radius: 20px;
+                                                     border-bottom-right-radius: 20px;">
+                                            <div class="p-3" style="border-bottom: 1px solid #474747">
+                                                <div class="row mb-3">
+                                                    <div class="col-3"><label for="quiz">Quiz *</label></div>
+                                                    <div class="col-3 d-flex">
+                                                        <input style="margin-right: 5px" type="number" id="quiz"
+                                                               value="15"
+                                                               min="0" max="100">
+                                                        <span class="percent-sign">%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-3"><label for="assignment">Assignment *</label>
+                                                    </div>
+                                                    <div class="col-3 d-flex">
+
+                                                        <input style="margin-right: 5px" type="number" id="assignment"
+                                                               value="15" min="0" max="100">%
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-3"><label for="final">Final *</label></div>
+                                                    <div class="col-3 d-flex">
+                                                        <input style="margin-right: 5px" type="number" id="final"
+                                                               value="70" min="0" max="100">%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-3 d-flex justify-content-between" style="border-bottom: 1px solid #474747">
+                                                <div class="row col-6">
+                                                    <div style="margin-left: 5px" class="col-6"><label
+                                                            for="final-theory">Final Theory*</label>
+                                                    </div>
+                                                    <div class="col-5 d-flex">
+
+                                                        <input style="margin-right: 5px" type="number" id="final-theory"
+                                                               value="40" min="0" max="100">%
+                                                    </div>
+                                                </div>
+
+                                                <div class="row col-6">
+                                                    <div class="col-6"><label for="final-practice">Final
+                                                        Practice*</label>
+                                                    </div>
+                                                    <div class="col-6 d-flex">
+
+                                                        <input style="margin-right: 5px" type="number"
+                                                               id="final-practice"
+                                                               value="60" min="0" max="100">%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-3">
+                                                <div>
+                                                    <p><b>Passing criteria</b></p>
+                                                </div>
+                                                <div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-3"><label for="gpa">GPA*</label></div>
+                                                        <div class="col-3 d-flex">
+                                                            <input style="margin-right: 5px" type="number" id="gpa"
+                                                                   value="70" min="0" max="100">%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="background-color: #2D3748; color: white; text-align: center;
+                                           border-top-left-radius: 50px; border-top-right-radius: 50px;">
+                                        Training delivery principle
+                                    </div>
+                                    <div style="border: 1px solid #2d3748;  border-bottom-left-radius: 20px;
+                                                     border-bottom-right-radius: 20px;">
+                                        <div id="full-editor1"
+                                             style=" height: 200px; overflow: auto;">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="chart" class="col-2" style=" margin-top: 28.6px;">
+                <div>
+                    <div class="tab-Chart w-100" style="background-color: #2d3748; padding: 10px;
+                    border-bottom: #2d3748; border-left: #2d3748; border-right: #2d3748">
+                        Time allocation
+                    </div>
+                </div>
+                <div class="w-100" style="border: 1px solid #2d3748; padding: 10%;
+                                    border-bottom-left-radius: 20px;
+                                    border-bottom-right-radius: 20px">
+                    <div class="mb-3">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                    <ul class="chart-legend">
+                        <li class="chart-legend-item"><span class="chart-legend-color assignment"></span>Assignment/Lab
+                            (54%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color concept"></span>Concept/Lecture
+                            (29%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color guide"></span>Guide/Review
+                            (9%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color test"></span>Test/Quiz (1%)
+                        </li>
+                        <li class="chart-legend-item"><span class="chart-legend-color exam"></span>Exam (6%)</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="row d-flex justify-content-between" style="padding-left: 2%">
+            <div id="buttonPrev" class="btn btn-main col-1 " onclick="prevForm()"
+                 style="height: 25px; padding-left: 20px;">
+                Previous
+            </div>
+            <div class="col-3 d-flex buttonNextDraft" style="margin-right:2%">
+                <a th:href="@{/syllabus/list}" class="col-3 cancel" style="padding-top: 9px;
+                    color: red; cursor: pointer"><b>Cancel</b></a>
+                <p class="btn col-5 btn-draft" style="color: white;background-color: #474747">Save as draft</p>
+                <p onclick="nextForm()" class="btn btn-main col-3" style="padding-right: 20px;">Save</p>
+            </div>
+        </div>
+        <button type="submit" style="display: none"></button>
+        <!--        </form>-->
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+<!--Delete Day modal-->
+<div class="modal" id="delete-day">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <img th:src="@{/icon/other/warning-delete.png}" alt="" style="margin-right: 8px">
+                <h4 class="modal-title" style="color:  #2D3748; font-size: 20px">Delete Day</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p style="font-size: 15px">Delete all content of the Day?</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mt-3">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-user" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                        <button id="btn-add-user" class="btn btn-main me-2">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add unit item for an unit-->
+<div class="modal" id="add-unit-item">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 115%">
+            <!-- Modal Header -->
+            <div class="d-flex " style="background-color: #2D3748; justify-content: space-between;
+                    padding: 5px 0">
+                <div></div>
+                <h4 class="modal-title" style="font-size: 15px; color: white">New Content</h4>
+                <button type="button" class="btn-main" style="border: 0" data-bs-dismiss="modal">
+                    <img th:src="@{/icon/other/close-modal.png}" alt=""></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="margin: 0 10px">
+                <div class="row  mb-4">
+                    <div class="col-4">
+                        <label for="name-content"><b>Name</b></label>
+                    </div>
+                    <div class=" col-8">
+                        <input style="border-radius: 5px; padding: 2px 0" class=" form-control" id="name-content"
+                               type="text" placeholder="Name of content..."/>
+                    </div>
+                </div>
+
+                <div class="row  mb-4">
+                    <div class="col-4">
+                        <label><b>Output standard</b></label>
+                    </div>
+                    <div class=" col-8">
+                        <div class="select-container" id="selectContainer">
+                            <img th:src="@{/icon/document-manage/search.png}" alt="">
+                            <!-- Options will be generated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row  mb-4">
+                    <div class="col-4">
+                        <label for="training-time"><b>Training time</b></label>
+                    </div>
+                    <div class=" col-8">
+                        <input style="border-radius: 5px; padding: 2px 0" class=" form-control" id="training-time"
+                               type="text" placeholder="Minutes"/>
+                    </div>
+                </div>
+
+                <div class="row  mb-4">
+                    <div class="col-4">
+                        <label><b>Delivery type</b></label>
+                    </div>
+                    <div class=" col-8">
+                        <select id="numberSelect" class="form-select" aria-label="Default select example">
+                            <option selected disabled hidden value="">Select one</option>
+                            <option style="color: #2C5282;" value="1"><img th:src="@{/icon/delivery-types/lab.png}"
+                                                                           alt=""> Assignment/Lab
+                            </option>
+                            <option style="color: #2C5282;" value="1"><img th:src="@{/icon/delivery-types/lab.png}"
+                                                                           alt=""> Concept/Lecture
+                            </option>
+                            <option style="color: #2C5282;" value="1"><img th:src="@{/icon/delivery-types/lab.png}"
+                                                                           alt=""> Guide/Review
+                            </option>
+                            <option style="color: #2C5282;" value="1"><img th:src="@{/icon/delivery-types/lab.png}"
+                                                                           alt=""> Test/Quiz
+                            </option>
+                            <option style="color: #2C5282;" value="1"><img th:src="@{/icon/delivery-types/lab.png}"
+                                                                           alt=""> Exam
+                            </option>
+                            <option style="color: #2C5282;" value="1"><img th:src="@{/icon/delivery-types/lab.png}"
+                                                                           alt=""> Seminar/Workshop
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <label><b>Method</b></label>
+                    </div>
+                    <div class=" col-8">
+                        <input checked class="form-check-input" type="checkbox" id="onlineOfflineSwitch"/>
+                        <label class="form-check-label" for="onlineOfflineSwitch" id="switchLabel">Online</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer d-flex justify-content-center">
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <button type="button" id="btn-cancel" class="btn btn-outline-danger me-2"
+                                data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                        <button id="btn-add" class="btn btn-main me-2">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--training-materials modal-->
+<div class="modal" id="training-materials">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 115%">
+            <!-- Modal Header -->
+            <div class="d-flex " style="background-color: #2D3748; justify-content: space-between;
+                    padding: 5px 5px">
+                <h4 class="modal-title" style="font-size: 15px; color: white;margin-left: 20px">Day 1</h4>
+                <button type="button" class="btn-main" style="border: 0" data-bs-dismiss="modal">
+                    <img th:src="@{/icon/other/close-modal.png}" alt=""></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="margin: 0 10px">
+                <div class="row">
+                    <div class="col-2">
+                        Unit 5
+                    </div>
+                    <div class="col-10">
+                        .NET Introduction
+                    </div>
+                </div>
+                <div class="row " style="background-color:  #DFDEDE; font-size: 14px; border-radius: 5px;
+                        padding: 10px 0">
+
+                    <div> .NET Introduction</div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="#">.NET Introduction overview.pdf</a>
+                        </div>
+                        <div>
+                            <span style="margin-right: 3px;">by Joseph on 12/03/2012</span>
+                            <img style="width: 15px; margin-right: 3px"
+                                 th:src="@{/icon/document-manage/pencil-blue-test.png}" alt="">
+                            <img style="width: 14px" th:src="@{/icon/document-manage/delete-bluebold.png}" alt="">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="#">.NET Introduction pattern in lorem.pdf</a>
+                        </div>
+
+                        <div>
+                            <span style="margin-right: 3px;">by Warrior Tran on 02/08/2022</span>
+                            <img style="width: 15px; margin-right: 3px"
+                                 th:src="@{/icon/document-manage/pencil-blue-test.png}" alt="">
+                            <img style="width: 14px" th:src="@{/icon/document-manage/delete-bluebold.png}" alt="">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer d-flex justify-content-center">
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <button class="btn btn-main me-2">Upload new</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function changeOutline() {
+        const phase1 = document.getElementById('phase-general');
+        const phase2 = document.getElementById('phase-outline');
+        const phase3 = document.getElementById('phase-other');
+        const phase4 = document.getElementById('phase-done');
+        const prevGeneral = document.getElementById('buttonPrev');
+
+        phase1.style.display = 'none';
+        phase2.style.display = 'block';
+        phase3.style.display = 'none';
+        phase4.style.display = 'none';
+        prevGeneral.style.opacity = 1;
+    }
+
+    function changeGeneral() {
+        const prevGeneral = document.getElementById('buttonPrev');
+        const phase1 = document.getElementById('phase-general');
+        const phase2 = document.getElementById('phase-outline');
+        const phase3 = document.getElementById('phase-other');
+        const phase4 = document.getElementById('phase-done');
+        phase1.style.display = 'block';
+        phase2.style.display = 'none';
+        phase3.style.display = 'none';
+        phase4.style.display = 'none';
+        prevGeneral.style.opacity = 0;
+    }
+
+    function changeOther() {
+        const prevGeneral = document.getElementById('buttonPrev');
+        const phase1 = document.getElementById('phase-general');
+        const phase2 = document.getElementById('phase-outline');
+        const phase3 = document.getElementById('phase-other');
+        const phase4 = document.getElementById('phase-done');
+        phase1.style.display = 'none';
+        phase2.style.display = 'none';
+        phase3.style.display = 'block';
+        phase4.style.display = 'none';
+        prevGeneral.style.opacity = 1;
+    }
+
+    function prevForm() {
+        const tabs = document.querySelectorAll('.tab');
+
+        let activeTabIndex = -1;
+
+
+        tabs.forEach((tab, index) => {
+            if (tab.classList.contains('active')) {
+                activeTabIndex = index;
+            }
+        });
+
+        if (activeTabIndex > 0) {
+            tabs[activeTabIndex].classList.remove('active');
+            tabs[activeTabIndex - 1].classList.add('active');
+            $("#tab-body-" + (activeTabIndex + 1)).hide();
+            $("#tab-body-" + (activeTabIndex)).show();
+            let prevTabs = tabs[activeTabIndex - 1];
+            switch (prevTabs.id) {
+                case 'tab-general':
+                    changeGeneral();
+                    break;
+                case 'tab-outline':
+                    changeOutline();
+                    break;
+                case 'tab-other':
+                    changeOther();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    function nextForm() {
+        const tabs = document.querySelectorAll('.tab');
+
+        let activeTabIndex = -1;
+
+
+        tabs.forEach((tab, index) => {
+            if (tab.classList.contains('active')) {
+                activeTabIndex = index;
+            }
+        });
+
+        if (activeTabIndex < tabs.length - 1) {
+            tabs[activeTabIndex].classList.remove('active');
+            tabs[activeTabIndex + 1].classList.add('active');
+            $("#tab-body-" + (activeTabIndex + 1)).hide();
+            $("#tab-body-" + (activeTabIndex + 2)).show();
+            let nextTabs = tabs[activeTabIndex + 1];
+            switch (nextTabs.id) {
+                case 'tab-general':
+                    changeGeneral();
+                    break;
+                case 'tab-outline':
+                    changeOutline();
+                    break;
+                case 'tab-other':
+                    changeOther();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    function addUnit() {
+        const addUnit = document.getElementById('add-unit');
+        addUnit.style.display = 'flex';
+        addUnit.style.transition = 'max-height 0.2s ease';
+    }
+
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const accordionContent = button.nextElementSibling;
+
+            button.classList.toggle('active');
+
+            if (button.classList.contains('active')) {
+                accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+            } else {
+                accordionContent.style.maxHeight = 0;
+            }
+        });
+    });
+
+    function handleDelete(event) {
+        event.stopPropagation();
+    }
+
+    document.getElementById('onlineOfflineSwitch').addEventListener('change', function (event) {
+        var label = document.getElementById('switchLabel');
+        if (this.checked) {
+            label.textContent = 'Online';
+
+        } else {
+            label.textContent = 'Offline';
+        }
+    });
+
+    let selectedValues = {};
+
+    function createOption(value, text) {
+        // Create the option div
+        const option = document.createElement('div');
+        option.className = 'select-option selected';
+        option.textContent = text;
+
+        // Create the remove button
+        const removeBtn = document.createElement('span');
+        removeBtn.textContent = 'X';
+        removeBtn.className = 'remove-btn';
+        removeBtn.onclick = function () {
+            removeOption(value, option);
+        };
+        option.appendChild(removeBtn);
+
+        // Add the option to the container
+        document.getElementById('selectContainer').appendChild(option);
+        selectedValues[value] = true;
+    }
+
+    function removeOption(value, option) {
+        // Remove the option element from the DOM
+        option.remove();
+        // Remove the value from the selected values object
+        delete selectedValues[value];
+        console.log(selectedValues); // Replace this with actual form submission or other actions
+    }
+
+    // Example options to add (you would add these dynamically in your actual code)
+    createOption('value1', 'Option 1');
+    createOption('value2', 'Option 2');
+    createOption('value3', 'Option 3');
+
+
+</script>
+</body>
+
+</html>

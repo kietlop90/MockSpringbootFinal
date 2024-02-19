@@ -20,10 +20,12 @@ public interface ITrainingProgramService {
 
     DReponseTrainingProgram findTrainingProgrammById(String id);
 
+
     List<DReponseTrainingUnit> findALlUnit(String code);
 
 
     DResponseSyllabus getSylabusByCode(String code);
+
 
     List<DResponseClass> getALlClassOfTrainingProgram(String code);
 
@@ -35,6 +37,10 @@ public interface ITrainingProgramService {
     List<String> getListSearch();
 
     List<DReponseTrainingProgram> searchALlTrainingProgram(String name);
+
+//    @Transactional
+//    List<DReponseTrainingProgram> searchALlTrainingProgram(String name);
+
 
 //    DReponseTrainingProgram save( requestTrainingProgramCreate);
     DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate);

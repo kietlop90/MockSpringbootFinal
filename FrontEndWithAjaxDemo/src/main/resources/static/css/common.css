@@ -312,7 +312,7 @@ td{
     background-color: #2d3748;
 }
 
-.group-tab .tab {
+.group-tab .tab, .tab-Chart {
     background-color: #6D7684;
     border: 1px solid #ffffff;
     border-top-left-radius: 20px;

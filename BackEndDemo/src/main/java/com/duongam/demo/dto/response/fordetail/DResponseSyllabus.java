@@ -19,6 +19,8 @@ public class DResponseSyllabus {
 
     private String topicName;
 
+    private Integer attendeeNumber;
+
     private String technicalGroup;
 
     private String version;
@@ -41,7 +43,7 @@ public class DResponseSyllabus {
         this.topicCode = syllabus.getTopicCode();
         this.topicName = syllabus.getTopicName();
         this.technicalGroup = syllabus.getTechnicalGroup();
-        this.version = syllabus.getVersion();
+        this.version = String.valueOf(syllabus.getVersion());
         this.topicOutline = syllabus.getTopicOutline();
         this.trainingMaterials = syllabus.getTrainingMaterials();
         this.trainingPrinciples = syllabus.getTrainingPrinciples();

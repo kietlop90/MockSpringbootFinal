@@ -2,6 +2,7 @@ package com.duongam.demo.service;
 
 import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.request.forcreate.CRequestUser;
+import com.duongam.demo.dto.request.forupdate.URequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.entities.Role;
@@ -84,42 +85,58 @@ public class UserServiceImpl implements IUserService {
     }
 
 	@Override
-	public void save(CRequestUser cUser) {
-		User user = modelMapper.map(cUser, User.class);
-		Role role = roleRepository.findByName(cUser.getRole()).orElse(null);
+	public DResponseUser save(CRequestUser cUser) {
+		User user = new User();
+		user.setName(cUser.getName());
+		user.setEmail(cUser.getEmail());
+		user.setPhone(cUser.getPhone());
+		user.setStatus(cUser.getStatus());
+		Role role = null;
+		if ("ADMIN".equals(cUser.getRole())){
+			role = new Role(ERole.ADMIN);
+		} else if ("CUSTOMER".equals(cUser.getRole())){
+			role = new Role(ERole.CUSTOMER);
+		}
 		user.setRole(role);
+		String date = cUser.getDob();
+		user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		if (cUser.getGender() == "MALE"){
+			user.setGender(EGender.MALE);
+		} else user.setGender(EGender.FEMALE);
 		userRepository.save(user);
+		DResponseUser dResponseUser = new DResponseUser(user);
+		return dResponseUser;
 	}
 
 	@Override
-	public void update(CRequestUser cUser) {
-		User existingUser = userRepository.findById(cUser.getId()).orElse(null);
-		String date = cUser.getDob();
+	public DResponseUser update(URequestUser uUser) {
+		User existingUser = userRepository.findById(uUser.getId()).orElse(null);
+		String date = uUser.getDob();
 		if (existingUser != null){
-			existingUser.setName(cUser.getName());
-			existingUser.setPhone(cUser.getPhone());
+			existingUser.setName(uUser.getName());
+			existingUser.setPhone(uUser.getPhone());
 			existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-			existingUser.setGender(EGender.valueOf(cUser.getGender()));
-			existingUser.setStatus(Boolean.valueOf(cUser.getStatus()));
+			existingUser.setGender(EGender.valueOf(uUser.getGender()));
+			existingUser.setStatus(Boolean.valueOf(uUser.getStatus()));
+			userRepository.save(existingUser);
+			DResponseUser dResponseUser = new DResponseUser(existingUser);
+			return dResponseUser;
 		}
-		userRepository.save(existingUser);
+		return null;
 	}
 
 	@Override
 	public DResponseUser findById(Long id) {
-		Optional<User> user = userRepository.findById(id);
-		return user.map(value ->{
-			DResponseUser responseUser = modelMapper.map(value, DResponseUser.class);
-			responseUser.setRole(value.roleName());
-			responseUser.setGender(value.genderText());
-			responseUser.setDob(value.dobText());
-			return responseUser;
-		}).orElse(null);
+		User user = userRepository.findById(id).orElse(null);
+		return new DResponseUser(user);
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public DResponseUser deleteById(Long id) {
+		User user = userRepository.findById(id).orElse(null);
+		DResponseUser dResponseUser = new DResponseUser(user);
 		userRepository.deleteById(id);
+		return dResponseUser;
 	}
 
 }

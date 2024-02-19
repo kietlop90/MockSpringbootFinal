@@ -70,11 +70,11 @@ public class TrainingProgramController {
 
 
 
-    @GetMapping("/search/{name}")
-    public ResponseEntity<List<DReponseTrainingProgram>> searchTrainingProgram(@PathVariable String name) {
-        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
-        return ResponseEntity.ok().body(reponseTrainingProgramList);
-    }
+//    @GetMapping("/search/{name}")
+//    public ResponseEntity<List<DReponseTrainingProgram>> searchTrainingProgram(@PathVariable String name) {
+//        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
+//        return ResponseEntity.ok().body(reponseTrainingProgramList);
+//    }
 
 
     @GetMapping("/getDetail/{code}")

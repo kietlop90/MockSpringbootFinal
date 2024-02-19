@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class LResponseUser {
     private Long id;
     private String name;
+    private String username;
     private String email;
     private String phone;
     private String role;
@@ -25,5 +26,4 @@ public class LResponseUser {
     private Timestamp createdDate;
     private String modifiedBy;
     private Timestamp modifiedDate;
-    private String username;
 }

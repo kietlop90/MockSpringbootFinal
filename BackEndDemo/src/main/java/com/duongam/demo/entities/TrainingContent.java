@@ -20,6 +20,8 @@ public class TrainingContent {
     @Column(name = "training_content_id")
     private Long id;
 
+    private String content;
+
     private String deliveryType;
 
     private Integer duration;
@@ -34,8 +36,7 @@ public class TrainingContent {
     private TrainingUnit unitCode;
 
 
-    @OneToMany
-    @JoinColumn(name = "trainingContent")
+    @OneToMany(mappedBy = "trainingContent")
     private List<LearningObjective> learningObjective;
 
 }

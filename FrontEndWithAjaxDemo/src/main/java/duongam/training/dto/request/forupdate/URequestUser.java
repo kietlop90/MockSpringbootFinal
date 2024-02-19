@@ -13,19 +13,17 @@ import java.util.List;
 @Setter
 @ToString
 public class URequestUser {
-    private Long id;
-    @Size(min = 6, max = 50, message = "Length of firstname should be from 6 to 20")
+    private String password;
+    private String roleId;
     private String name;
-    @Email
+    private String username;
     private String email;
     private String phone;
-    private List<String> roles;
-    private LocalDate dob;
+    private String dob;
     private String gender;
-    private boolean status;
+    private Boolean status;
     private String createdBy;
     private LocalDate createdDate;
     private String modifiedBy;
     private LocalDate modifiedDate;
-    private String username;
 }

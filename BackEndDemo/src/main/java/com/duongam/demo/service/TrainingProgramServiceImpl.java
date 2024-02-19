@@ -70,7 +70,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             dResponseSyllabus.setTopicCode(value.getTopicCode());
             dResponseSyllabus.setStatus(value.getStatus());
             dResponseSyllabus.setCreatedBy(value.getCreatedBy());
-            dResponseSyllabus.setVersion(value.getVersion());
+            dResponseSyllabus.setVersion(String.valueOf(value.getVersion()));
             dResponseSyllabus.setTrainingMaterials(value.getTrainingMaterials());
             dResponseSyllabus.setTechnicalGroup(value.getTechnicalGroup());
             dResponseSyllabus.setTopicName(value.getTopicName());
@@ -117,7 +117,11 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             trainingProgram1.setDuration(trainingProgram.getDuration());
             trainingProgram1.setStatus(trainingProgram.getStatus());
             trainingProgram1.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+
             trainingProgram1.setCreatedBy(trainingProgram.getCreatedBy());
+
+//            trainingProgram1.setCreateBy(trainingProgram.getCreateBy());
+
             trainingProgramRepository.save(trainingProgram1);
 
             return new DReponseTrainingProgram(trainingProgram1);
@@ -197,9 +201,20 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         return listSearch;
     }
 
+
     @Override
     @Transactional
     public List<DReponseTrainingProgram> searchALlTrainingProgram(String name) {
+
+//    @Override
+//    @Transactional
+//    public List<DReponseTrainingProgram> searchALlTrainingProgram(String name) {
+//        List<TrainingProgram> trainingProgramList = trainingProgramRepository.findByNameLike(name);
+//        return trainingProgramList.stream().map(value -> {
+//            return new DReponseTrainingProgram(value);
+//        }).collect(Collectors.toList());
+//    }
+
 
         if (Objects.equals(name, "asdfghjkl")) {
             name = "";

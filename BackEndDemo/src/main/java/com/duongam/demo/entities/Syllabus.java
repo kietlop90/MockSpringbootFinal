@@ -2,6 +2,7 @@ package com.duongam.demo.entities;
 
 import com.duongam.demo.entities.enums.EGender;
 import com.duongam.demo.entities.enums.EThreeStatus;
+import com.duongam.demo.entities.enums.EVersion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,9 @@ import java.util.List;
 
 public class Syllabus {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "syllabus_code")
     private String topicCode;
 
@@ -29,13 +33,17 @@ public class Syllabus {
 
     private String technicalGroup;
 
-    private String version;
+    private EVersion version;
+
+    private Integer attendeeNumber;
 
     private String topicOutline;
 
     private String trainingMaterials;
 
     private String trainingPrinciples;
+
+    private String trainingAudience;
 
 
     @Enumerated(EnumType.STRING)
@@ -64,8 +72,9 @@ public class Syllabus {
     private List<TrainingProgramSyllabus> trainingProgramSyllabus;// map voi TopicCode
 
 
-    @OneToMany(mappedBy = "syllabus")
-    private List<SyllabusObjective> syllabusObjectives;// map voi syllabusObjective
+    @OneToOne
+    @JoinColumn(name = "syllabus_object_id")
+    private SyllabusObjective syllabusObjectives;// map voi syllabusObjective
 
 
     @OneToMany(mappedBy = "syllabus")
@@ -74,9 +83,6 @@ public class Syllabus {
     public String getStatus() {
         return status.name();
     }
-
-
-
 
 
 //    public String getModifiedDate() {

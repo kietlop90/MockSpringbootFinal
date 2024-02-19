@@ -42,4 +42,16 @@ public class SylabusController {
         httpSyllabus.delete(id);
         return "redirect:/syllabus/list";
     }
+
+    @GetMapping("/create")
+    public String createSyllabus(Model model) {
+
+        return "syllabus-create";
+    }
+
+    @GetMapping("/details")
+    public String syllabusDetails(Model model) {
+
+        return "syllabus-details";
+    }
 }

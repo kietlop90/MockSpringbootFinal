@@ -42,7 +42,9 @@ public class Class implements Serializable {
 
     private LocalDateTime endDate;
 
-    private Long createdBy;//createdBy và modifiedBy lưu trong database là id của user
+    @ManyToOne
+    @JoinColumn(name = "create_by")
+    private User createdBy; // Lấy id của user
 
     @CreationTimestamp
     @Column(name = "create_date", insertable = false, updatable = false)
@@ -74,5 +76,4 @@ public class Class implements Serializable {
         });
         return classUserList;
     }
-
 }

@@ -74,6 +74,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "createdBy")
     private List<Syllabus> syllabusList;
 
+    @OneToMany(mappedBy = "createdBy")
+    private List<Class> classList;
+
     @Transient
     public String roleName() {
         return role.getName().toString();

@@ -15,7 +15,7 @@ public interface LResponseClass {
     String getFSU();
     LocalDateTime getStartDate();
     LocalDateTime getEndDate();
-    String getCreatedBy();
+    String userCreatedBy();
     Timestamp getCreatedDate();
     String getModifiedBy();
     Timestamp getModifiedDate();

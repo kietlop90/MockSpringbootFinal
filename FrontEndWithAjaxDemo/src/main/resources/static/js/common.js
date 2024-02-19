@@ -51,9 +51,9 @@ function addItem(url, data, redirect){
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
             resultAddItem = result;
-            // if (redirect) {
-            //     window.location.replace(redirect + resultAddItem.id);
-            // }
+            if (redirect) {
+                window.location.replace(redirect + resultAddItem.id);
+            }
         }
     });
 }

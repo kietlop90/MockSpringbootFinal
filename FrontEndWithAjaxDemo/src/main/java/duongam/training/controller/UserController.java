@@ -27,6 +27,7 @@ public class UserController {
 	public String list(Model model) {
 		List<LResponseUser> list = httpUser.getAll();
 		model.addAttribute("list", list);
+		model.addAttribute("user", new CRequestUser());
 		return "user-list";
 	}
 
@@ -67,8 +68,14 @@ public class UserController {
 	}
 
 	@PostMapping("/add")
-	@ResponseBody
-	public DResponseUser addDatabase(@ModelAttribute("request") CRequestUser request) {
-		return httpUser.add(request);
+	public String addDatabase(@ModelAttribute("user") CRequestUser request) {
+		httpUser.add(request);
+		return "redirect:/user/list";
+	}
+
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long requestId){
+		httpUser.deleteById(requestId);
+		return "redirect:/user/list";
 	}
 }

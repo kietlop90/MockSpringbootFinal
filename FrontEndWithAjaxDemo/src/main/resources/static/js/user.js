@@ -25,10 +25,14 @@ $(function () {
 
         console.log("Data to be sent:", data);
 
-        addItem("/user/add", data, "/user/list", function (response) {
+        addItem("/user/list", data, "/user/list", function (response) {
             if (response && response.error) {
                 alert("Lỗi khi thêm dữ liệu: " + response.message);
             }
         });
     })
+    // $(".btn-delete-user").on("click", function (){
+    //     let idUser = $(this).attr("data-id-user");
+    //     window.location.replace("/user/delete/" + idUser);
+    // })
 })

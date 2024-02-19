@@ -9,6 +9,7 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script th:src="@{/js/syllabus-list.js}"></script>
+    <script th:src="@{/js/user.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -206,7 +207,7 @@
                     </div>
                     <div class="col-9">
                         <input type="text" class="form-control" placeholder="User name"
-                               autofocus required/>
+                               autofocus required id="input-user-name"/>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -215,7 +216,7 @@
                     </div>
                     <div class="col-9">
                         <input type="text" class="form-control" placeholder="Email address"
-                               autofocus required pattern=".*\S.*"/>
+                               autofocus required pattern=".*\S.*" id="input-user-email"/>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -224,7 +225,7 @@
                     </div>
                     <div class="col-9">
                         <input type="text" class="form-control" placeholder="Phone number"
-                               autofocus required/>
+                               autofocus required id="input-user-phone"/>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -233,7 +234,7 @@
                     </div>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="date" class="form-control" required>
+                            <input type="date" class="form-control" required id="input-user-dob">
                         </div>
                     </div>
                 </div>
@@ -243,7 +244,8 @@
                     </div>
                     <div class="col-9">
                         <label>
-                            <input type="radio" name="gender" value="MALE" style="accent-color: #0a3622" checked>
+                            <input type="radio" name="gender" value="MALE"
+                                   style="accent-color: #0a3622" checked>
                             Male
                         </label>
                         <label>

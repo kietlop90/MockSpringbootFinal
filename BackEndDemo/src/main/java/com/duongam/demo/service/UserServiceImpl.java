@@ -99,7 +99,7 @@ public class UserServiceImpl implements IUserService {
 		user.setRole(role);
 		String date = cUser.getDob();
 		user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		if (cUser.getGender() == "MALE"){
+		if ("MALE".equals(cUser.getGender())){
 			user.setGender(EGender.MALE);
 		} else user.setGender(EGender.FEMALE);
 		userRepository.save(user);

@@ -2,6 +2,9 @@ package duongam.training.controller;
 
 import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
+import duongam.training.dto.request.forcreate.CRequestClass;
+import duongam.training.dto.request.forcreate.CRequestUser;
+import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.service.HttpUser;
@@ -9,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -64,5 +64,11 @@ public class UserController {
 			return "redirect:/user/login";
 		}
 		return "redirect:/user/list";
+	}
+
+	@PostMapping("/add")
+	@ResponseBody
+	public DResponseUser addDatabase(@ModelAttribute("request") CRequestUser request) {
+		return httpUser.add(request);
 	}
 }

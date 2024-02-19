@@ -21,11 +21,9 @@ public class TrainingProgramSyllabus {
 
     private String sequence; // cai ma lop, no duoc ket hop boi syllabus va tang dan theo moi khoa
 
-
     @ManyToOne
     @JoinColumn(name = "syllabus_code")
     private Syllabus syllabusCode;
-
 
     @ManyToOne
     @JoinColumn(name = "training_program")

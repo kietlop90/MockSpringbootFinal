@@ -272,7 +272,6 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             } else {
                 trainingProgram.setStatus(3);
             }
-
             trainingProgram.setModifiedDate(new Timestamp(System.currentTimeMillis()));
             trainingProgramRepository.save(trainingProgram);
             return new DReponseTrainingProgram(trainingProgram);

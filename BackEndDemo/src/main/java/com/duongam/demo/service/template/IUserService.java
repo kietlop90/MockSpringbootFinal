@@ -18,7 +18,7 @@ public interface IUserService {
 
 	DResponseUser save(CRequestUser cUser);
 
-	DResponseUser update(URequestUser cUser);
+	DResponseUser update(URequestUser uUser);
 
 	DResponseUser findById(Long id);
 

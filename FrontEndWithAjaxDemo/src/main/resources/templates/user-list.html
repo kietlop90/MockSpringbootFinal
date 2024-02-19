@@ -8,7 +8,7 @@
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
-    <script th:src="@{/js/user.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -47,7 +48,7 @@
                         <span class="input-group-text">
                             <img th:src="@{/icon/navigation-menu/calendar-today-blue.png}" alt="">
                         </span>
-                    <input class="form-control" id="datepicker-filter" placeholder="Create date...">
+                    <input type="date" class="form-control" id="datepicker-filter" placeholder="Create date...">
                 </div>
             </div>
             <div class="col-6 group-btn-right">
@@ -76,11 +77,11 @@
                         <thead class="header-table">
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Full name</th>
                             <th>Email</th>
                             <th>Day Of Birth</th>
-                            <th>Status</th>
-                            <th>Roles</th>
+                            <th>Gender</th>
+                            <th>Type</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -91,9 +92,48 @@
                                 <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
                                 <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
-                                <td th:id='${"status"+ item.id}' th:text="${item.status}"></td>
+                                <td th:id="${'status' + item.id}">
+                                    <img th:if="${item.gender == 'MALE'}" th:src="@{/icon/other/male.png}" alt="Male">
+                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
+                                         alt="Female">
+                                </td>
                                 <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
-                                <td th:id='${"action"+ item.id}'>...</td>
+                                <td th:id='${"action"+ item.id}'>
+                                    <button class="btn btn-three-dot dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a th:id="'btn-update-class-' + ${item.id}" class="dropdown-item btn-update-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/other/create.png}" alt="">
+                                                <label style="color: #2C5282">Edit user</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-update-class-' + ${item.id}" class="dropdown-item btn-update-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/other/role-black.png}" alt="">
+                                                <label style="color: #2C5282">Change role</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-copy-class-' + ${item.id}" class="dropdown-item btn-copy-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/other/visibility_off.png}" alt="">
+                                                <label style="color: #2C5282">De-activate user</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-delete-class-' + ${item.id}" class="dropdown-item btn-delete-class"
+                                               th:data-id-class="${item.id}">
+                                                <img th:src="@{/icon/other/delete_forever.png}" alt="">
+                                                <label style="color: #8B8B8B">Delete user</label>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
                             </tr>
                         </th:block>
                         </tbody>
@@ -138,105 +178,102 @@
 <div class="modal" id="addUserModel">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" th:object="${registerForm}" th:action="@{register}">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Add a new user</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 class="modal-title text-center" style="color: white; width: 100%;">Add a new user</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+<!--            <form action="@{/user/add}" method="post" th:object=""></form>-->
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>User type</b></label>
+                    </div>
+                    <div class="col-9">
+                        <select id="user-type-input" class="form-select">
+                            <option value="" selected disabled>Select one</option>
+                            <option value="CUSTOMER">Trainer</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                    </div>
                 </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>User type</b></label>
-                        </div>
-                        <div class="col-9">
-                            <select id="user-type-input" class="form-control">
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="TRAINER">TRAINER</option>
-                                <option value="STUDENT">STUDENT</option>
-                            </select>
-                        </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Name</b></label>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Name</b></label>
-                        </div>
-                        <div class="col-9">
-                            <input id="user-name-input" type="text" class="form-control" placeholder="User name"
-                            />
-                        </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="User name"
+                               autofocus required/>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Email address</b></label>
-                        </div>
-                        <div class="col-9">
-                            <input id="email-address-input" type="text" class="form-control" placeholder="Email address"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Password</b></label>
-                        </div>
-                        <div class="col-9">
-                            <input id="password-input" type="text" class="form-control" placeholder="Email address"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Phone</b></label>
-                        </div>
-                        <div class="col-9">
-                            <input id="phone-input" type="text" class="form-control" placeholder="Phone number"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Date of birth</b></label>
-                        </div>
-                        <div class="col-9">
-                            <input id="dob-input" type="text" class="form-control" placeholder="Enter User type"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Gender</b></label>
-                        </div>
-                        <div class="col-9">
-                            <input id="gender-input" type="text" class="form-control" placeholder="Enter User type"
-                            />
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-3">
-                            <label><b>Status</b></label>
-                        </div>
-                        <div class="col-9">
-                            <img th:src="@{/icon/status/Active.png}"></im>
-                        </div>
-                    </div>
-
                 </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <div class="row mt-3">
-                        <div class="col-12 d-flex justify-content-end">
-                            <button id="btn-cancel-user" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
-                            <button id="btn-add-user" class="btn btn-main me-2">Save</button>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Email address</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="Email address"
+                               autofocus required pattern=".*\S.*"/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Phone</b></label>
+                    </div>
+                    <div class="col-9">
+                        <input type="text" class="form-control" placeholder="Phone number"
+                               autofocus required/>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Date of birth</b></label>
+                    </div>
+                    <div class="col-9">
+                        <div class="input-group">
+                            <input type="date" class="form-control" required>
                         </div>
                     </div>
                 </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Gender</b></label>
+                    </div>
+                    <div class="col-9">
+                        <label>
+                            <input type="radio" name="gender" value="MALE" style="accent-color: #0a3622" checked>
+                            Male
+                        </label>
+                        <label>
+                            <input type="radio" name="gender" value="FEMALE" style="accent-color: #0a3622">
+                            Female
+                        </label>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <label for="user-type-input"><b>Status</b></label>
+                    </div>
+                    <div class="col-9">
+                        <img th:src="@{/icon/status/Active.png}"></im>
+                    </div>
+                </div>
 
-            </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btnCancel" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                        </button>
+                        <button id="btnSave" class="btn btn-main me-2">Save</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

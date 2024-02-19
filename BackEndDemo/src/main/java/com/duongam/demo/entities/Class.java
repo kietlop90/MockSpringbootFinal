@@ -76,4 +76,8 @@ public class Class implements Serializable {
         });
         return classUserList;
     }
+
+    public String userCreatedBy() {
+        return createdBy.getUsername();
+    }
 }

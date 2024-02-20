@@ -26,8 +26,8 @@ public class TrainingProgramController {
     @GetMapping("/list")
     public String list(Model model) {
         List<DReponseTrainingProgram> list = httpTrainingProgram.getAll();
-//        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
-//        model.addAttribute("listTagSearch", listTagSearch);
+        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+        model.addAttribute("listTagSearch", listTagSearch);
         model.addAttribute("list", list);
         return "trainingProgram-list";
     }
@@ -41,6 +41,7 @@ public class TrainingProgramController {
             model.addAttribute("list", list);
             return "trainingProgram-list";
         }
+
         List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName(name);
         List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
         model.addAttribute("listTagSearch", listTagSearch);

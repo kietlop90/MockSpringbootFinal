@@ -30,11 +30,6 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(reponseTrainingProgramPage);
     }
 
-//    @GetMapping("/listAllTrainingUnit/{code}")
-//    public ResponseEntity<List<DReponseTrainingUnit>> listAllTrainingUnit(@PathVariable String code) {
-//        List<DReponseTrainingUnit> reponseTrainingUnits = trainingProgramService.getAllTrainingUnitBySyllabusCode(code);
-//        return ResponseEntity.ok().body(reponseTrainingUnits);
-//    }
 
     @GetMapping("/getAllTrainingUnit/{code}")
     public ResponseEntity<List<DReponseTrainingUnit>> getAllTrainingUnit(@PathVariable String code) {
@@ -70,11 +65,11 @@ public class TrainingProgramController {
 
 
 
-//    @GetMapping("/search/{name}")
-//    public ResponseEntity<List<DReponseTrainingProgram>> searchTrainingProgram(@PathVariable String name) {
-//        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
-//        return ResponseEntity.ok().body(reponseTrainingProgramList);
-//    }
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<DReponseTrainingProgram>> searchTrainingProgram(@PathVariable String name) {
+        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
+        return ResponseEntity.ok().body(reponseTrainingProgramList);
+    }
 
 
     @GetMapping("/getDetail/{code}")
@@ -90,11 +85,11 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(reponseTrainingProgramList);
     }
 
-//    @GetMapping("/deleteSearchTag/{name}")
-//    public ResponseEntity<List<DReponseTrainingProgram>> deleteSearchTag(@PathVariable String name) {
-//        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
-//        return ResponseEntity.ok().body(reponseTrainingProgramList);
-//    }
+    @GetMapping("/deleteSearchTag/{name}")
+    public ResponseEntity<List<DReponseTrainingProgram>> deleteSearchTag(@PathVariable String name) {
+        List<DReponseTrainingProgram> reponseTrainingProgramList = trainingProgramService.searchALlTrainingProgram(name);
+        return ResponseEntity.ok().body(reponseTrainingProgramList);
+    }
 
 
     @GetMapping("/duplicate/{id}")

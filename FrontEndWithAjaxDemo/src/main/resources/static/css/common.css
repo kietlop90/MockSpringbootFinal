@@ -81,6 +81,11 @@ body {
     color: #FFFFFF;
 }
 
+.btn-admin{
+    background-color: #4DB848;!important;
+    color: #FFFFFF;
+}
+
 .btn-main:hover {
     background-color: #4a5975 !important;
     color: #FFFFFF;

@@ -1,3 +1,21 @@
 .form-control::placeholder {
     font-style: italic;
 }
+
+.type-admin {
+    text-align: center;
+    background-color: #4DB848!important;
+    color: white !important;
+    width: 50px !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+}
+
+.type-trainee {
+    text-align: center;
+    background-color: #2D3748 !important;
+    color: white !important;
+    width: 50px !important;
+    padding: 10px 20px !important;
+    border-radius: 50px !important;
+}

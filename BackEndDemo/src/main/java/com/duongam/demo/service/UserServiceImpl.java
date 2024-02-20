@@ -4,6 +4,7 @@ import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.request.forupdate.URequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
+import com.duongam.demo.dto.response.forlist.LResponseSyllabus;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.entities.Role;
 import com.duongam.demo.entities.User;
@@ -15,6 +16,10 @@ import com.duongam.demo.service.template.IUserService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -80,8 +85,15 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<LResponseUser> getAll() {
-        return userRepository.findAllBy();
+	public Page<LResponseUser> getAll(int page, int size, String sortField, String dir) {
+		Pageable pageable;
+		if (sortField == null || sortField.isEmpty()) {
+			pageable = PageRequest.of(page, size, Sort.Direction.fromString("desc"), "id");
+		} else {
+			pageable = PageRequest.of(page, size, Sort.Direction.fromString(dir), sortField);
+		}
+		return userRepository.findAllBy(pageable).
+				map(entity -> modelMapper.map(entity, LResponseUser.class));
     }
 
 	@Override
@@ -94,8 +106,8 @@ public class UserServiceImpl implements IUserService {
 		Role role = null;
 		if ("ADMIN".equals(cUser.getRole())){
 			role = new Role(ERole.ADMIN);
-		} else if ("CUSTOMER".equals(cUser.getRole())){
-			role = new Role(ERole.CUSTOMER);
+		} else if ("TRAINER".equals(cUser.getRole())){
+			role = new Role(ERole.TRAINER);
 		}
 		user.setRole(role);
 		String date = cUser.getDob();

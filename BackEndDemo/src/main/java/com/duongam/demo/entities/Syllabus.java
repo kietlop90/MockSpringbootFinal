@@ -23,9 +23,6 @@ import java.util.List;
 
 public class Syllabus {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "syllabus_code")
     private String topicCode;
 

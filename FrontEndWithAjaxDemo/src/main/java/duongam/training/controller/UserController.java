@@ -29,8 +29,9 @@ public class UserController {
     public String list(Model model, @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "10") int size,
                        @RequestParam(required = false) String sortField,
-                       @RequestParam(defaultValue = "desc") String dir) {
-        PaginatedResponse<LResponseUser> lResponseUsers = httpUser.getAll(page, size, sortField, dir);
+                       @RequestParam(defaultValue = "desc") String dir,
+                        @RequestParam(defaultValue = "")String keywords){
+        PaginatedResponse<LResponseUser> lResponseUsers = httpUser.getAll(page, size, sortField, dir, keywords);
         model.addAttribute("userList", lResponseUsers.getContent());
         model.addAttribute("totalPages", lResponseUsers.getTotalPages());
         model.addAttribute("currentPage", lResponseUsers.getCurrentPage());

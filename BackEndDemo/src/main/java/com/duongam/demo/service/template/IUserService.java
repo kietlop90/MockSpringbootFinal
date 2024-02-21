@@ -15,7 +15,7 @@ public interface IUserService {
 
 	DResponseUser create(RegisterModel registerModel);
 
-	Page<LResponseUser> getAll(int page, int size, String sort, String dir);
+	Page<LResponseUser> getAll(int page, int size, String sort, String dir, String[] keywords);
 
 	DResponseUser save(CRequestUser cUser);
 

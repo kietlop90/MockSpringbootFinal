@@ -9,7 +9,6 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script th:src="@{/js/user.js}"></script>
-    <script th:src="@{/js/syllabus-list.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -41,32 +40,26 @@
                         <span class="input-group-text">
                             <img th:src="@{/icon/document-manage/search.png}" alt="">
                         </span>
-                    <input class="form-control" id="input-filter" placeholder="Search by...">
-                    <button type="button" onclick="addKeywordAndSearch()" class="btn btn-main">
+                    <input type="text" class="form-control" id="input-filter" placeholder="Search by..." autofocus>
+                    <button type="button" id="btn-filter-user" class="btn btn-main">
                            <img th:src="@{/icon/action/filter_list-white.png}" alt="">
                         Filter
                     </button>
                 </div>
             </div>
-            <div class="col-6 group-btn-right">
+            <div class="col-6 group-btn-right mb-2">
                 <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">
                     <img th:src="@{/icon/action/add-white.png}" alt="">
                     Add User
                 </button>
             </div>
-
-            <div  class="row mb-2 mt-2">
+            <div class="row mb-2">
                 <div class="col">
-                    <div class="group-filter " >
-                            <span class="item-filter">
-                                foundation
-                                <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
-                                     alt="">
-                            </span>
+                    <div id="group-filter" class="group-filter">
                     </div>
                 </div>
             </div>
-            <div id="keywords-container"></div>
+
 
             <!-- table -->
             <div class="row">
@@ -114,7 +107,9 @@
                                     <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
                                          alt="Female">
                                 </td>
-                                <td class="type" th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                <td th:id='${"role"+ item.id}'>
+                                    <label th:class="${'status-' + item.role.toLowerCase()}" th:text="${item.role}"></label>
+                                </td>
                                 <td th:id='${"action"+ item.id}'>
                                     <button class="btn btn-three-dot dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -303,7 +298,13 @@
                         <label for="user-type-input"><b>Status</b></label>
                     </div>
                     <div class="col-9">
-                        <img th:src="@{/icon/status/Active.png}"></im>
+<!--                        <img th:src="@{/icon/status/Active.png}"></im>-->
+                        <div class="btn-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="togBtn" checked="checked" disabled>
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -324,42 +325,6 @@
     </div>
 </div>
 <script>
-    var searchKeywords = []; // Mảng để lưu trữ các từ khóa tìm kiếm
-
-    function addKeywordAndSearch() {
-        var input = document.getElementById('input-filter').value;
-        if (input.trim() !== '') {
-            searchKeywords.push(input.trim()); // Thêm từ khóa mới vào mảng
-            search(); // Gọi hàm tìm kiếm
-        }
-    }
-
-    function removeKeywordAndSearch(index) {
-        searchKeywords.splice(index, 1); // Xóa từ khóa tại vị trí chỉ định
-        search(); // Gọi hàm tìm kiếm
-    }
-
-    function search() {
-        var url = `/user/list?keywords=${encodeURIComponent(searchKeywords.join(','))}`;
-        window.location.href = url; // Gửi yêu cầu tìm kiếm đến server
-    }
-
-    function renderKeywords() {
-        var keywordsContainer = document.getElementById('keywords-container');
-        // Thêm từ khóa mới vào giao diện người dùng
-        searchKeywords.forEach((keyword, index) => {
-            var keywordSpan = document.createElement('span');
-            keywordSpan.textContent = keyword;
-            var removeBtn = document.createElement('button');
-            removeBtn.textContent = 'x';
-            removeBtn.onclick = function() { removeKeywordAndSearch(index); };
-            keywordSpan.appendChild(removeBtn);
-            keywordsContainer.appendChild(keywordSpan);
-        });
-    }
-
-    // Gọi hàm này mỗi khi trang được tải để hiển thị từ khóa tìm kiếm
-    renderKeywords();
 
 </script>
 </body>

@@ -34,16 +34,11 @@ public class HttpUser {
     @Autowired
     private ModelMapper modelMapper;
 
-    public DResponseUser add(CRequestUser cRequestUser) {
+    public DResponseUser add(CRequestUser requestUser) {
         HttpBase<CRequestUser, DResponseUser> httpBase = new HttpBase<>();
-        return httpBase.postToAPI(cRequestUser, userUrl.add(), DResponseUser.class);
+        requestUser.setStatus(true);
+        return httpBase.postToAPI(requestUser, userUrl.add(), DResponseUser.class);
     }
-
-//    public DResponseUser register(RegisterForm registerForm) {
-//        CRequestUser requestUser = modelMapper.map(registerForm, CRequestUser.class);
-//        HttpBase<CRequestUser, DResponseUser> httpBase = new HttpBase<>();
-//        return httpBase.postToAPI(requestUser, userUrl.register(), DResponseUser.class);
-//    }
 
     public DResponseUser login(LoginForm loginForm) {
         HttpBase<LoginForm, DResponseUser> httpBase = new HttpBase<>();

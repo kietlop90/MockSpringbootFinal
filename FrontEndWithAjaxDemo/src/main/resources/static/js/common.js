@@ -59,13 +59,16 @@ function addItem(url, data, redirect){
 }
 
 let resultUpdateItem;
-function updateItem(url, data){
+function updateItem(url, data, redirect){
     $.ajax({
         type: "POST",
         url: url,
         data: data,
         success: function (result) {
             resultUpdateItem = result;
+            if (redirect) {
+                window.location.replace(redirect);
+            }
         }
     });
 }

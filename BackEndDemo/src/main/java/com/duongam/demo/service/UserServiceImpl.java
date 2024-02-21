@@ -30,10 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -110,63 +107,68 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-    @Override
-    @Transactional
-    public DResponseUser save(CRequestUser cUser) {
-        User user = new User();
-        user.setName(cUser.getName());
-        user.setEmail(cUser.getEmail());
-        user.setPhone(cUser.getPhone());
-        user.setStatus(cUser.getStatus());
-        Role role = null;
-        if ("ADMIN".equals(cUser.getRole())) {
-            role = new Role(ERole.ADMIN);
-        } else if ("TRAINER".equals(cUser.getRole())) {
-            role = new Role(ERole.TRAINER);
+        @Override
+        @Transactional
+        public DResponseUser save(CRequestUser cUser) {
+            User user = new User();
+            user.setName(cUser.getName());
+            user.setEmail(cUser.getEmail());
+            user.setPhone(cUser.getPhone());
+            user.setStatus(cUser.getStatus());
+            Role role = null;
+            if ("ADMIN".equals(cUser.getRole())){
+                role = roleRepository.findByName(ERole.ADMIN).orElse(null);
+            } else if ("CUSTOMER".equals(cUser.getRole())){
+                role = roleRepository.findByName(ERole.TRAINER).orElse(null);
+            }
+            user.setRole(role);
+            String date = cUser.getDob();
+            user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            if ("MALE".equals(cUser.getGender())){
+                user.setGender(EGender.MALE);
+            } else user.setGender(EGender.FEMALE);
+            userRepository.save(user);
+            return new DResponseUser(user);
         }
-        user.setRole(role);
-        String date = cUser.getDob();
-        user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        if (cUser.getGender() == "MALE") {
-            user.setGender(EGender.MALE);
-        } else user.setGender(EGender.FEMALE);
-        userRepository.save(user);
-        DResponseUser dResponseUser = new DResponseUser(user);
-        return dResponseUser;
-    }
 
-    @Override
-    @Transactional
-    public DResponseUser update(URequestUser uUser) {
-        User existingUser = userRepository.findById(uUser.getId()).orElse(null);
-        String date = uUser.getDob();
-        if (existingUser != null) {
-            existingUser.setName(uUser.getName());
-            existingUser.setPhone(uUser.getPhone());
-            existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            existingUser.setGender(EGender.valueOf(uUser.getGender()));
-            existingUser.setStatus(Boolean.valueOf(uUser.getStatus()));
-            userRepository.save(existingUser);
-            DResponseUser dResponseUser = new DResponseUser(existingUser);
+        @Override
+        @Transactional
+        public DResponseUser update(URequestUser uUser) {
+            User existingUser = userRepository.findById(uUser.getId()).orElse(null);
+            String date = uUser.getDob();
+            if (existingUser != null){
+                existingUser.setName(uUser.getName());
+                existingUser.setPhone(uUser.getPhone());
+                existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                existingUser.setGender(EGender.valueOf(uUser.getGender()));
+                existingUser.setStatus(uUser.getStatus());
+                userRepository.save(existingUser);
+                return new DResponseUser(existingUser);
+            }
+            return null;
+        }
+
+        @Override
+        @Transactional
+        public DResponseUser findById(Long id) {
+            User user = userRepository.findById(id).orElse(null);
+            assert user != null;
+            return new DResponseUser(user);
+        }
+
+        @Override
+        @Transactional
+        public DResponseUser deleteById(Long id) {
+            User user = userRepository.findById(id).orElse(null);
+            assert user != null;
+            DResponseUser dResponseUser = new DResponseUser(user);
+            userRepository.deleteById(id);
             return dResponseUser;
         }
-        return null;
-    }
 
-    @Override
-    @Transactional
-    public DResponseUser findById(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        return new DResponseUser(user);
-    }
-
-    @Override
-    @Transactional
-    public DResponseUser deleteById(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        DResponseUser dResponseUser = new DResponseUser(user);
-        userRepository.deleteById(id);
-        return dResponseUser;
-    }
+	@Override
+	public DResponseUser deActivateById(Long id) {
+		return null;
+	}
 
 }

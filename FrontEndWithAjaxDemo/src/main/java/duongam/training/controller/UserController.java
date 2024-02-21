@@ -4,6 +4,7 @@ import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forcreate.CRequestUser;
+import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
@@ -25,28 +26,22 @@ public class UserController {
     @Autowired
     private HttpUser httpUser;
 
-    @GetMapping("/list")
-    public String list(Model model, @RequestParam(defaultValue = "0") int page,
-                       @RequestParam(defaultValue = "10") int size,
-                       @RequestParam(required = false) String sortField,
-                       @RequestParam(defaultValue = "desc") String dir,
-                        @RequestParam(defaultValue = "")String keywords){
-        PaginatedResponse<LResponseUser> lResponseUsers = httpUser.getAll(page, size, sortField, dir, keywords);
-        model.addAttribute("userList", lResponseUsers.getContent());
-        model.addAttribute("totalPages", lResponseUsers.getTotalPages());
-        model.addAttribute("currentPage", lResponseUsers.getCurrentPage());
-        model.addAttribute("pageSize", lResponseUsers.getSize());
+	@GetMapping("/list")
+	public String list(Model model, @RequestParam(defaultValue = "0") int page,
+					   @RequestParam(defaultValue = "10") int size,
+					   @RequestParam(required = false) String sortField,
+					   @RequestParam(defaultValue = "desc") String dir,
+					   @RequestParam(defaultValue = "")String keywords){
+		PaginatedResponse<LResponseUser> lResponseUsers = httpUser.getAll(page, size, sortField, dir, keywords);
+		model.addAttribute("userList", lResponseUsers.getContent());
+		model.addAttribute("totalPages", lResponseUsers.getTotalPages());
+		model.addAttribute("currentPage", lResponseUsers.getCurrentPage());
+		model.addAttribute("pageSize", lResponseUsers.getSize());
 
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("dir", dir);
-        return "user-list";
-    }
-
-    @PostMapping("/add")
-    @ResponseBody
-    public DResponseUser addDatabase(@ModelAttribute("request") CRequestUser request) {
-        return httpUser.add(request);
-    }
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("dir", dir);
+		return "user-list";
+	}
 
     @GetMapping("/login")
     public String getLogin(Model model, String error, String logout) {
@@ -60,12 +55,38 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
-        DResponseUser dResponseUser = httpUser.login(loginForm);
-        if (dResponseUser == null) {
-            return "redirect:/user/login";
-        }
-        return "redirect:/user/list";
-    }
+	@PostMapping("/login")
+	@ResponseBody
+	public String postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
+		DResponseUser dResponseUser = httpUser.login(loginForm);
+		if(dResponseUser == null){
+			return "redirect:/user/login";
+		}
+		return "redirect:/user/list";
+	}
+
+	@PostMapping("/add")
+	@ResponseBody
+	public DResponseUser addDatabase(@ModelAttribute("user") CRequestUser request) {
+		return httpUser.add(request);
+	}
+
+//	@GetMapping("/delete/{id}")
+//	public String delete(@PathVariable("id") Long requestId){
+//		httpUser.deleteById(requestId);
+//		return "redirect:/user/list";
+//	}
+//
+//	@GetMapping("/update/{id}")
+//	public String updateForm(Model model, @PathVariable("id") Long requestId){
+//		DResponseUser dResponseUser = httpUser.getById(requestId);
+//		model.addAttribute("existingUser", dResponseUser);
+//		return "user-update";
+//	}
+
+	@PostMapping("/update")
+	@ResponseBody
+	public DResponseUser update(@ModelAttribute("existingUser") URequestUser request) {
+		return httpUser.update(request);
+	}
 }

@@ -15,4 +15,15 @@ public class DResponseUser {
     private String role;
 
     private String token;
+
+    private String email;
+
+    private String dob;
+
+    private String gender;
+
+    private String phone;
+
+    private String name;
+
 }

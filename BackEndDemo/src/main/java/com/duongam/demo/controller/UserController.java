@@ -42,7 +42,6 @@ public class UserController {
         paginatedResponse.setTotalElements(responseUsers.getTotalElements());
         paginatedResponse.setCurrentPage(responseUsers.getNumber());
         paginatedResponse.setSize(responseUsers.getSize());
-
         return ResponseEntity.ok().body(paginatedResponse);
     }
 

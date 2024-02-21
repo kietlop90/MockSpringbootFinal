@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Syllabus</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/syllabus-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Users
+            </div>
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <div class="col-3">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/document-manage/search.png}" alt="">
+                        </span>
+                    <input class="form-control" id="input-filter" placeholder="Search by name...">
+                </div>
+            </div>
+            <div class="col-3 mb-2">
+                <div class="input-group">
+                        <span class="input-group-text">
+                            <img th:src="@{/icon/navigation-menu/calendar-today-blue.png}" alt="">
+                        </span>
+                    <input type="date" class="form-control" id="datepicker-filter" placeholder="Create date...">
+                </div>
+            </div>
+            <div class="col-6 group-btn-right">
+                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">
+                    <img th:src="@{/icon/action/add-white.png}" alt="">
+                    Add User
+                </button>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col">
+                    <div class="group-filter">
+                            <span class="item-filter">
+                                foundation
+                                <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
+                                     alt="">
+                            </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead class="header-table">
+                        <tr>
+                            <th>ID</th>
+                            <th>Full name</th>
+                            <th>Email</th>
+                            <th>Day Of Birth</th>
+                            <th>Gender</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="item : ${list}">
+                            <tr th:id='${"tr"+ item.id}'>
+                                <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
+                                <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
+                                <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
+                                <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
+                                <td th:id="${'status' + item.id}">
+                                    <img th:if="${item.gender == 'MALE'}" th:src="@{/icon/other/male.png}" alt="Male">
+                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
+                                         alt="Female">
+                                </td>
+                                <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                <td th:id='${"action"+ item.id}'>
+                                    <button class="btn btn-three-dot dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a th:id="'btn-update-class-' + ${item.id}"
+                                               class="dropdown-item btn-update-class"
+                                               th:data-id-user="${item.id}" data-bs-toggle="modal"
+                                               data-bs-target="#updateUserModal">
+                                                <img th:src="@{/icon/other/create.png}" alt="">
+                                                <label style="color: #2C5282">Edit user</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-update-class-' + ${item.id}"
+                                               class="dropdown-item btn-update-class"
+                                               th:data-id-user="${item.id}">
+                                                <img th:src="@{/icon/other/role-black.png}" alt="">
+                                                <label style="color: #2C5282">Change role</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-copy-class-' + ${item.id}"
+                                               class="dropdown-item btn-copy-class"
+                                               th:data-id-user="${item.id}">
+                                                <img th:src="@{/icon/other/visibility_off.png}" alt="">
+                                                <label style="color: #2C5282">De-activate user</label>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:id="'btn-delete-user-' + ${item.id}"
+                                               class="dropdown-item btn-delete-class"
+                                               th:data-id-user="${item.id}"
+                                               th:href="@{/user/delete/{id}(id=${item.id})}"
+                                               onclick="if (!(confirm('Are you sure you want to delete this Content?'))) return false">
+                                                <img th:src="@{/icon/other/delete_forever.png}" alt="">
+                                                <label style="color: #8B8B8B">Delete user</label>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="group-pagging">
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/first_page.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging number active">1</div>
+                        <div class="item-pagging number">2</div>
+                        <div class="item-pagging number">3</div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="">
+                        </div>
+                        <div class="item-pagging">
+                            <img th:src="@{/icon/navigator/last_page.png}" alt="">
+                        </div>
+                        <div class="item-per-page">
+                            Rows per page:
+                            <select class="form-control" name="item-per-page" id="item-per-page">
+                                <option value="">10</option>
+                                <option value="">20</option>
+                                <option value="">30</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+
+
+<!--Update User Modal-->
+<div class="modal" id="updateUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 class="modal-title text-center" style="color: white; width: 100%;">
+                    Update user
+                </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <form th:action="@{/user/update}" method="post" th:object="${existingUser}">
+                <div class="modal-body">
+                    <input type="hidden" th:field="*{id}" />
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>User type</b></label>
+                        </div>
+                        <div class="col-9">
+                            <p class="form-select" readonly
+                               th:utext="${existingUser.role == 'ADMIN' ? 'Admin' : (existingUser.role == 'CUSTOMER' ? 'Trainer' : 'Unknown')}"/>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Name</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" placeholder="User name"
+                                   autofocus required id="" th:field="*{name}"/>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Email address</b></label>
+                        </div>
+                        <div class="col-9">
+                            <p class="form-control" th:text="${existingUser.email}" readonly/>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Phone</b></label>
+                        </div>
+                        <div class="col-9">
+                            <input type="text" class="form-control" placeholder="Phone number"
+                                   autofocus required th:field="*{phone}"/>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Date of birth</b></label>
+                        </div>
+                        <div class="col-9">
+                            <div class="input-group">
+                                <input type="date" class="form-control" required th:field="*{dob}"
+                                       th:value="${#dates.format(existingUser.dob, 'yyyy-MM-dd')}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Gender</b></label>
+                        </div>
+                        <div class="col-9">
+                            <label>
+                                <input type="radio" name="gender" value="MALE"
+                                       style="accent-color: #0a3622" th:field="*{gender}">
+                                Male
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="FEMALE"
+                                       style="accent-color: #0a3622" th:field="*{gender}">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <label><b>Status</b></label>
+                        </div>
+                        <div class="col-9">
+                            <img th:src="@{/icon/status/Active.png}"></im>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div class="row mb-2">
+                        <div class="col-12 d-flex justify-content-end">
+                            <button class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                            </button>
+                            <button class="btn btn-main me-2" type="submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script>
+    // jQuery script to trigger modal on page load
+    $(document).ready(function () {
+        // Select the modal by its ID and call the modal() method
+        $('#updateUserModal').modal('show');
+    });
+</script>
+</body>
+
+
+
+</html>

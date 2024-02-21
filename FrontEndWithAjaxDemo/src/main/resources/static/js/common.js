@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     let tabDom = $(".tab");
     if (tabDom.length > 0) {
         for (const index in tabDom) {
@@ -32,18 +32,20 @@ $(document).ready(function(){
 });
 
 let resultGetItemById;
+
 function getItemById(url, id) {
     $.ajax({
-        type : "GET",
-        url : url + id,
-        success : function(result){
+        type: "GET",
+        url: url + id,
+        success: function (result) {
             resultGetItemById = result;
         }
     });
 }
 
 let resultAddItem;
-function addItem(url, data, redirect){
+
+function addItem(url, data, redirect) {
     debugger
     $.ajax({
         type: "POST",
@@ -51,21 +53,7 @@ function addItem(url, data, redirect){
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
             resultAddItem = result;
-            if (redirect) {
-                window.location.replace(redirect + resultAddItem.id);
-            }
-        }
-    });
-}
-
-let resultUpdateItem;
-function updateItem(url, data, redirect){
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: data,
-        success: function (result) {
-            resultUpdateItem = result;
+            alert("Add new successfully !!!");
             if (redirect) {
                 window.location.replace(redirect);
             }
@@ -73,13 +61,52 @@ function updateItem(url, data, redirect){
     });
 }
 
-let resultDeleteItem;
-function deleteItem(url, id){
+let resultUpdateItem;
+
+function updateItem(url, data, redirect) {
     $.ajax({
         type: "POST",
-        url: url + id,
+        url: url,
+        data: data,
+        success: function (result) {
+            resultUpdateItem = result;
+            alert("Update successfully !!!");
+            if (redirect) {
+                window.location.replace(redirect);
+            }
+        }
+    });
+}
+
+let resultDetailItem;
+
+function getItem(url, data, redirect) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: data,
+            success: function (result) {
+                resultDetailItem = result;
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
+
+let resultDeleteItem;
+
+function deleteItem(url, id, redirect) {
+    $.ajax({
+        type: "DELETE",
+        url: url + "/" + id,
         success: function (result) {
             resultDeleteItem = result;
+            alert("Delete successfully !!!");
+            if (redirect) {
+                window.location.replace(redirect);
+            }
         }
     });
 }

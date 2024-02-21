@@ -93,17 +93,10 @@ public class UserServiceImpl implements IUserService {
         } else {
             pageable = PageRequest.of(page, size, Sort.Direction.fromString(dir), sortField);
         }
-        switch (keywords.length) {
-            case 1:
-                return userRepository.findAllByOneKeyword(keywords[0], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
-            case 2:
-                return userRepository.findAllByTwoKeyword(keywords[0], keywords[1], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
-            case 3:
-                return userRepository.findAllByThreeKeyword(keywords[0], keywords[1], keywords[2], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
-            case 4:
-                return userRepository.findAllByForKeyword(keywords[0], keywords[1], keywords[2], keywords[3], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
-            default:
-                return userRepository.findAllBy(pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
+        if (keywords.length == 0) {
+            return userRepository.findAllBy(pageable);
+        } else {
+        return userRepository.findAllByOneKeyword(keywords[keywords.length - 1], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
         }
     }
 
@@ -112,21 +105,16 @@ public class UserServiceImpl implements IUserService {
         public DResponseUser save(CRequestUser cUser) {
             User user = new User();
             user.setName(cUser.getName());
+            user.setUsername(cUser.getUsername());
             user.setEmail(cUser.getEmail());
             user.setPhone(cUser.getPhone());
             user.setStatus(cUser.getStatus());
-            Role role = null;
-            if ("ADMIN".equals(cUser.getRole())){
-                role = roleRepository.findByName(ERole.ADMIN).orElse(null);
-            } else if ("CUSTOMER".equals(cUser.getRole())){
-                role = roleRepository.findByName(ERole.TRAINER).orElse(null);
-            }
+            user.setPassword(bCryptPasswordEncoder.encode(cUser.getPassword()));
+            Role role = roleRepository.findByName(ERole.valueOf(cUser.getRole())).orElse(null);
             user.setRole(role);
             String date = cUser.getDob();
             user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            if ("MALE".equals(cUser.getGender())){
-                user.setGender(EGender.MALE);
-            } else user.setGender(EGender.FEMALE);
+            user.setGender(EGender.valueOf(cUser.getGender()));
             userRepository.save(user);
             return new DResponseUser(user);
         }

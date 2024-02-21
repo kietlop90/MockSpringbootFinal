@@ -37,7 +37,6 @@ public class UserController {
 		model.addAttribute("totalPages", lResponseUsers.getTotalPages());
 		model.addAttribute("currentPage", lResponseUsers.getCurrentPage());
 		model.addAttribute("pageSize", lResponseUsers.getSize());
-
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("dir", dir);
 		return "user-list";
@@ -56,7 +55,6 @@ public class UserController {
     }
 
 	@PostMapping("/login")
-	@ResponseBody
 	public String postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
 		DResponseUser dResponseUser = httpUser.login(loginForm);
 		if(dResponseUser == null){
@@ -71,6 +69,24 @@ public class UserController {
 		return httpUser.add(request);
 	}
 
+	@PostMapping("/update")
+	@ResponseBody
+	public DResponseUser update(@ModelAttribute("user") URequestUser request) {
+		return httpUser.update(request);
+	}
+
+	@GetMapping("/getById/{id}")
+	@ResponseBody
+	public DResponseUser getById(@PathVariable("id") Long requestId) {
+		return httpUser.getById(requestId);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public void delete(@PathVariable("id") Long requestId) {
+		httpUser.deleteById(requestId);
+	}
+
 //	@GetMapping("/delete/{id}")
 //	public String delete(@PathVariable("id") Long requestId){
 //		httpUser.deleteById(requestId);
@@ -83,10 +99,4 @@ public class UserController {
 //		model.addAttribute("existingUser", dResponseUser);
 //		return "user-update";
 //	}
-
-	@PostMapping("/update")
-	@ResponseBody
-	public DResponseUser update(@ModelAttribute("existingUser") URequestUser request) {
-		return httpUser.update(request);
-	}
 }

@@ -5,16 +5,14 @@ $(document).ready(function () {
     $("#btn-add-user").on("click", function () {
         let role = $("#user-type-input").val();
         let name = $("#name-input").val(); // ten that
-        let username = $("#user-name-input").val();
         let email = $("#email-address-input").val();
-        // let password = $("#password-input").val();
         let phone = $("#phone-input").val();
         let dob = $("#dob-input").val();
         let gender = $("#gender-input").val();
         let data = {
             role: role,
             name: name,
-            username: username,
+            username: email,
             password: '123456789',
             email: email,
             phone: phone,
@@ -22,11 +20,39 @@ $(document).ready(function () {
             gender: gender,
             status: true,
         };
-        addItem("/user/add", data, "/user/list");
+        if (resultDetailItem && resultDetailItem.id) {
+            data.id = resultDetailItem.id;
+            updateItem("/user/update", data, "/user/list");
+        } else {
+            addItem("/user/add", data, "/user/list");
+        }
     })
-    $(".btn-update-user").on("click", function () {
-        //TO DO
+    $(".btn-update-user").on("click", async function () {
+        let id = $(this).attr("data-id");
+        await getItem("/user/getById/" + id);
+        // update text in form
+        $("#title-model").html("Update a user");
+        $("#user-type-input").attr("disabled", "disabled");
+        $("#email-address-input").attr("disabled", "disabled");
+
+        // fill data in form
+        $("#user-type-input").val(resultDetailItem.role);
+        $("#name-input").val(resultDetailItem.name); // ten that
+        $("#user-name-input").val(resultDetailItem.username);
+        $("#email-address-input").val(resultDetailItem.email);
+        $("#phone-input").val(resultDetailItem.phone);
+        $("#dob-input").attr("value", moment(resultDetailItem.dob).format('YYYY-MM-DD'));
+        $("#gender-input").val(resultDetailItem.gender);
+
+        // trigger show modal
+        $("#btn-add").click();
     })
+    $(".btn-delete-user").on("click", function () {
+        let id = $(this).attr("data-id");
+        deleteItem("/user/delete", id, "/user/list");
+    })
+
+    // event enter
     $(document).on("keypress", function (e) {
         if(e.keyCode === 13) {
             addKeywordAndSearch();

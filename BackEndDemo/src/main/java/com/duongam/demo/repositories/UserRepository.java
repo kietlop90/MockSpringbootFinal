@@ -21,18 +21,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<LResponseUser> findAllByOneKeyword(@Param("keyword") String keyword, Pageable pageable);
 
     @Query("SELECT u FROM User u WHERE CAST(u.id AS string) LIKE %:keyword% OR u.name LIKE %:keyword% OR u.email LIKE %:keyword% " +
-            "AND CAST(u.id AS string) LIKE %:keyword2% OR u.name LIKE %:keyword2% OR u.email LIKE %:keyword2% ")
+            "OR CAST(u.id AS string) LIKE %:keyword2% OR u.name LIKE %:keyword2% OR u.email LIKE %:keyword2% ")
     Page<LResponseUser> findAllByTwoKeyword(@Param("keyword") String keyword, @Param("keyword2") String keyword2, Pageable pageable);
 
     @Query("SELECT u FROM User u WHERE CAST(u.id AS string) LIKE %:keyword% OR u.name LIKE %:keyword% OR u.email LIKE %:keyword% " +
-            "AND CAST(u.id AS string) LIKE %:keyword2% OR u.name LIKE %:keyword2% OR u.email LIKE %:keyword2%  " +
-            "AND CAST(u.id AS string) LIKE %:keyword3% OR u.name LIKE %:keyword3% OR u.email LIKE %:keyword3% ")
+            "OR CAST(u.id AS string) LIKE %:keyword2% OR u.name LIKE %:keyword2% OR u.email LIKE %:keyword2%  " +
+            "OR CAST(u.id AS string) LIKE %:keyword3% OR u.name LIKE %:keyword3% OR u.email LIKE %:keyword3% ")
     Page<LResponseUser> findAllByThreeKeyword(@Param("keyword") String keyword, @Param("keyword2") String keyword2, @Param("keyword3") String keyword3, Pageable pageable);
 
     @Query("SELECT u FROM User u WHERE CAST(u.id AS string) LIKE %:keyword% OR u.name LIKE %:keyword% OR u.email LIKE %:keyword% " +
-            "AND CAST(u.id AS string) LIKE %:keyword2% OR u.name LIKE %:keyword2% OR u.email LIKE %:keyword2% " +
-            "AND CAST(u.id AS string) LIKE %:keyword3% OR u.name LIKE %:keyword3% OR u.email LIKE %:keyword3% " +
-            "AND CAST(u.id AS string) LIKE %:keyword4% OR u.name LIKE %:keyword4% OR u.email LIKE %:keyword4%")
+            "OR CAST(u.id AS string) LIKE %:keyword2% OR u.name LIKE %:keyword2% OR u.email LIKE %:keyword2% " +
+            "OR CAST(u.id AS string) LIKE %:keyword3% OR u.name LIKE %:keyword3% OR u.email LIKE %:keyword3% " +
+            "OR CAST(u.id AS string) LIKE %:keyword4% OR u.name LIKE %:keyword4% OR u.email LIKE %:keyword4%")
     Page<LResponseUser> findAllByForKeyword(@Param("keyword") String keyword, @Param("keyword2") String keyword2, @Param("keyword3") String keyword3,
                                    @Param("keyword4") String keyword4, Pageable pageable);
 

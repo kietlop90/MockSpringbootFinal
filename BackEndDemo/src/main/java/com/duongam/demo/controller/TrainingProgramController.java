@@ -119,7 +119,7 @@ public class TrainingProgramController {
 
 
 
-
+chu
 //    @PostMapping("/saveTrainingProgram")
 //    public ResponseEntity<DReponseTrainingProgram> saveTrainingProgram(@RequestBody RequestTrainingProgramCreate requestTrainingProgramUpdate) {
 //        DReponseTrainingProgram reponseTrainingProgram = trainingProgramService.save(requestTrainingProgramUpdate);

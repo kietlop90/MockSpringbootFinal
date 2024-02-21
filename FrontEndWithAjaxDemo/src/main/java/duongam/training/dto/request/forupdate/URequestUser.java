@@ -19,8 +19,8 @@ public class URequestUser {
     @Email
     private String email;
     private String phone;
-    private List<String> roles;
-    private LocalDate dob;
+    private String role;
+    private String dob;
     private String gender;
     private boolean status;
     private String createdBy;

@@ -25,10 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -83,8 +80,13 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public List<LResponseUser> getAll() {
-        return userRepository.findAllBy();
+	public List<DResponseUser> getAll() {
+		List<User> userList = userRepository.findAll();
+		List<DResponseUser> dResponseUserList = new ArrayList<>();
+		for (User user : userList){
+			dResponseUserList.add(new DResponseUser(user));
+		}
+        return dResponseUserList;
     }
 
 	@Override
@@ -120,7 +122,7 @@ public class UserServiceImpl implements IUserService {
 		if (existingUser != null){
 			existingUser.setName(uUser.getName());
 			existingUser.setPhone(uUser.getPhone());
-			existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 			existingUser.setGender(EGender.valueOf(uUser.getGender()));
 			existingUser.setStatus(Boolean.valueOf(uUser.getStatus()));
 			userRepository.save(existingUser);
@@ -144,6 +146,11 @@ public class UserServiceImpl implements IUserService {
 		DResponseUser dResponseUser = new DResponseUser(user);
 		userRepository.deleteById(id);
 		return dResponseUser;
+	}
+
+	@Override
+	public DResponseUser deActivateById(Long id) {
+		return null;
 	}
 
 }

@@ -46,9 +46,9 @@ public class HttpUser {
         return dResponseUser;
     }
 
-    public List<LResponseUser> getAll() {
-        HttpBase<LResponseUser[], LResponseUser[]> httpBase = new HttpBase<>();
-        LResponseUser[] list = httpBase.getFromAPI(userUrl.getAll(), LResponseUser[].class);
+    public List<DResponseUser> getAll() {
+        HttpBase<DResponseUser[], DResponseUser[]> httpBase = new HttpBase<>();
+        DResponseUser[] list = httpBase.getFromAPI(userUrl.getAll(), DResponseUser[].class);
         return Arrays.asList(list);
     }
 
@@ -74,6 +74,7 @@ public class HttpUser {
 
     public DResponseUser add(CRequestUser requestUser) {
         HttpBase<CRequestUser, DResponseUser> httpBase = new HttpBase<>();
+        requestUser.setStatus(true);
         return httpBase.postToAPI(requestUser, userUrl.add(), DResponseUser.class);
     }
 }

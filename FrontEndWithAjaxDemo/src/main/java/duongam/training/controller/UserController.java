@@ -4,6 +4,7 @@ import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forcreate.CRequestUser;
+import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
 import duongam.training.dto.response.forlist.LResponseUser;
@@ -25,7 +26,7 @@ public class UserController {
 
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<LResponseUser> list = httpUser.getAll();
+		List<DResponseUser> list = httpUser.getAll();
 		model.addAttribute("list", list);
 		model.addAttribute("user", new CRequestUser());
 		return "user-list";
@@ -76,6 +77,21 @@ public class UserController {
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable("id") Long requestId){
 		httpUser.deleteById(requestId);
+		return "redirect:/user/list";
+	}
+
+	@GetMapping("/update/{id}")
+	public String updateForm(Model model, @PathVariable("id") Long requestId){
+		DResponseUser dResponseUser = httpUser.getById(requestId);
+		model.addAttribute("existingUser", dResponseUser);
+		List<DResponseUser> list = httpUser.getAll();
+		model.addAttribute("list", list);
+		return "user-update";
+	}
+
+	@PostMapping("/update")
+	public String update(@ModelAttribute("existingUser") URequestUser request) {
+		httpUser.update(request);
 		return "redirect:/user/list";
 	}
 }

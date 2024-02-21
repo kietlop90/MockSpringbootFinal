@@ -25,8 +25,8 @@ public class UserController {
 	private IUserService userService;
 
 	@GetMapping("/list")
-	public ResponseEntity<List<LResponseUser>> list(Model model) {
-		List<LResponseUser> list = userService.getAll();
+	public ResponseEntity<List<DResponseUser>> list(Model model) {
+		List<DResponseUser> list = userService.getAll();
 		return ResponseEntity.ok().body(list);
 	}
 

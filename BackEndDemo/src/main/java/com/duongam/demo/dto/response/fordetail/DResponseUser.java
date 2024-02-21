@@ -29,6 +29,10 @@ public class DResponseUser {
 
     private String gender;
 
+    private String phone;
+
+    private String name;
+
     public DResponseUser(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
@@ -36,5 +40,7 @@ public class DResponseUser {
         this.dob = user.dobText();
         this.gender = user.genderText();
         this.role = user.roleName();
+        this.phone = user.getPhone();
+        this.name = user.getName();
     }
 }

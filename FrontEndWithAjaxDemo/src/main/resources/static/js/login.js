@@ -12,14 +12,26 @@ function login() {
         username: $("#username-input").val(),
         password: $("#password-input").val(),
     }
+    if (!data.username || !data.password) {
+        alert("Email or password cannot be empty");
+        window.location.replace("/user/login");
+        return;
+    }
+
     $.ajax({
         type: "POST",
         url: "/user/login",
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
-            localStorage.setItem("user_name", result.name);
-            localStorage.setItem("user_info", JSON.stringify(result));
-            window.location.replace("/user/list");
+            if (result.data === null) {
+                localStorage.setItem("user_name", result.name);
+                localStorage.setItem("user_info", JSON.stringify(result));
+                alert("Login successfully !!!");
+                window.location.replace("/user/list");
+            } else {
+                alert("Email or password is incorrect. Please try again.");
+                window.location.replace("/user/login");
+            }
         }
     });
 }

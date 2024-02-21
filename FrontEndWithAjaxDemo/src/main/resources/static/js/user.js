@@ -13,7 +13,7 @@ $(document).ready(function () {
             role: role,
             name: name,
             username: email,
-            password: '123456789',
+            password: '123123',
             email: email,
             phone: phone,
             dob: dob,

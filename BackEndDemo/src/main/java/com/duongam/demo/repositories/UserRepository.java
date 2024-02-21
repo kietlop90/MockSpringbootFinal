@@ -36,5 +36,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<LResponseUser> findAllByForKeyword(@Param("keyword") String keyword, @Param("keyword2") String keyword2, @Param("keyword3") String keyword3,
                                    @Param("keyword4") String keyword4, Pageable pageable);
 
-    public User findByUsername(String userName);
+     User findByUsername(String userName);
 }

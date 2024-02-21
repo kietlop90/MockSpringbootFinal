@@ -92,14 +92,12 @@
                                 <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
                                 <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
-                                <td th:id="${'gender' + item.id}">
+                                <td th:id="${'status' + item.id}">
                                     <img th:if="${item.gender == 'MALE'}" th:src="@{/icon/other/male.png}" alt="Male">
-                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}" alt="Female">
+                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
+                                         alt="Female">
                                 </td>
-                                <td th:id="${'role' + item.id}">
-                                    <img th:if="${item.role == 'ADMIN'}" th:src="@{/icon/other/admin.png}" alt="Admin">
-                                    <img th:if="${item.role == 'CUSTOMER'}" th:src="@{/icon/other/trainer.png}">
-                                </td>
+                                <td th:id='${"type"+ item.id}' th:text="${item.role}"></td>
                                 <td th:id='${"action"+ item.id}'>
                                     <button class="btn btn-three-dot dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -109,7 +107,8 @@
                                         <li>
                                             <a th:id="'btn-update-class-' + ${item.id}"
                                                class="dropdown-item btn-update-class"
-                                               th:data-id-user="${item.id}" th:href="@{/user/update/{id}(id=${item.id})}">
+                                               th:data-id-user="${item.id}" data-bs-toggle="modal"
+                                               data-bs-target="#updateUserModal">
                                                 <img th:src="@{/icon/other/create.png}" alt="">
                                                 <label style="color: #2C5282">Edit user</label>
                                             </a>
@@ -182,75 +181,73 @@
 </div>
 <div id="footer" th:insert="footer.html"></div>
 
-<!-- Add User Modal -->
-<div class="modal" id="addUserModel">
+
+<!--Update User Modal-->
+<div class="modal" id="updateUserModal">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #2D3748">
                 <h4 class="modal-title text-center" style="color: white; width: 100%;">
-                    Add a new user
+                    Update user
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <!-- Modal body -->
-            <form th:action="@{/user/add}" method="post" th:object="${user}">
+            <form th:action="@{/user/update}" method="post" th:object="${existingUser}">
                 <div class="modal-body">
+                    <input type="hidden" th:field="*{id}" />
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>User type</b></label>
+                            <label><b>User type</b></label>
                         </div>
                         <div class="col-9">
-                            <select id="user-type-input" class="form-select" th:field="*{role}">
-                                <option value="" selected disabled>Select one</option>
-                                <option value="CUSTOMER">Trainer</option>
-                                <option value="ADMIN">Admin</option>
-                            </select>
+                            <p class="form-select" readonly
+                               th:utext="${existingUser.role == 'ADMIN' ? 'Admin' : (existingUser.role == 'CUSTOMER' ? 'Trainer' : 'Unknown')}"/>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>Name</b></label>
+                            <label><b>Name</b></label>
                         </div>
                         <div class="col-9">
                             <input type="text" class="form-control" placeholder="User name"
-                                   autofocus required id="input-user-name" th:field="*{name}"/>
+                                   autofocus required id="" th:field="*{name}"/>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>Email address</b></label>
+                            <label><b>Email address</b></label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control" placeholder="Email address"
-                                   autofocus required pattern=".*\S.*" id="input-user-email" th:field="*{email}"/>
+                            <p class="form-control" th:text="${existingUser.email}" readonly/>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>Phone</b></label>
+                            <label><b>Phone</b></label>
                         </div>
                         <div class="col-9">
                             <input type="text" class="form-control" placeholder="Phone number"
-                                   autofocus required id="input-user-phone" th:field="*{phone}"/>
+                                   autofocus required th:field="*{phone}"/>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>Date of birth</b></label>
+                            <label><b>Date of birth</b></label>
                         </div>
                         <div class="col-9">
                             <div class="input-group">
-                                <input type="date" class="form-control" required id="input-user-dob"
-                                       th:field="*{dob}">
+                                <input type="date" class="form-control" required th:field="*{dob}"
+                                       th:value="${#dates.format(existingUser.dob, 'yyyy-MM-dd')}">
                             </div>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>Gender</b></label>
+                            <label><b>Gender</b></label>
                         </div>
                         <div class="col-9">
                             <label>
@@ -267,7 +264,7 @@
                     </div>
                     <div class="row mb-2">
                         <div class="col-3">
-                            <label for="user-type-input"><b>Status</b></label>
+                            <label><b>Status</b></label>
                         </div>
                         <div class="col-9">
                             <img th:src="@{/icon/status/Active.png}"></im>
@@ -280,9 +277,9 @@
                 <div class="modal-footer">
                     <div class="row mb-2">
                         <div class="col-12 d-flex justify-content-end">
-                            <button id="btnCancel" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                            <button class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
                             </button>
-                            <button id="btnSave" class="btn btn-main me-2" type="submit">Save</button>
+                            <button class="btn btn-main me-2" type="submit">Save</button>
                         </div>
                     </div>
                 </div>
@@ -291,7 +288,15 @@
 
     </div>
 </div>
-
+<script>
+    // jQuery script to trigger modal on page load
+    $(document).ready(function () {
+        // Select the modal by its ID and call the modal() method
+        $('#updateUserModal').modal('show');
+    });
+</script>
 </body>
+
+
 
 </html>

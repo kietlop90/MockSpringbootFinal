@@ -14,7 +14,7 @@ public interface IUserService {
 
 	DResponseUser create(RegisterModel registerModel);
 
-	List<LResponseUser> getAll();
+	List<DResponseUser> getAll();
 
 	DResponseUser save(CRequestUser cUser);
 
@@ -23,4 +23,6 @@ public interface IUserService {
 	DResponseUser findById(Long id);
 
 	DResponseUser deleteById(Long id);
+
+	DResponseUser deActivateById(Long id);
 }

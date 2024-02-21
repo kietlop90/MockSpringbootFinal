@@ -4,6 +4,7 @@ import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forcreate.CRequestUser;
+import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
 import duongam.training.dto.response.forlist.LResponseUser;
@@ -25,15 +26,25 @@ public class UserController {
 
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<LResponseUser> list = httpUser.getAll();
+		List<DResponseUser> list = httpUser.getAll();
 		model.addAttribute("list", list);
+		model.addAttribute("user", new CRequestUser());
 		return "user-list";
 	}
 
-	@PostMapping("/add")
-	@ResponseBody
-	public DResponseUser addDatabase(@ModelAttribute("request") CRequestUser request) {
-		return httpUser.add(request);
+	@GetMapping("/register")
+	public String registration(Model model) {
+		model.addAttribute("registerForm", new RegisterForm());
+		return "register";
+	}
+
+	@PostMapping("/register")
+	public String registration(@ModelAttribute("registerForm") @Valid RegisterForm registerForm, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "register";
+		}
+        httpUser.register(registerForm);
+		return "redirect:/user/login";
 	}
 
 	@GetMapping("/login")
@@ -54,6 +65,33 @@ public class UserController {
 		if(dResponseUser == null){
 			return "redirect:/user/login";
 		}
+		return "redirect:/user/list";
+	}
+
+	@PostMapping("/add")
+	public String addDatabase(@ModelAttribute("user") CRequestUser request) {
+		httpUser.add(request);
+		return "redirect:/user/list";
+	}
+
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long requestId){
+		httpUser.deleteById(requestId);
+		return "redirect:/user/list";
+	}
+
+	@GetMapping("/update/{id}")
+	public String updateForm(Model model, @PathVariable("id") Long requestId){
+		DResponseUser dResponseUser = httpUser.getById(requestId);
+		model.addAttribute("existingUser", dResponseUser);
+		List<DResponseUser> list = httpUser.getAll();
+		model.addAttribute("list", list);
+		return "user-update";
+	}
+
+	@PostMapping("/update")
+	public String update(@ModelAttribute("existingUser") URequestUser request) {
+		httpUser.update(request);
 		return "redirect:/user/list";
 	}
 }

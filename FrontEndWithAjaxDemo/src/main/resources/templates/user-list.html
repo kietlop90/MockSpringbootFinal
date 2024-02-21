@@ -9,7 +9,6 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script th:src="@{/js/user.js}"></script>
-    <script th:src="@{/js/syllabus-list.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -34,42 +33,33 @@
                 Users
             </div>
         </div>
-        <div class="row">
+        <div class="row d-flex justify-content-between">
             <!-- filter -->
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                         <span class="input-group-text">
                             <img th:src="@{/icon/document-manage/search.png}" alt="">
                         </span>
-                    <input class="form-control" id="input-filter" placeholder="Search by name...">
+                    <input type="text" class="form-control" id="input-filter" placeholder="Search by..." autofocus>
+                    <button type="button" id="btn-filter-user" class="btn btn-main">
+                           <img th:src="@{/icon/action/filter_list-white.png}" alt="">
+                        Filter
+                    </button>
                 </div>
             </div>
-            <div class="col-3 mb-2">
-                <div class="input-group">
-                        <span class="input-group-text">
-                            <img th:src="@{/icon/navigation-menu/calendar-today-blue.png}" alt="">
-                        </span>
-                    <input type="date" class="form-control" id="datepicker-filter" placeholder="Create date...">
-                </div>
-            </div>
-            <div class="col-6 group-btn-right">
-                <button type="button" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">
+            <div class="col-6 group-btn-right mb-2">
+                <button type="button" id="btn-add" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">
                     <img th:src="@{/icon/action/add-white.png}" alt="">
                     Add User
                 </button>
             </div>
-
             <div class="row mb-2">
                 <div class="col">
-                    <div class="group-filter">
-                            <span class="item-filter">
-                                foundation
-                                <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
-                                     alt="">
-                            </span>
+                    <div id="group-filter" class="group-filter">
                     </div>
                 </div>
             </div>
+
 
             <!-- table -->
             <div class="row">
@@ -109,7 +99,7 @@
                         <th:block th:each="item : ${userList}">
                             <tr th:id='${"tr"+ item.id}'>
                                 <td th:id='${"id"+ item.id}' th:text="${item.id}"></td>
-                                <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
+                                <td style="font-weight: bold" th:id='${"name"+ item.id}' th:text="${item.name}"></td>
                                 <td th:id='${"email"+ item.id}' th:text="${item.email}"></td>
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
                                 <td th:id="${'status' + item.id}">
@@ -117,41 +107,43 @@
                                     <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
                                          alt="Female">
                                 </td>
-                                <td class="type" th:id='${"type"+ item.id}' th:text="${item.role}"></td>
+                                <td th:id='${"role"+ item.id}'>
+                                    <label th:class="${'status-' + item.role.toLowerCase()}" th:text="${item.role}"></label>
+                                </td>
                                 <td th:id='${"action"+ item.id}'>
                                     <button class="btn btn-three-dot dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                        ...
+                                        <img th:src="@{/icon/action/more_horizontal.png}" alt="First Page">
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a th:id="'btn-update-class-' + ${item.id}"
-                                               class="dropdown-item btn-update-class"
-                                               th:data-id-class="${item.id}">
+                                            <a th:id="'btn-update-user-' + ${item.id}"
+                                               class="dropdown-item btn-update-user"
+                                               th:data-id="${item.id}">
                                                 <img th:src="@{/icon/other/create.png}" alt="">
                                                 <label style="color: #2C5282">Edit user</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-update-class-' + ${item.id}"
-                                               class="dropdown-item btn-update-class"
-                                               th:data-id-class="${item.id}">
+                                            <a th:id="'btn-change-role-' + ${item.id}"
+                                               class="dropdown-item btn-change-role"
+                                               th:data-id="${item.id}">
                                                 <img th:src="@{/icon/other/role-black.png}" alt="">
                                                 <label style="color: #2C5282">Change role</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-copy-class-' + ${item.id}"
-                                               class="dropdown-item btn-copy-class"
-                                               th:data-id-class="${item.id}">
+                                            <a th:id="'btn-de-activate-user-' + ${item.id}"
+                                               class="dropdown-item btn-de-activate-user"
+                                               th:data-id="${item.id}">
                                                 <img th:src="@{/icon/other/visibility_off.png}" alt="">
                                                 <label style="color: #2C5282">De-activate user</label>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-delete-class-' + ${item.id}"
-                                               class="dropdown-item btn-delete-class"
-                                               th:data-id-class="${item.id}">
+                                            <a th:id="'btn-delete-user-' + ${item.id}"
+                                               class="dropdown-item btn-delete-user"
+                                               th:data-id="${item.id}">
                                                 <img th:src="@{/icon/other/delete_forever.png}" alt="">
                                                 <label style="color: #8B8B8B">Delete user</label>
                                             </a>
@@ -172,27 +164,28 @@
                         <a class="item-pagging" th:href="@{/user/list(page=0, size=${pageSize})}">
                             <img th:src="@{/icon/navigator/first_page.png}" alt="First Page">
                         </a>
-                        <div class="item-pagging"
-                             th:href="@{/user/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                        <a class="item-pagging"
+                           th:href="@{/user/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
                             <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="Previous Page">
 
-                            <a th:href="@{/user/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
-                            </a>
-                            <div class="item-pagging" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
-                                <a class="item-pagging number" style="text-decoration: none;color: white"
-                                   th:href="@{/user/list(page=${pageNum}, size=${pageSize}, sortField=${sortField}, dir=${dir})}"
-                                   th:classappend="${currentPage == pageNum} ? 'active' : ''"
-                                   th:text="${pageNum + 1}"></a>
-                            </div>
-                            <a class="item-pagging"
-                               th:href="@{/user/list(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
-                                <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="Next Page">
-                            </a>
-                            <a class="item-pagging"
-                               th:href="@{/user/list(page=${totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
-                                <img th:src="@{/icon/navigator/last_page.png}" alt="Last Page">
-                            </a>
+                            <!--                            <a th:href="@{/syllabus/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">-->
+                        </a>
+                        <a th:href="@{/user/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                        </a>
+                        <div class="item-pagging" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a class="item-pagging number" style="text-decoration: none;color: white"
+                               th:href="@{/user/list(page=${pageNum}, size=${pageSize}, sortField=${sortField}, dir=${dir})}"
+                               th:classappend="${currentPage == pageNum} ? 'active' : 'display-none'"
+                               th:text="${pageNum + 1}"></a>
                         </div>
+                        <a class="item-pagging"
+                           th:href="@{/user/list(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="Next Page">
+                        </a>
+                        <a class="item-pagging"
+                           th:href="@{/user/list(page=${totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/last_page.png}" alt="Last Page">
+                        </a>
                     </div>
                     <div class="group-pagging">
 
@@ -219,12 +212,11 @@
 
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #2D3748">
-                <h4 class="modal-title text-center" style="color: white; width: 100%;">Add a new user</h4>
+                <h4 id="title-model" class="modal-title text-center" style="color: white; width: 100%;">Add a new user</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <!-- Modal body -->
-            <!--            <form action="@{/user/add}" method="post" th:object=""></form>-->
             <div class="modal-body">
                 <div class="row mb-2">
                     <div class="col-3">
@@ -233,7 +225,7 @@
                     <div class="col-9">
                         <select id="user-type-input" class="form-select">
                             <option value="" selected disabled>Select one</option>
-                            <option value="CUSTOMER">Trainer</option>
+                            <option value="TRAINER">Trainer</option>
                             <option value="ADMIN">Admin</option>
                         </select>
                     </div>
@@ -247,15 +239,15 @@
                                autofocus required/>
                     </div>
                 </div>
-                <div class="row mb-2">
-                    <div class="col-3">
-                        <label for="user-name-input"><b>User Name</b></label>
-                    </div>
-                    <div class="col-9">
-                        <input type="text" id="user-name-input" class="form-control" placeholder="User name"
-                               required/>
-                    </div>
-                </div>
+<!--                <div class="row mb-2">-->
+<!--                    <div class="col-3">-->
+<!--                        <label for="user-name-input"><b>User Name</b></label>-->
+<!--                    </div>-->
+<!--                    <div class="col-9">-->
+<!--                        <input type="text" id="user-name-input" class="form-control" placeholder="User name"-->
+<!--                               required/>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="row mb-2">
                     <div class="col-3">
                         <label for="email-address-input"><b>Email address</b></label>
@@ -305,7 +297,12 @@
                         <label for="user-type-input"><b>Status</b></label>
                     </div>
                     <div class="col-9">
-                        <img th:src="@{/icon/status/Active.png}"></im>
+                        <div class="btn-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="togBtn" checked="checked" disabled>
+                                <div class="slider round"></div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -315,9 +312,9 @@
             <div class="modal-footer">
                 <div class="row mb-2">
                     <div class="col-12 d-flex justify-content-end">
-                        <button id="btnCancel" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                        <button id="btn-cancel-user" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
                         </button>
-                        <button id="btnSave" class="btn btn-main me-2">Save</button>
+                        <button id="btn-add-user" class="btn btn-main me-2">Save</button>
                     </div>
                 </div>
             </div>
@@ -325,7 +322,9 @@
         </div>
     </div>
 </div>
+<script>
 
+</script>
 </body>
 
 </html>

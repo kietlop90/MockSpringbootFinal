@@ -19,3 +19,24 @@
     padding: 10px 20px !important;
     border-radius: 50px !important;
 }
+
+.display-none{
+    display: none;
+}
+
+.status-trainer {
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #2D3748;
+    border-radius: 14px;
+    padding: 1px 10px;
+}
+
+.status-admin {
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #4DB848;
+    border-radius: 14px;
+    padding: 1px 10px;
+}
+

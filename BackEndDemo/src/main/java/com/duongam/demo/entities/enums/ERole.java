@@ -1,7 +1,7 @@
 package com.duongam.demo.entities.enums;
 
 public enum ERole {
-    TRAINER("TRAINER"), ADMIN("ADMIN"),SUPERADMIN("SUPERADMIN");
+    TRAINER("TRAINER"), ADMIN("ADMIN"), SUPER_ADMIN("SUPER_ADMIN");
     private final String text;
 
     private ERole(final String text) {

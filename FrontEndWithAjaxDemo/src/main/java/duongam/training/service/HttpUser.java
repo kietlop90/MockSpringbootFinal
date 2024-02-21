@@ -34,16 +34,11 @@ public class HttpUser {
     @Autowired
     private ModelMapper modelMapper;
 
-    public DResponseUser add(CRequestUser cRequestUser) {
+    public DResponseUser add(CRequestUser requestUser) {
         HttpBase<CRequestUser, DResponseUser> httpBase = new HttpBase<>();
-        return httpBase.postToAPI(cRequestUser, userUrl.add(), DResponseUser.class);
+        requestUser.setStatus(true);
+        return httpBase.postToAPI(requestUser, userUrl.add(), DResponseUser.class);
     }
-
-//    public DResponseUser register(RegisterForm registerForm) {
-//        CRequestUser requestUser = modelMapper.map(registerForm, CRequestUser.class);
-//        HttpBase<CRequestUser, DResponseUser> httpBase = new HttpBase<>();
-//        return httpBase.postToAPI(requestUser, userUrl.register(), DResponseUser.class);
-//    }
 
     public DResponseUser login(LoginForm loginForm) {
         HttpBase<LoginForm, DResponseUser> httpBase = new HttpBase<>();
@@ -51,14 +46,14 @@ public class HttpUser {
         if (dResponseUser != null) {
             Token.API_KEY = dResponseUser.getToken();
             String role = dResponseUser.getRole();
-                Token.ROLE.add(ERole.valueOf(role));
+            Token.ROLE.add(ERole.valueOf(role));
         }
 
         return dResponseUser;
     }
 
     public PaginatedResponse<LResponseUser> getAll(int page, int size,
-                                                   String sortField, String dir) {
+                                                   String sortField, String dir, String keywords) {
         RestTemplate restTemplate = new RestTemplate();
         String urlWithParam = userUrl.getAll() + "?page=" + page + "&size=" + size;
 
@@ -66,6 +61,9 @@ public class HttpUser {
             urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
         }
 
+        if (keywords != null && !keywords.isEmpty()) {
+            urlWithParam += "&keywords=" + keywords;
+        }
         ResponseEntity<PaginatedResponse<LResponseUser>> response = restTemplate.exchange(
                 urlWithParam,
                 HttpMethod.GET,

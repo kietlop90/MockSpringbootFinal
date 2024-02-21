@@ -21,8 +21,7 @@
 <div id="header" th:insert="header.html"></div>
 <div id="body" class="body">
     <img th:src="@{/img/login-background.png}" alt="logo" class="back-login">
-    <form id="form-login" method="POST" th:object="${loginForm}" th:action="@{login}" class="form-signin"
-          onsubmit="setUserName()">
+    <div id="form-login" class="form-signin">
         <h2 class="form-heading">FPT Fresh Academy</h2>
         <h2 class="form-heading">Training Management</h2>
         <div id="contact">
@@ -31,19 +30,19 @@
         </div>
 
         <div class="form-group">
-            <input id="username-input" th:field="*{username}" type="text" value="aumauduong"
+            <input id="username-input" type="text" value="aumauduong"
                    class="form-control mb-2" placeholder="Enter Email" autofocus/>
-            <input id="password-input" th:field="*{password}" type="password" value="aumauduong" class="form-control"
+            <input id="password-input" type="password" value="aumauduong" class="form-control"
                    placeholder="Password"/>
 
-            <h4 class="text-center">
-                <a th:href="@{register}">Create an account</a>
-            </h4>
-            <button class="btn w-100 justify-content-center btn-main" type="submit">
+<!--            <h4 class="text-center">-->
+<!--                <a th:href="@{register}">Create an account</a>-->
+<!--            </h4>-->
+            <button class="btn w-100 justify-content-center btn-main" onclick="login()">
                 Sign In
             </button>
         </div>
-    </form>
+    </div>
 </div>
 <div id="footer" th:insert="footer.html"></div>
 </body>

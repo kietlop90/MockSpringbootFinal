@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 
 @Api(tags = "User", description = "User API's")
@@ -31,15 +32,16 @@ public class UserController {
     public ResponseEntity<PaginatedResponse<LResponseUser>> list(@RequestParam(defaultValue = "0") int page,
                                                                  @RequestParam(defaultValue = "10") int size,
                                                                  @RequestParam(required = false) String sortField,
-                                                                 @RequestParam(defaultValue = "desc") String dir) {
-        Page<LResponseUser> responseUsers = userService.getAll(page, size, sortField, dir);
+                                                                 @RequestParam(defaultValue = "desc") String dir,
+                                                                 @RequestParam(defaultValue = "") String keywords) {
+        String[] keywordArray = (keywords != null && !keywords.isEmpty()) ? keywords.split(",") : new String[]{};
+        Page<LResponseUser> responseUsers = userService.getAll(page, size, sortField, dir, keywordArray);
         PaginatedResponse<LResponseUser> paginatedResponse = new PaginatedResponse<>();
         paginatedResponse.setContent(responseUsers.getContent());
         paginatedResponse.setTotalPages(responseUsers.getTotalPages());
         paginatedResponse.setTotalElements(responseUsers.getTotalElements());
         paginatedResponse.setCurrentPage(responseUsers.getNumber());
         paginatedResponse.setSize(responseUsers.getSize());
-
         return ResponseEntity.ok().body(paginatedResponse);
     }
 

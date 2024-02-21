@@ -55,12 +55,9 @@ public class UserController {
     }
 
 	@PostMapping("/login")
-	public String postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
-		DResponseUser dResponseUser = httpUser.login(loginForm);
-		if(dResponseUser == null){
-			return "redirect:/user/login";
-		}
-		return "redirect:/user/list";
+	@ResponseBody
+	public DResponseUser postLogin(@ModelAttribute("loginModel") LoginForm loginForm) {
+        return httpUser.login(loginForm);
 	}
 
 	@PostMapping("/add")

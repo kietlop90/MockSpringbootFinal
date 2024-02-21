@@ -7,6 +7,19 @@ $(document).ready(function(){
     }
 });
 
-function setUserName() {
-    localStorage.setItem("user_name", $("#username-input").val());
+function login() {
+    let data = {
+        username: $("#username-input").val(),
+        password: $("#password-input").val(),
+    }
+    $.ajax({
+        type: "POST",
+        url: "/user/login",
+        data: JSON.parse(JSON.stringify(data)),
+        success: function (result) {
+            localStorage.setItem("user_name", result.name);
+            localStorage.setItem("user_info", JSON.stringify(result));
+            window.location.replace("/user/list");
+        }
+    });
 }

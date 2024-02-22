@@ -71,6 +71,7 @@ public class UserServiceImpl implements IUserService {
         return detailRespondUser;
     }
 
+
     @Override
     @Transactional
     public DResponseUser create(RegisterModel registerModel) {
@@ -96,67 +97,77 @@ public class UserServiceImpl implements IUserService {
         if (keywords.length == 0) {
             return userRepository.findAllBy(pageable);
         } else {
-        return userRepository.findAllByOneKeyword(keywords[keywords.length - 1], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
+            return userRepository.findAllByOneKeyword(keywords[keywords.length - 1], pageable).map(entity -> modelMapper.map(entity, LResponseUser.class));
         }
     }
 
-        @Override
-        @Transactional
-        public DResponseUser save(CRequestUser cUser) {
-            User user = new User();
-            user.setName(cUser.getName());
-            user.setUsername(cUser.getUsername());
-            user.setEmail(cUser.getEmail());
-            user.setPhone(cUser.getPhone());
-            user.setStatus(cUser.getStatus());
-            user.setPassword(bCryptPasswordEncoder.encode(cUser.getPassword()));
-            Role role = roleRepository.findByName(ERole.valueOf(cUser.getRole())).orElse(null);
-            user.setRole(role);
-            String date = cUser.getDob();
-            user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            user.setGender(EGender.valueOf(cUser.getGender()));
-            userRepository.save(user);
-            return new DResponseUser(user);
-        }
+    @Override
+    public List<LResponseUser> getTrainer() {
+        return userRepository.findTrainer();
+    }
 
-        @Override
-        @Transactional
-        public DResponseUser update(URequestUser uUser) {
-            User existingUser = userRepository.findById(uUser.getId()).orElse(null);
-            String date = uUser.getDob();
-            if (existingUser != null){
-                existingUser.setName(uUser.getName());
-                existingUser.setPhone(uUser.getPhone());
-                existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                existingUser.setGender(EGender.valueOf(uUser.getGender()));
-                existingUser.setStatus(uUser.getStatus());
-                userRepository.save(existingUser);
-                return new DResponseUser(existingUser);
-            }
-            return null;
-        }
+    @Override
+    public List<LResponseUser> getAdmin() {
+        return userRepository.findAdmin();
+    }
 
-        @Override
-        @Transactional
-        public DResponseUser findById(Long id) {
-            User user = userRepository.findById(id).orElse(null);
-            assert user != null;
-            return new DResponseUser(user);
-        }
+    @Override
+    @Transactional
+    public DResponseUser save(CRequestUser cUser) {
+        User user = new User();
+        user.setName(cUser.getName());
+        user.setUsername(cUser.getUsername());
+        user.setEmail(cUser.getEmail());
+        user.setPhone(cUser.getPhone());
+        user.setStatus(cUser.getStatus());
+        user.setPassword(bCryptPasswordEncoder.encode(cUser.getPassword()));
+        Role role = roleRepository.findByName(ERole.valueOf(cUser.getRole())).orElse(null);
+        user.setRole(role);
+        String date = cUser.getDob();
+        user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        user.setGender(EGender.valueOf(cUser.getGender()));
+        userRepository.save(user);
+        return new DResponseUser(user);
+    }
 
-        @Override
-        @Transactional
-        public DResponseUser deleteById(Long id) {
-            User user = userRepository.findById(id).orElse(null);
-            assert user != null;
-            DResponseUser dResponseUser = new DResponseUser(user);
-            userRepository.deleteById(id);
-            return dResponseUser;
+    @Override
+    @Transactional
+    public DResponseUser update(URequestUser uUser) {
+        User existingUser = userRepository.findById(uUser.getId()).orElse(null);
+        String date = uUser.getDob();
+        if (existingUser != null) {
+            existingUser.setName(uUser.getName());
+            existingUser.setPhone(uUser.getPhone());
+            existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            existingUser.setGender(EGender.valueOf(uUser.getGender()));
+            existingUser.setStatus(uUser.getStatus());
+            userRepository.save(existingUser);
+            return new DResponseUser(existingUser);
         }
+        return null;
+    }
 
-	@Override
-	public DResponseUser deActivateById(Long id) {
-		return null;
-	}
+    @Override
+    @Transactional
+    public DResponseUser findById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        assert user != null;
+        return new DResponseUser(user);
+    }
+
+    @Override
+    @Transactional
+    public DResponseUser deleteById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        assert user != null;
+        DResponseUser dResponseUser = new DResponseUser(user);
+        userRepository.deleteById(id);
+        return dResponseUser;
+    }
+
+    @Override
+    public DResponseUser deActivateById(Long id) {
+        return null;
+    }
 
 }

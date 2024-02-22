@@ -16,6 +16,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public Page<LResponseUser> findAllBy(Pageable pageable);
 
+    @Query("SELECT u FROM User u WHERE u.role.id = 2")
+    public List<LResponseUser> findAdmin();
+
+    @Query("SELECT u FROM User u WHERE  u.role.id = 3")
+    public List<LResponseUser> findTrainer();
+
     //Search User by Keyword
     @Query("SELECT u FROM User u WHERE CAST(u.id AS string) LIKE %:keyword% OR u.name LIKE %:keyword% OR u.email LIKE %:keyword%")
     Page<LResponseUser> findAllByOneKeyword(@Param("keyword") String keyword, Pageable pageable);

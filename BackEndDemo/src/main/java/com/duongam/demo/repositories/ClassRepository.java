@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface ClassRepository extends JpaRepository<Class, Long> {
-	public List<LResponseClass> findAllBy();
+	 List<LResponseClass> findAllBy();
 
 
 	@Query("select u from Class u where u.trainingProgramCode.code = :trainingProgramCode ")

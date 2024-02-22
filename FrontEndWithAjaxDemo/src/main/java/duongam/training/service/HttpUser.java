@@ -8,6 +8,7 @@ import duongam.training.dto.request.forcreate.CRequestUser;
 import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
+import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -73,6 +74,18 @@ public class HttpUser {
         );
 
         return response.getBody();
+    }
+
+    public List<LResponseUser> getTrainer() {
+        HttpBase<LResponseUser[], LResponseUser[]> httpBase = new HttpBase<>();
+        LResponseUser[] list = httpBase.getFromAPI(userUrl.getAllTrainer(), LResponseUser[].class);
+        return Arrays.asList(list);
+    }
+
+    public List<LResponseUser> getAdmin() {
+        HttpBase<LResponseUser[], LResponseUser[]> httpBase = new HttpBase<>();
+        LResponseUser[] list = httpBase.getFromAPI(userUrl.getAllAdmin(), LResponseUser[].class);
+        return Arrays.asList(list);
     }
 
     public DResponseUser update(URequestUser requestCustomer) {

@@ -31,6 +31,7 @@ public class ClassController {
 	}
 	@PostMapping("/add")
 	public ResponseEntity<DResponseClass> add(@Valid @RequestBody CRequestClass cRequestClass, BindingResult bindingResult) {
+
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(null);
 		}

@@ -20,10 +20,21 @@ $(function () {
     })
     $("#btn-save-as-draft").on("click", function () {
         let className = $("#input-name-class").val();
+        // let duration = $("#timePicker").val();
+        let location = $("#select-location").val();
+        let trainer = $("#select-trainer").val();
+        let admin = $("#select-admin").val();
+        let dateTime = $("#timeFrameDaterangepicker").val().split(' - ');
         let data = {
-            name: className
+            name: className,
+            // duration : duration,
+            location : location,
+            trainer : trainer,
+            admin : admin,
+            startDate: dateTime[0],
+            endDate: dateTime[1],
         };
-        addItem("/class/add", data, "/class/update/");
+        addItem("/class/add", data, "/class/list");
     })
     $("#btn-next").on("click", function () {
         //TO DO
@@ -31,7 +42,7 @@ $(function () {
 
     // event enter
     $(document).on("keypress", function (e) {
-        if(e.keyCode === 13 && $("#create-content").css("display") !== "none") {
+        if (e.keyCode === 13 && $("#create-content").css("display") !== "none") {
             showUpdateContent();
         }
     })
@@ -94,21 +105,24 @@ $(function () {
 
     // timePicker
     $('#timePicker').daterangepicker({
-        timePicker : true,
-        timePicker24Hour : true,
-        timePickerIncrement : 1,
-        timePickerSeconds : false,
+        timePicker: true,
+        timePicker24Hour: true,
+        timePickerIncrement: 1,
+        timePickerSeconds: false,
         autoApply: true,
-        locale : {
-            format : 'HH:mm'
+        locale: {
+            format: 'HH:mm'
         }
-    }).on('show.daterangepicker', function(ev, picker) {
+    }).on('show.daterangepicker', function (ev, picker) {
         picker.container.find(".calendar-table").hide();
     });
 
     // input-filter-training-program
     $("#group-filter-training-program").hide();
     $("#info-training-program").show();
+
+    getTrainer();
+    getAdmin();
 });
 
 function showCreateContent() {
@@ -127,5 +141,27 @@ function showUpdateContent(isUpdate = false) {
         $("#label-name-class").html(className);
 
         $("#btn-back").hide();
+    }
+}
+
+async function getTrainer() {
+    await getList("/user/list-trainer", "trainer");
+    let selectTrainerDom = $("#select-trainer");
+    for (const [index, item] of resultList["trainer"].entries()) {
+        let option = $("<option>")
+            .html(item.name)
+            .attr("value", item.id);
+        selectTrainerDom.append(option);
+    }
+}
+
+async function getAdmin() {
+    await getList("/user/list-admin", "admin");
+    let selectAdminDom = $("#select-admin");
+    for (const [index, item] of resultList["admin"].entries()) {
+        let option = $("<option>")
+            .html(item.name)
+            .attr("value", item.id);
+        selectAdminDom.append(option);
     }
 }

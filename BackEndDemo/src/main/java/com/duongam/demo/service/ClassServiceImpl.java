@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +36,8 @@ public class ClassServiceImpl implements IClassService {
 	@Transactional
 	public DResponseClass save(CRequestClass CRequestClass) {
 		Class aClass = modelMapper.map(CRequestClass, Class.class);
+		aClass.setStartDate(LocalDate.parse(CRequestClass.getStartDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+		aClass.setEndDate(LocalDate.parse(CRequestClass.getEndDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
 		return modelMapper.map(classRepository.save(aClass), DResponseClass.class);
 	}
 

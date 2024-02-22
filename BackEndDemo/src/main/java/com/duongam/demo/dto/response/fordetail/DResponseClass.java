@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -23,8 +24,8 @@ public class DResponseClass {
     private String attendee;
     private String location;
     private String fsu;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
     private String createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;

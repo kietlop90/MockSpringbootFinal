@@ -17,6 +17,10 @@ public interface IUserService {
 
 	Page<LResponseUser> getAll(int page, int size, String sort, String dir, String[] keywords);
 
+	List<LResponseUser> getTrainer();
+
+	List<LResponseUser> getAdmin();
+
 	DResponseUser save(CRequestUser cUser);
 
 	DResponseUser update(URequestUser uUser);

@@ -126,6 +126,13 @@
                                 <label>Location</label>
                             </div>
                             <div>
+                                <select id="select-location" class="form-control">
+                                    <option value="VietNam">VietNam</option>
+                                    <option value="USA">USA</option>
+                                    <option value="USA1">USA1</option>
+                                    <option value="USA2">USA2</option>
+                                    <option value="USA3">USA3</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row-general">
@@ -134,6 +141,8 @@
                                 <label>Trainer</label>
                             </div>
                             <div>
+                                <select id="select-trainer" class="form-control">
+                                </select>
                             </div>
                         </div>
                         <div class="row-general">
@@ -142,7 +151,8 @@
                                 <label>Admin</label>
                             </div>
                             <div>
-                                <select id="select-admin" class="form-control"></select>
+                                <select id="select-admin" class="form-control">
+                                </select>
                             </div>
                         </div>
                         <div class="row-general">
@@ -150,9 +160,17 @@
                                 <img th:src="@{/icon/indicator/supplier.png}" alt="">
                                 <label>FSU</label>
                             </div>
-                            <div>
-                                <select id="select-fsu" class="form-control"></select>
+                            <div class="flex-md-wrap">
+                                <div class="col-12 mb-1">
+                                    <select id="select-fsu" class="form-control">
+                                    </select>
+                                </div>
+                                <div  class="col-12">
+                                    <select id="select-contact-fsu" class="form-control">
+                                    </select>
+                                </div>
                             </div>
+
                         </div>
                         <hr>
                         <div class="row-general">
@@ -183,7 +201,13 @@
                     <div class="header-form" data-bs-toggle="collapse" data-bs-target="#attendee">
                         <div>
                             <img th:src="@{/icon/indicator/grade-white.png}" alt="">
-                            <label>Attendee</label>
+                            <label class="me-2">Attendee</label>
+                            <select id="select-attendee" class="form-control w-50">
+                                <option value="VietNam">VietNam</option>
+                                <option value="USA">USA</option>
+                                <option value="USA1">USA1</option>
+                                <option value="USA2">USA2</option>
+                            </select>
                         </div>
                         <div>
                             <img th:src="@{/icon/action/arrow_drop_down_circle-white.png}" alt="">

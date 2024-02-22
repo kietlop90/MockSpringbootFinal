@@ -1,14 +1,10 @@
 $(function () {
     $("#btn-create-class").on("click", function () {
-        let className = $("#input-name-class").val();
-        let data = {
-            name: className
-        };
-        addItem("/class/add", data, "/class/update/");
+        showUpdateContent();
     })
     $("#btn-update-class").on("click", function () {
-        let idClass = $("#btn-update-class").attr("data-id-class");
-        window.location.replace("/class/update/" + idClass);
+        let id = $(this).attr("data-id");
+        window.location.replace("/class/update/" + id);
     })
     $("#btn-copy-class").on("click", function () {
         //TO DO
@@ -16,15 +12,36 @@ $(function () {
     $("#btn-delete-class").on("click", function () {
         //TO DO
     })
+    $("#btn-back").on("click", function () {
+        //TO DO
+    })
+    $("#btn-cancel").on("click", function () {
+        //TO DO
+    })
+    $("#btn-save-as-draft").on("click", function () {
+        let className = $("#input-name-class").val();
+        let data = {
+            name: className
+        };
+        addItem("/class/add", data, "/class/update/");
+    })
+    $("#btn-next").on("click", function () {
+        //TO DO
+    })
+
+    // event enter
+    $(document).on("keypress", function (e) {
+        if(e.keyCode === 13 && $("#create-content").css("display") !== "none") {
+            showUpdateContent();
+        }
+    })
 
     let pathName = window.location.pathname;
     if (pathName.includes("add")) {
-        $("#create-content").show();
-        $("#update-content").hide();
+        showCreateContent();
     }
     if (pathName.includes("update")) {
-        $("#create-content").hide();
-        $("#update-content").show();
+        showUpdateContent(true);
     }
 
     // init daterangepicker
@@ -72,7 +89,7 @@ $(function () {
     // prevent hide after range selection
     picker.data('daterangepicker').hide = function () {
     };
-    // show picker on load
+    // always show picker on load
     picker.data('daterangepicker').show();
 
     // timePicker
@@ -91,7 +108,24 @@ $(function () {
 
     // input-filter-training-program
     $("#group-filter-training-program").hide();
-
-    // input-filter-training-program
     $("#info-training-program").show();
 });
+
+function showCreateContent() {
+    $("#create-content").show();
+    $("#update-content").hide();
+}
+
+function showUpdateContent(isUpdate = false) {
+    $("#create-content").hide();
+    $("#update-content").show();
+
+    if (!isUpdate) {
+        $(".group-btn-three-dot").hide();
+
+        let className = $("#input-name-class").val();
+        $("#label-name-class").html(className);
+
+        $("#btn-back").hide();
+    }
+}

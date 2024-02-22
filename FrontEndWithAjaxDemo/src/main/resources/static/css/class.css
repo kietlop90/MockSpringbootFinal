@@ -23,6 +23,21 @@ hr {
     margin: 0.5rem;
 }
 
+.group-title {
+    position: relative;
+    display: flex;
+}
+
+.group-title .title {
+    width: calc(100% - 60px);
+}
+
+.group-btn-three-dot {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
 .group-general {
     padding: 5px;
 }

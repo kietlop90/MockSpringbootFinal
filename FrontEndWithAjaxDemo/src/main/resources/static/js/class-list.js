@@ -9,7 +9,7 @@ $(function(){
         window.location.replace("/class/add");
     })
     $(".btn-update-class").on("click", function () {
-        let idClass = $(this).attr("data-id-class");
+        let idClass = $(this).attr("data-id");
         window.location.replace("/class/update/" + idClass);
     })
     $("#btn-copy-class").on("click", function () {

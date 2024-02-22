@@ -15,4 +15,11 @@ import java.util.ArrayList;
 public class CRequestClass {
     private String name;
     private String status;
+    private String startDate;
+    private String location;
+    private String endDate;
+    private String attendee;
+    private String trainingProgramName;
+    private String duration;
+    private String FSU;
 }

@@ -44,21 +44,8 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @Autowired
     private ModelMapper modelMapper;
-
-	
-	@Override
-	public DResponseUser login(String userName, String password, HttpServletResponse response) {
-		User user = userRepository.findByUsername(userName);
-		if (user == null) {
-			return null;
-		}
-		if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
-			return null;
-		}
-
 
 
     @Override

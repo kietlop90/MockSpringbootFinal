@@ -20,6 +20,7 @@ public class DResponseClass {
     private String code;
     private Integer duration;
     private String status;
+    private String attendee;
     private String location;
     private String fsu;
     private LocalDateTime startDate;

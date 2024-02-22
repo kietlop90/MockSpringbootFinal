@@ -104,8 +104,7 @@
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
                                 <td th:id="${'status' + item.id}">
                                     <img th:if="${item.gender == 'MALE'}" th:src="@{/icon/other/male.png}" alt="Male">
-                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
-                                         alt="Female">
+                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}" alt="Female">
                                 </td>
                                 <td th:id='${"role"+ item.id}'>
                                     <label th:class="${'status-' + item.role.toLowerCase()}" th:text="${item.role}"></label>
@@ -136,8 +135,8 @@
                                             <a th:id="'btn-de-activate-user-' + ${item.id}"
                                                class="dropdown-item btn-de-activate-user"
                                                th:data-id="${item.id}">
-                                                <img th:src="@{/icon/other/visibility_off.png}" alt="">
-                                                <label style="color: #2C5282">De-activate user</label>
+                                                <img th:src="${item.status == true ? '/icon/other/visibility_off.png' : '/icon/action/visibility.png'}" alt="">
+                                                <label th:text="${item.status == true ? 'De-activate user' : 'Activate user'}" style="color: #2C5282"></label>
                                             </a>
                                         </li>
                                         <li>
@@ -278,16 +277,16 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <label for="gender-input"><b>Gender</b></label>
+                        <label><b>Gender</b></label>
                     </div>
                     <div class="col-9">
                         <label>
-                            <input type="radio" id="gender-input" name="gender" value="MALE"
+                            <input type="radio" class="gender-input" name="gender" value="MALE"
                                    style="accent-color: #0a3622" checked>
                             Male
                         </label>
                         <label>
-                            <input type="radio" name="gender" value="FEMALE" style="accent-color: #0a3622">
+                            <input type="radio" class="gender-input" name="gender" value="FEMALE" style="accent-color: #0a3622">
                             Female
                         </label>
                     </div>
@@ -299,7 +298,7 @@
                     <div class="col-9">
                         <div class="btn-switch">
                             <label class="switch">
-                                <input type="checkbox" id="togBtn" checked="checked" disabled>
+                                <input id="switch-status" type="checkbox" checked="checked" disabled>
                                 <div class="slider round"></div>
                             </label>
                         </div>

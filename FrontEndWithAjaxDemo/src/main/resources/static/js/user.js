@@ -8,7 +8,7 @@ $(document).ready(function () {
         let email = $("#email-address-input").val();
         let phone = $("#phone-input").val();
         let dob = $("#dob-input").val();
-        let gender = $("#gender-input").val();
+        let gender = $(".gender-input:checked").val();
         let data = {
             role: role,
             name: name,
@@ -41,12 +41,20 @@ $(document).ready(function () {
         $("#user-name-input").val(resultDetailItem.username);
         $("#email-address-input").val(resultDetailItem.email);
         $("#phone-input").val(resultDetailItem.phone);
-        $("#dob-input").attr("value", moment(resultDetailItem.dob).format('YYYY-MM-DD'));
+        $("#dob-input").attr("value", moment(resultDetailItem.dob, "DD/MM/YYYY").format('YYYY-MM-DD'));
         $("#gender-input").val(resultDetailItem.gender);
+        $("#switch-status").attr("checked", resultDetailItem.status);
 
         // trigger show modal
         $("#btn-add").click();
     })
+    $(".btn-de-activate-user").on("click",  async function () {
+        let id = $(this).attr("data-id");
+        await getItem("/user/getById/" + id);
+        resultDetailItem.status = !resultDetailItem.status;
+        resultDetailItem.dob = moment(resultDetailItem.dob, "DD/MM/YYYY").format('YYYY-MM-DD');
+        updateItem("/user/update", resultDetailItem, "/user/list", false);
+    });
     $(".btn-delete-user").on("click", function () {
         let id = $(this).attr("data-id");
         deleteItem("/user/delete", id, "/user/list");

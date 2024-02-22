@@ -1,0 +1,64 @@
+.status-Inactive {
+    font-size: 14px;
+    background-color: lightgray;
+    border-radius: 14px;
+    padding: 1px 5px;
+    font-weight: normal;
+}
+
+.status-Active {
+    font-size: 14px;
+    background-color: lightgreen;
+    border-radius: 14px;
+    padding: 1px 5px;
+    font-weight: normal;
+}
+
+hr {
+    margin: 0.5rem;
+}
+
+.group-title {
+    position: relative;
+    display: flex;
+}
+
+.group-title .title {
+    width: calc(100% - 60px);
+}
+
+.group-btn-three-dot {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.group-syllabus .item-syllabus {
+    padding: 15px;
+    margin-bottom: 0.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.group-syllabus .item-syllabus .name-syllabus > div:first-child {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.group-syllabus .item-syllabus .name-syllabus > div:last-child {
+    border-radius: 50%;
+    border: 1px solid gray;
+    color: gray;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.group-syllabus .item-syllabus .name-syllabus > div:last-child:hover {
+    color: red;
+    border: 1px solid red;
+}

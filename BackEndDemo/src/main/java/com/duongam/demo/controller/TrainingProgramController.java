@@ -1,12 +1,15 @@
 package com.duongam.demo.controller;
 
 
-
+import com.duongam.demo.dto.page.PaginatedResponse;
+import com.duongam.demo.dto.request.forcreate.CRequestClass;
+import com.duongam.demo.dto.request.forcreate.CRequestTrainingProgram;
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DReponseTrainingUnit;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
+import com.duongam.demo.dto.response.forlist.LResponseSyllabus;
 import com.duongam.demo.entities.TrainingUnit;
 import com.duongam.demo.repositories.TrainingProgramRepository;
 import com.duongam.demo.service.template.ITrainingProgramService;
@@ -14,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,9 +30,27 @@ public class TrainingProgramController {
     private ITrainingProgramService trainingProgramService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<DReponseTrainingProgram>> listTrainingPrograms() {
-        List<DReponseTrainingProgram> reponseTrainingProgramPage = trainingProgramService.listAllTrainingPrograms();
-        return ResponseEntity.ok().body(reponseTrainingProgramPage);
+    public ResponseEntity<PaginatedResponse<DReponseTrainingProgram>> listTrainingPrograms(@RequestParam(defaultValue = "0") int page,
+                                                                                           @RequestParam(defaultValue = "10") int size,
+                                                                                           @RequestParam(required = false) String sortField,
+                                                                                           @RequestParam(defaultValue = "desc") String dir) {
+        Page<DReponseTrainingProgram> responseSyllabi = trainingProgramService.listAllTrainingPrograms(page, size, sortField, dir);
+        PaginatedResponse<DReponseTrainingProgram> paginatedResponse = new PaginatedResponse<>();
+        paginatedResponse.setContent(responseSyllabi.getContent());
+        paginatedResponse.setTotalPages(responseSyllabi.getTotalPages());
+        paginatedResponse.setTotalElements(responseSyllabi.getTotalElements());
+        paginatedResponse.setCurrentPage(responseSyllabi.getNumber());
+        paginatedResponse.setSize(responseSyllabi.getSize());
+        return ResponseEntity.ok().body(paginatedResponse);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<DReponseTrainingProgram> add(@Valid @RequestBody CRequestTrainingProgram cRequestTrainingProgram, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        DReponseTrainingProgram dReponseTrainingProgram = trainingProgramService.save(cRequestTrainingProgram);
+        return ResponseEntity.ok().body(dReponseTrainingProgram);
     }
 
 
@@ -62,7 +85,6 @@ public class TrainingProgramController {
         List<String> listTags = trainingProgramService.getListSearch();
         return ResponseEntity.ok().body(listTags);
     }
-
 
 
     @GetMapping("/search/{name}")
@@ -116,8 +138,6 @@ public class TrainingProgramController {
         DResponseSyllabus dResponseSyllabusList = trainingProgramService.getSylabusByCode(id);
         return ResponseEntity.ok().body(dResponseSyllabusList);
     }
-
-
 
 
 //    @PostMapping("/saveTrainingProgram")

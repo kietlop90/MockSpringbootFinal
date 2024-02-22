@@ -26,14 +26,14 @@ public class DReponseTrainingProgram {
     public DReponseTrainingProgram(TrainingProgram trainingProgram) {
         this.id = trainingProgram.getCode();
         this.ProgramName = trainingProgram.getName();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        this.CreatedOn = simpleDateFormat.format(trainingProgram.getCreatedDate());
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        this.CreatedOn = simpleDateFormat.format(trainingProgram.getCreatedDate());
 
         this.CreatedBy = trainingProgram.getCreatedBy().getName();
 
 //        this.CreatedBy = trainingProgram.getCreateBy().getName();
 
-        this.duration = trainingProgram.getDuration() + " days";
+//        this.duration = trainingProgram.getDuration() + " days";
 
         if (trainingProgram.getStatus() == 1) {
             this.Status = "Active";

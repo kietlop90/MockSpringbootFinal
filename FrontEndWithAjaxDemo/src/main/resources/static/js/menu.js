@@ -27,10 +27,12 @@ $(document).ready(function () {
                 {
                     label: "List program",
                     path: "/trainingProgram/list",
+                    pathGroup: ["/trainingProgram/list"],
                 },
                 {
                     label: "Create program",
-                    path: "",
+                    path: "/trainingProgram/add",
+                    pathGroup: ["/trainingProgram/add", "/trainingProgram/update"],
                 },
             ],
             icon: "icon/navigation-menu/group.png"

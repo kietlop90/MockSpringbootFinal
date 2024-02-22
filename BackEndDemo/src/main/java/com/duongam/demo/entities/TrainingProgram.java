@@ -32,8 +32,6 @@ public class TrainingProgram {
     // them phan cua topic code vao
     private Integer status;
 
-
-
     @CreationTimestamp
     @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;

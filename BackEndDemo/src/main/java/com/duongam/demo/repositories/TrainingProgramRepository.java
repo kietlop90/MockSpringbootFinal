@@ -1,6 +1,8 @@
 package com.duongam.demo.repositories;
 
 import com.duongam.demo.entities.TrainingProgram;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface TrainingProgramRepository extends JpaRepository<TrainingProgram, String> {
 
-    List<TrainingProgram> getAllBy();
+    Page<TrainingProgram> findAllBy(Pageable pageable);
 
 //    void deleteByCode(String code);
 

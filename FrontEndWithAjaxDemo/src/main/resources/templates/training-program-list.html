@@ -74,18 +74,17 @@
                     <table class="table">
                         <thead class="header-table">
                         <tr>
-                            <th class="sortable" data-sort="id">ID</th>
                             <th class="sortable" data-sort="programName">Program name</th>
-                            <!-- Add the same for other headers -->
-                            <th>Created on</th>
-                            <th>Created by</th>
-                            <th>Duration</th>
-                            <th>Status</th>
+                            <th class="sortable" data-sort="createdOn">Created on</th>
+                            <th class="sortable" data-sort="createdBy">Created by</th>
+                            <th class="sortable" data-sort="duration">Duration</th>
+                            <th class="sortable" data-sort="status">Status</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each=" trainingProgram : ${list}">
+                        <tr th:each=" trainingProgram, a : ${list}">
+
                             <td th:text="${trainingProgram.id}"></td>
                             <td><a th:href="@{/trainingProgram/getDetailTrainingProgram/{id}(id=${trainingProgram.id})}" th:text="${trainingProgram.programName}"></a></td>
                             <td th:text="${trainingProgram.createdOn}"></td>
@@ -127,24 +126,37 @@
             <!-- Button trigger modal -->
 
             <div class="row">
+
                 <div class="col-12">
                     <div class="group-pagging">
-                        <div class="item-pagging">
-                            <img th:src="@{/assets/icon/navigator/first_page.png}" alt="">
+                        <a class="item-pagging" th:href="@{/trainingProgram/list(page=0, size=${pageSize})}">
+                            <img th:src="@{/icon/navigator/first_page.png}" alt="First Page">
+                        </a>
+                        <a class="item-pagging"
+                           th:href="@{/trainingProgram/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/arrow_back_ios.png}" alt="Previous Page">
+
+                            <!--                            <a th:href="@{/syllabus/list(page=${currentPage > 0 ? currentPage - 1 : 0}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">-->
+                        </a>
+                        <div class="item-pagging" th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a class="item-pagging number" style="text-decoration: none;color: white"
+                               th:href="@{/trainingProgram/list(page=${pageNum}, size=${pageSize}, sortField=${sortField}, dir=${dir})}"
+                               th:classappend="${currentPage == pageNum} ? 'active' : ''"
+                               th:text="${pageNum + 1}"></a>
                         </div>
-                        <div class="item-pagging">
-                            <img th:src="@{/assets/icon/navigator/arrow_back_ios.png}" alt="">
-                        </div>
-                        <div class="item-pagging number active">1</div>
-                        <div class="item-pagging number">2</div>
-                        <div class="item-pagging number">3</div>
-                        <div class="item-pagging">
-                            <img th:src="@{/assets/icon/navigator/arrow_forward_ios.png}" alt="">
-                        </div>
-                        <div class="item-pagging">
-                            <img th:src="@{/assets/icon/navigator/last_page.png}" alt="">
-                        </div>
-                        <div class="item-per-page">
+                        <a class="item-pagging"
+                           th:href="@{/trainingProgram/list(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/arrow_forward_ios.png}" alt="Next Page">
+                        </a>
+                        <a class="item-pagging"
+                           th:href="@{/trainingProgram/list(page=${totalPages - 1}, size=${pageSize}, sortField=${sortField}, dir=${dir})}">
+                            <img th:src="@{/icon/navigator/last_page.png}" alt="Last Page">
+                        </a>
+
+                    </div>
+                    <div class="group-pagging">
+
+                        <div class="item-per-page ">
                             Rows per page:
                             <select class="form-control" name="item-per-page" id="item-per-page">
                                 <option value="">10</option>

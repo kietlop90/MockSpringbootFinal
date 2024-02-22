@@ -1,12 +1,18 @@
 package com.duongam.demo.service;
 
+import com.duongam.demo.dto.request.forcreate.CRequestTrainingProgram;
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.*;
 import com.duongam.demo.entities.*;
 import com.duongam.demo.entities.Class;
 import com.duongam.demo.repositories.*;
 import com.duongam.demo.service.template.ITrainingProgramService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +22,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class TrainingProgramServiceImpl implements ITrainingProgramService {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private TrainingProgramRepository trainingProgramRepository;
@@ -82,20 +91,42 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         }).collect(Collectors.toList());
     }
 
-
     @Override
     @Transactional
-    public List<DReponseTrainingProgram> listAllTrainingPrograms() {
-        List<TrainingProgram> trainingProgramList = trainingProgramRepository.getAllBy();
-        return trainingProgramList.stream()
-                .map(value -> {
-                    return new DReponseTrainingProgram(value);
-                }).collect(Collectors.toList());
+    public DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram) {
+        TrainingProgram trainingProgram = new TrainingProgram();
+        trainingProgram.setCreatedBy(userRepository.findByUsername("zinny123@gmail.com"));
+        trainingProgram.setCode("TP0016");
+        trainingProgram.setName(cRequestTrainingProgram.getProgramName());
+        if (Objects.equals(cRequestTrainingProgram.getStatus(), "Active")) {
+            trainingProgram.setStatus(1);
+        } else if ("InActive".equals(cRequestTrainingProgram.getStatus())) {
+            trainingProgram.setStatus(2);
+        } else {
+            trainingProgram.setStatus(3);
+        }
+        trainingProgramRepository.save(trainingProgram);
+        return new DReponseTrainingProgram(trainingProgram);
     }
 
     @Override
     @Transactional
+    public Page<DReponseTrainingProgram> listAllTrainingPrograms(int page, int size, String sortField, String dir) {
+        Pageable pageable;
+        if (sortField == null || sortField.isEmpty()) {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString("desc"), "createdDate");
+        } else {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString(dir), sortField);
+        }
+        return trainingProgramRepository.findAllBy(pageable).
+                map(entity -> {
+                    return new DReponseTrainingProgram(entity);
+                });
+    }
 
+
+    @Override
+    @Transactional
     public DReponseTrainingProgram deleteTrainingProgramById(String id) {
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
         assert trainingProgram != null : "Training program not found";
@@ -232,7 +263,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         }
 
         if (listSearch.isEmpty()) {
-            return listAllTrainingPrograms();
+            return trainingProgramRepository.findAll().stream().map(DReponseTrainingProgram::new).collect(Collectors.toList());
         }
 
         if (listSearch.size() > 4) {
@@ -266,9 +297,8 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                 return Collections.emptyList();
         }
 
-        return trainingProgramList.stream()
-                .map(DReponseTrainingProgram::new)
-                .collect(Collectors.toList());
+        return  trainingProgramList.stream()
+                .map(DReponseTrainingProgram::new).collect(Collectors.toList());
     }
 
     @Override
@@ -287,7 +317,6 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             } else {
                 trainingProgram.setStatus(3);
             }
-
             trainingProgram.setModifiedDate(new Timestamp(System.currentTimeMillis()));
             trainingProgramRepository.save(trainingProgram);
             return new DReponseTrainingProgram(trainingProgram);

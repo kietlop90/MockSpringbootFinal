@@ -12,6 +12,7 @@ public class TrainingProgramUrl {
     private UrlProperties urlProperties;
     private static final String GET_ALL = "trainingProgram.getall";
 
+    private static final String ADD = "trainingProgram.add";
     private static final String UPDATE = "trainingProgram.update";
 
 
@@ -77,6 +78,10 @@ public class TrainingProgramUrl {
 //        return urlProperties.getProperty(ADD);
 //    }
 
+    public String add() {
+        return urlProperties.getProperty(ADD);
+    }
+
     public String update() {
         return urlProperties.getProperty(UPDATE);
     }
@@ -92,5 +97,4 @@ public class TrainingProgramUrl {
     public String deleteById(String id) {
         return String.format(urlProperties.getProperty(DELETE_BY_ID),id);
     }
-
 }

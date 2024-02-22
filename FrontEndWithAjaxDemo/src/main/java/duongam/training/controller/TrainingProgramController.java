@@ -1,14 +1,13 @@
 package duongam.training.controller;
 
 import duongam.training.dto.request.forcreate.CRequestClass;
-import duongam.training.dto.request.forupdate.URequestClass;
+import duongam.training.dto.request.forcreate.CRequestTrainingProgram;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingUnit;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseSyllabus;
-import duongam.training.dto.response.forlist.LResponseClass;
-import duongam.training.service.HttpClass;
+import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpTrainingProgram;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,48 +23,85 @@ public class TrainingProgramController {
     private HttpTrainingProgram httpTrainingProgram;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<DReponseTrainingProgram> list = httpTrainingProgram.getAll();
-//        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
-//        model.addAttribute("listTagSearch", listTagSearch);
-        model.addAttribute("list", list);
-        return "trainingProgram-list";
+    public String list(Model model, @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "10") int size,
+                       @RequestParam(required = false) String sortField,
+                       @RequestParam(defaultValue = "desc") String dir) {
+
+        PaginatedResponse<DReponseTrainingProgram> trainingProgramPaginatedResponse = httpTrainingProgram.getAll(page, size, sortField, dir);
+        model.addAttribute("totalPages", trainingProgramPaginatedResponse.getTotalPages());
+        model.addAttribute("currentPage", trainingProgramPaginatedResponse.getCurrentPage());
+        model.addAttribute("pageSize", trainingProgramPaginatedResponse.getSize());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("dir", dir);
+        model.addAttribute("list",trainingProgramPaginatedResponse.getContent());
+
+        List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
+        model.addAttribute("listTagSearch", listTagSearch);
+        return "training-program-list";
     }
 
     @GetMapping("/search")
     public String search(Model model,@RequestParam("name") String name) {
         if (name.isEmpty()) {
             List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName("asdfghjkl");
+            model.addAttribute("totalPages", 0);
+            model.addAttribute("currentPage", 10);
+            model.addAttribute("pageSize", 10);
+            model.addAttribute("sortField", "sortField");
+            model.addAttribute("dir", "dir");
             List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
             model.addAttribute("listTagSearch", listTagSearch);
             model.addAttribute("list", list);
-            return "trainingProgram-list";
+            return "training-program-list";
         }
+
         List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName(name);
+        model.addAttribute("totalPages", 0);
+        model.addAttribute("currentPage", 10);
+        model.addAttribute("pageSize", 10);
+        model.addAttribute("sortField", "sortField");
+        model.addAttribute("dir", "dir");
         List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
         model.addAttribute("listTagSearch", listTagSearch);
         model.addAttribute("list", list);
-        return "trainingProgram-list";
+        return "training-program-list";
     }
 
     @GetMapping("/deleteTagSearch/{tag}")
     public String deleteTagSearch(Model model,@PathVariable("tag") String tagName) {
         httpTrainingProgram.deleteSearchTag(tagName);
         List<DReponseTrainingProgram> list = httpTrainingProgram.searchByName("asdfghjkl");
+        model.addAttribute("totalPages", 0);
+        model.addAttribute("currentPage", 10);
+        model.addAttribute("pageSize", 10);
+        model.addAttribute("sortField", "sortField");
+        model.addAttribute("dir", "dir");
         List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
         model.addAttribute("listTagSearch", listTagSearch);
         model.addAttribute("list", list);
-        return "trainingProgram-list";
+        return "training-program-list";
     }
 
+    @GetMapping("/add")
+    public String addForm(Model model) {
+        model.addAttribute("program", new DReponseTrainingProgram());
+        return "training-program-create";
+    }
 
+    @PostMapping("/add")
+    @ResponseBody
+    public DReponseTrainingProgram addDatabase(@ModelAttribute("request") CRequestTrainingProgram request) {
+        return httpTrainingProgram.add(request);
+    }
 
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") String requestId,  Model model) {
         DReponseTrainingProgram dReponseTrainingProgram = httpTrainingProgram.getById(requestId);
 
         model.addAttribute("training", dReponseTrainingProgram);
-        return "update-TrainingProGram";
+        return "training-program-update";
     }
 
     @PostMapping("/update")
@@ -81,7 +117,7 @@ public class TrainingProgramController {
         List<String> listTagSearch = httpTrainingProgram.getAllSearchTag();
         model.addAttribute("listTagSearch", listTagSearch);
         model.addAttribute("list", list);
-        return "trainingProgram-list";
+        return "training-program-list";
     }
 
     @GetMapping("/deleteSearchTag/{id}")

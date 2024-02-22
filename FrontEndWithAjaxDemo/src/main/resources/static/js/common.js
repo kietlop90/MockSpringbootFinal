@@ -84,14 +84,16 @@ function addItem(url, data, redirect) {
 
 let resultUpdateItem;
 
-function updateItem(url, data, redirect) {
+function updateItem(url, data, redirect, isAlert = true) {
     $.ajax({
         type: "POST",
         url: url,
         data: data,
         success: function (result) {
             resultUpdateItem = result;
-            alert("Update successfully !!!");
+            if (isAlert) {
+                alert("Update successfully !!!");
+            }
             if (redirect) {
                 window.location.replace(redirect);
             }

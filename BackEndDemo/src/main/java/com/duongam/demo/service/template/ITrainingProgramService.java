@@ -1,16 +1,23 @@
 package com.duongam.demo.service.template;
 
+import com.duongam.demo.dto.request.forcreate.CRequestClass;
+import com.duongam.demo.dto.request.forcreate.CRequestTrainingProgram;
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.*;
 import com.duongam.demo.entities.TrainingUnit;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ITrainingProgramService {
 
+
     @Transactional
-    List<DReponseTrainingProgram> listAllTrainingPrograms();
+    DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram);
+
+    Page<DReponseTrainingProgram> listAllTrainingPrograms(int page, int size, String sort, String dir);
 
     DReponseTrainingProgram deleteTrainingProgramById(String id);
 

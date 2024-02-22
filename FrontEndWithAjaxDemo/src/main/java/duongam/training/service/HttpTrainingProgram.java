@@ -1,16 +1,23 @@
 package duongam.training.service;
 
 import duongam.training.dto.request.forcreate.CRequestClass;
+import duongam.training.dto.request.forcreate.CRequestTrainingProgram;
 import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
 import duongam.training.dto.response.fordetail.*;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.forlist.LResponseClass;
+import duongam.training.dto.response.forlist.LResponseSyllabus;
+import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.http.HttpBase;
 import duongam.training.service.url.ClassUrl;
 import duongam.training.service.url.TrainingProgramUrl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +47,26 @@ public class HttpTrainingProgram {
         HttpBase<DReponseTrainingProgram[], DReponseTrainingProgram[]> httpBase = new HttpBase<>();
         DReponseTrainingProgram[] list = httpBase.getFromAPI(trainingProgramUrl.getAll(), DReponseTrainingProgram[].class);
         return Arrays.asList(list);
+    }
+
+    public PaginatedResponse<DReponseTrainingProgram> getAll(int page, int size,
+                                                       String sortField, String dir) {
+        RestTemplate restTemplate = new RestTemplate();
+        String urlWithParam = trainingProgramUrl.getAll() + "?page=" + page + "&size=" + size;
+
+        if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
+            urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+        }
+
+        ResponseEntity<PaginatedResponse<DReponseTrainingProgram>> response = restTemplate.exchange(
+                urlWithParam,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<PaginatedResponse<DReponseTrainingProgram>>() {
+                }
+        );
+
+        return response.getBody();
     }
 
     public DReponseTrainingProgram duplicate(String id) {
@@ -104,5 +131,11 @@ public class HttpTrainingProgram {
         HttpBase<DReponseTrainingProgram[], DReponseTrainingProgram[]> httpBase = new HttpBase<>();
         DReponseTrainingProgram[] list = httpBase.getFromAPI(trainingProgramUrl.searchByName(name), DReponseTrainingProgram[].class);
         return Arrays.asList(list);
+    }
+
+    public DReponseTrainingProgram add(CRequestTrainingProgram request) {
+        HttpBase<CRequestTrainingProgram, DReponseTrainingProgram> httpBase = new HttpBase<>();
+        request.setStatus("InActive");
+        return httpBase.postToAPI(request, trainingProgramUrl.add(), DReponseTrainingProgram.class);
     }
 }

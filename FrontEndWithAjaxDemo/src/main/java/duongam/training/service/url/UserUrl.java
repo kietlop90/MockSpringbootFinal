@@ -44,5 +44,4 @@ public class UserUrl {
     public String deleteById(Long id) {
         return String.format(urlProperties.getProperty(DELETE_BY_ID),id);
     }
-
 }

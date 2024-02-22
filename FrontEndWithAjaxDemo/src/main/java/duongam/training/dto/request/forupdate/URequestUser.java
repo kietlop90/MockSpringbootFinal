@@ -22,7 +22,7 @@ public class URequestUser {
     private String role;
     private String dob;
     private String gender;
-    private boolean status;
+    private Boolean status;
     private String createdBy;
     private LocalDate createdDate;
     private String modifiedBy;

@@ -26,4 +26,6 @@ public class DResponseUser {
 
     private String name;
 
+    private Boolean status;
+
 }

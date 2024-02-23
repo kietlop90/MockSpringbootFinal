@@ -62,12 +62,7 @@
 
             <div class="row mb-2">
                 <div class="col">
-                    <div class="group-filter">
-                            <span class="item-filter">
-                                foundation
-                                <img class="btn-remove" th:src="@{/icon/navigation-menu/menu/menu_open-white.png}"
-                                     alt="">
-                            </span>
+                    <div id="group-filter" class="group-filter">
                     </div>
                 </div>
             </div>
@@ -95,7 +90,7 @@
                             <tr th:id='${"tr"+ item.id}'>
                                 <td th:id='${"name"+ item.id}' th:text="${item.name}"></td>
                                 <td th:id='${"code"+ item.id}' th:text="${item.code}"></td>
-                                <td th:id='${"createdDate"+ item.id}' th:text="${item.createdDate}"></td>
+                                <td th:id='${"createdDate"+ item.id}' th:text="${item.formatDate()}"></td>
                                 <td th:id='${"createdBy"+ item.id}' th:text="${item.createdBy}"></td>
                                 <td th:id='${"duration"+ item.id}' th:text="${item.duration}"></td>
                                 <td th:id='${"attendee"+ item.id}' th:text="${item.attendee}"></td>

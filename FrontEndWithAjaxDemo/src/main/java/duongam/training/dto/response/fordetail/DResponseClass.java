@@ -23,7 +23,7 @@ public class DResponseClass {
     private String fsu;
     private String startDate;
     private String endDate;
-    private Long createdBy;
+    private String createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;
     private Timestamp modifiedDate;

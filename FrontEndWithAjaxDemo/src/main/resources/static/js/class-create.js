@@ -39,7 +39,7 @@ $(function () {
             startDate: dateTime[0],
             endDate: dateTime[1],
             code: code,
-            createBy: JSON.parse(localStorage.getItem("user_info")).id,
+            createdBy: JSON.parse(localStorage.getItem("user_info")).id,
         };
         addItem("/class/add", data, "/class/list");
     })

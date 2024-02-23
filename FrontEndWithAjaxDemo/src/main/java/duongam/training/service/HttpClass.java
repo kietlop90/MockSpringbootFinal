@@ -35,11 +35,6 @@ public class HttpClass {
     @Autowired
     private ClassUrl classUrl;
 
-    public List<LResponseClass> getAll() {
-        HttpBase<LResponseClass[], LResponseClass[]> httpBase = new HttpBase<>();
-        LResponseClass[] list = httpBase.getFromAPI(classUrl.getAll(), LResponseClass[].class);
-        return Arrays.asList(list);
-    }
 
     public PaginatedResponse<LResponseClass> getAll(int page, int size,
                                                    String sortField, String dir, String keywords) {

@@ -1,6 +1,7 @@
 package duongam.training.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -35,13 +36,13 @@ public class SylabusController {
         return "syllabus-list";
     }
 
-    @GetMapping("/list-all")
-    @JsonProperty("data")
-    @ResponseBody
-    public List<LResponseUser> listAll(Model model) {
-        List<LResponseUser> test = httpSyllabus.();
-        return httpUser.getTrainer();
-    }
+//    @GetMapping("/list-all")
+//    @JsonProperty("data")
+//    @ResponseBody
+//    public List<DResponseSyllabus> listAll(Model model) {
+//        List<DResponseSyllabus> test = httpSyllabus.();
+//        return httpUser.getTrainer();
+//    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {

@@ -141,6 +141,7 @@
                                                 <ul class="dropdown-menu">
                                                     <li>
                                                         <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'SUPERADMIN'}"
                                                            th:data-id="${item.id}"
                                                            th:data-role="'SUPERADMIN'">
                                                             <label style="color: #2C5282">Super Admin</label>
@@ -148,6 +149,7 @@
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'ADMIN'}"
                                                            th:data-id="${item.id}"
                                                            th:data-role="'ADMIN'">
                                                             <label style="color: #2C5282">Admin</label>
@@ -155,6 +157,7 @@
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'TRAINER'}"
                                                            th:data-id="${item.id}"
                                                            th:data-role="'TRAINER'">
                                                             <label style="color: #2C5282">Trainer</label>

@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests()
 				// No need authentication.
 				.antMatchers("/user/login","/user/register","/role/create").permitAll()
-				.antMatchers( "/user/**","/syllabus/**","/trainingProgram/**").permitAll()
+				.antMatchers( "/user/**","/syllabus/**","/trainingProgram/**","/class/**").permitAll()
 				// Need authentication.
 				.anyRequest().authenticated().and()
 				//

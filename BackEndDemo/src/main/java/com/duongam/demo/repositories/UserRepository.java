@@ -10,11 +10,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
     public Page<LResponseUser> findAllBy(Pageable pageable);
+
+    @Query("SELECT u FROM User u WHERE u.role.id = 2")
+    public List<LResponseUser> findAdmin();
+
+    @Query("SELECT u FROM User u WHERE  u.role.id = 3")
+    public List<LResponseUser> findTrainer();
 
     //Search User by Keyword
     @Query("SELECT u FROM User u WHERE CAST(u.id AS string) LIKE %:keyword% OR u.name LIKE %:keyword% OR u.email LIKE %:keyword%")
@@ -37,4 +44,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                    @Param("keyword4") String keyword4, Pageable pageable);
 
      User findByUsername(String userName);
+
+     Optional<User> findById(Long id);
 }

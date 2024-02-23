@@ -29,7 +29,7 @@ public class ClassUser implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "class_id")
-    private Class classId;
+    private ClassForProject classId;
 
     @Transient
     public String userName() {

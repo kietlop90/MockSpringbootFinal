@@ -1,5 +1,6 @@
 package duongam.training.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.request.forcreate.CRequestClass;
@@ -7,6 +8,7 @@ import duongam.training.dto.request.forcreate.CRequestUser;
 import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseUser;
+import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -40,6 +42,21 @@ public class UserController {
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("dir", dir);
 		return "user-list";
+	}
+
+	@GetMapping("/list-trainer")
+	@ResponseBody
+	@JsonProperty("data")
+	public List<LResponseUser> listTrainer(Model model) {
+		List<LResponseUser> test = httpUser.getTrainer();
+		return httpUser.getTrainer();
+	}
+
+	@GetMapping("/list-admin")
+	@ResponseBody
+	@JsonProperty("data")
+	public List<LResponseUser> listAdmin(Model model) {
+		return httpUser.getAdmin();
 	}
 
     @GetMapping("/login")

@@ -4,6 +4,8 @@ import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.forlist.LResponseClass;
+import duongam.training.dto.response.forlist.LResponseUser;
+import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +22,18 @@ public class ClassController {
     private HttpClass httpClass;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<LResponseClass> list = httpClass.getAll();
-        for (LResponseClass item : list) {
-            item.formatData();
-        }
-        model.addAttribute("list", list);
+    public String list(Model model, @RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "10") int size,
+                       @RequestParam(required = false) String sortField,
+                       @RequestParam(defaultValue = "desc") String dir,
+                       @RequestParam(defaultValue = "")String keywords){
+        PaginatedResponse<LResponseClass> lResponseClassPaginatedResponse = httpClass.getAll(page, size, sortField, dir, keywords);
+        model.addAttribute("list", lResponseClassPaginatedResponse.getContent());
+        model.addAttribute("totalPages", lResponseClassPaginatedResponse.getTotalPages());
+        model.addAttribute("currentPage", lResponseClassPaginatedResponse.getCurrentPage());
+        model.addAttribute("pageSize", lResponseClassPaginatedResponse.getSize());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("dir", dir);
         return "class-list";
     }
 

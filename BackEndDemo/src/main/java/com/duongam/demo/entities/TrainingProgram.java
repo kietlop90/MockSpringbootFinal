@@ -46,7 +46,7 @@ public class TrainingProgram {
     // lien ket voi class
 
     @OneToMany(mappedBy = "trainingProgramCode")
-    private List<Class> classId; // map voi bang class(truong id)
+    private List<ClassForProject> classId; // map voi bang class(truong id)
 
 
     @ManyToOne

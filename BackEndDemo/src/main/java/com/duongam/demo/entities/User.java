@@ -12,13 +12,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 import javax.persistence.*;
-import javax.swing.text.DateFormatter;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -75,7 +72,7 @@ public class User{
     private List<Syllabus> syllabusList;
 
     @OneToMany(mappedBy = "createdBy")
-    private List<Class> classList;
+    private List<ClassForProject> classList;
 
 
     @Transient

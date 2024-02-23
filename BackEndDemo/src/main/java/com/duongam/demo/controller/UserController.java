@@ -45,6 +45,16 @@ public class UserController {
         return ResponseEntity.ok().body(paginatedResponse);
     }
 
+    @GetMapping("/list-trainer")
+    public ResponseEntity<List<LResponseUser>> listTrainer() {
+        return ResponseEntity.ok().body(userService.getTrainer());
+    }
+
+    @GetMapping("/list-admin")
+    public ResponseEntity<List<LResponseUser>> listAdmin() {
+        return ResponseEntity.ok().body(userService.getAdmin());
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<Object> loginUser(@RequestBody LoginModel loginModel, HttpServletResponse response) {
         String username = loginModel.getUsername();

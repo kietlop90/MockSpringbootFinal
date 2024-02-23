@@ -109,10 +109,16 @@ function renderKeywords() {
     for (const [index, item] of searchKeywords.entries()) {
         let itemFilterDom = $("<span>")
             .addClass("item-filter")
-            .addClass("me-2");
+            .addClass("me-2")
+            .css('cursor','pointer')
+            .on("click", function () {
+                searchKeywords.splice(index, 1);
+                searchKeywords.push(item);
+                search();
+            });
         let keywordsContainerDom = $("<div>")
             .html(item)
-            .addClass("me-2");
+            .addClass("me-2")
         let btnRemoveDom = $("<div>");
         btnRemoveDom
             .html("X")

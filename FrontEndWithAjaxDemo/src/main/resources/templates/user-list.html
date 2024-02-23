@@ -35,17 +35,19 @@
         </div>
         <div class="row d-flex justify-content-between">
             <!-- filter -->
-            <div class="col-4">
+            <div class="col-3">
                 <div class="input-group">
                         <span class="input-group-text">
                             <img th:src="@{/icon/document-manage/search.png}" alt="">
                         </span>
                     <input type="text" class="form-control" id="input-filter" placeholder="Search by..." autofocus>
-                    <button type="button" id="btn-filter-user" class="btn btn-main">
-                           <img th:src="@{/icon/action/filter_list-white.png}" alt="">
-                        Filter
-                    </button>
                 </div>
+            </div>
+            <div class="col-3 mb-2">
+                <button type="button" id="btn-filter-user" class="btn btn-main">
+                    <img th:src="@{/icon/action/filter_list-white.png}" alt="">
+                    Filter
+                </button>
             </div>
             <div class="col-6 group-btn-right mb-2">
                 <button type="button" id="btn-add" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">

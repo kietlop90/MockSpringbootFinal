@@ -31,6 +31,27 @@ $(document).ready(function () {
     $("#user-name").html(userName);
 });
 
+let resultList;
+
+function getList(url, prop) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (result) {
+                if (prop) {
+                    resultList = resultList ? resultList : {};
+                    resultList[prop] = result;
+                } else {
+                    resultList = result;
+                }
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
+
 let resultGetItemById;
 
 function getItemById(url, id) {
@@ -46,13 +67,13 @@ function getItemById(url, id) {
 let resultAddItem;
 
 function addItem(url, data, redirect) {
-    debugger
     $.ajax({
         type: "POST",
         url: url,
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
             resultAddItem = result;
+            console.log(result)
             alert("Add new successfully !!!");
             if (redirect) {
                 window.location.replace(redirect);

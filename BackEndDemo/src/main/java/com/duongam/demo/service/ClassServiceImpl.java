@@ -64,7 +64,7 @@ public class ClassServiceImpl implements IClassService {
     @Transactional
     public DResponseClass save(CRequestClass cRequestClass) {
         User user = userRepository.findById(cRequestClass.getCreatedBy()).orElse(null);
-        TrainingProgram trainingProgram = trainingProgramRepository.findById(cRequestClass.getTrainingProgramCode()).orElse(null);
+        TrainingProgram trainingProgram = trainingProgramRepository.findByCode(cRequestClass.getTrainingProgramCode()).orElse(null);
 
         ClassForProject aClass = modelMapper.map(cRequestClass, ClassForProject.class);
         aClass.setCreatedBy(user);

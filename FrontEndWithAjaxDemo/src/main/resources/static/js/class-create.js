@@ -132,6 +132,7 @@ $(function () {
         let val = $(this).val();
         await getListWithKeyWord("/trainingProgram/list-name/" + val);
         // render
+
         let listAutocompleteDom = $("#list-autocomplete");
         listAutocompleteDom.show();
         listAutocompleteDom.html("");
@@ -141,7 +142,7 @@ $(function () {
                 .addClass("item")
                 .on("click", async function () {
                     dataTraining = item;
-                    await getListSyllabusWithKeyWord("/syllabus/list-syllabus-program/" + item.id);
+                    await getListSyllabusWithKeyWord("/syllabus/list-syllabus-program/" + item.code);
                     dataSyllabus = resultListSyllabusWithKeyWord;
                     for (const itemSyllabus of resultListSyllabusWithKeyWord) {
                         let groupProgramDom = $("#group-training-program")
@@ -179,7 +180,7 @@ $(function () {
             let titleDom = $("<div>")
             titleDom
                 .addClass("item-title")
-                .html(item.programName);
+                .html(item.name);
 
             let infoDom = $("<div>")
             let modifiedDate = item.modifiedDate ? item.modifiedDate : "23/07/2022"

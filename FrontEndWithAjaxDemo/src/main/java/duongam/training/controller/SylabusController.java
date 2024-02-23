@@ -1,5 +1,7 @@
 package duongam.training.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpSyllabus;

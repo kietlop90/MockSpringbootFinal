@@ -1,24 +1,24 @@
-package com.duongam.demo.dto.response.fordetail;
+package com.duongam.demo.dto.response.forlist;
 
-import com.duongam.demo.entities.Permission;
 import com.duongam.demo.entities.Role;
+import com.duongam.demo.entities.User;
 import com.duongam.demo.entities.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class DResponseRole {
+public class LResponseRole {
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private ERole name;
+    private String name;
     private String description;
     private String syllabus;
     private String trainingProgram;
@@ -26,9 +26,9 @@ public class DResponseRole {
     private String learningMetarial;
     private String userManagerment;
 
-    public DResponseRole(Role role) {
+    public LResponseRole(Role role) {
         this.id = role.getId();
-        this.name = role.getName();
+        this.name = role.getName().toString();
         this.syllabus = role.getPermission().getSyllabus();
         this.trainingProgram = role.getPermission().getTrainingProgram();
         this.classForProject = role.getPermission().getClassForProject();

@@ -20,6 +20,8 @@ public class UserUrl {
     private static final String GET_ALL_TRAINER = "user.getalltrainer";
     private static final String GET_ALL_ADMIN = "user.getalladmin";
 
+    private static final String GET_ALL_PERMISSION = "user.permissionlist";
+
     public String login() {
         return urlProperties.getProperty(LOGIN);
     }
@@ -53,4 +55,6 @@ public class UserUrl {
     public String deleteById(Long id) {
         return String.format(urlProperties.getProperty(DELETE_BY_ID),id);
     }
+
+    public String getGetAllPermission() { return urlProperties.getProperty(GET_ALL_PERMISSION);}
 }

@@ -29,5 +29,5 @@ public interface IUserService {
 
 	DResponseUser deleteById(Long id);
 
-	DResponseUser deActivateById(Long id);
+
 }

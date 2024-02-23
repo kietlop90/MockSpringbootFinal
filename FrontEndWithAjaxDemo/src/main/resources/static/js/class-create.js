@@ -18,6 +18,8 @@ $(function () {
     $("#btn-cancel").on("click", function () {
         //TO DO
     })
+
+
     $("#btn-save-as-draft").on("click", function () {
         let className = $("#input-name-class").val();
         // let duration = $("#timePicker").val();
@@ -25,14 +27,19 @@ $(function () {
         let trainer = $("#select-trainer").val();
         let admin = $("#select-admin").val();
         let dateTime = $("#timeFrameDaterangepicker").val().split(' - ');
+        let today = new Date();
+        let random = Math.floor(Math.random() * 100);
+        let code = location + today.getFullYear() + zeroPad(random, 2);
         let data = {
             name: className,
             // duration : duration,
-            location : location,
-            trainer : trainer,
-            admin : admin,
+            location: location,
+            trainer: trainer,
+            admin: admin,
             startDate: dateTime[0],
             endDate: dateTime[1],
+            code: code,
+            createBy: JSON.parse(localStorage.getItem("user_info")).id,
         };
         addItem("/class/add", data, "/class/list");
     })
@@ -164,4 +171,9 @@ async function getAdmin() {
             .attr("value", item.id);
         selectAdminDom.append(option);
     }
+}
+
+function zeroPad(num, places) {
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
 }

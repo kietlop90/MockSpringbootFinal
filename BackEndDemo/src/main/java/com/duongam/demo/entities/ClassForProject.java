@@ -8,10 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Class {
+public class ClassForProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
@@ -76,9 +74,5 @@ public class Class {
             classUserList.add(user.userName());
         });
         return classUserList;
-    }
-
-    public String userCreatedBy() {
-        return createdBy.getUsername();
     }
 }

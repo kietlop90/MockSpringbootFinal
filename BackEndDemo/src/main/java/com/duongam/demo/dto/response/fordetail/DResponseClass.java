@@ -1,14 +1,12 @@
 package com.duongam.demo.dto.response.fordetail;
 
-import com.duongam.demo.entities.Class;
+import com.duongam.demo.entities.ClassForProject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @AllArgsConstructor
@@ -33,7 +31,7 @@ public class DResponseClass {
     private String trainingProgramName;
     private ArrayList<String> listOfClass;
 
-    public DResponseClass(Class classes) {
+    public DResponseClass(ClassForProject classes) {
         this.name = classes.getName();
         this.code = classes.getCode();
         this.createdBy = classes.getCreatedBy().getName();

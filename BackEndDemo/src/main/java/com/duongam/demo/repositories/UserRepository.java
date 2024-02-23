@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -43,4 +44,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
                                    @Param("keyword4") String keyword4, Pageable pageable);
 
      User findByUsername(String userName);
+
+     Optional<User> findById(Long id);
 }

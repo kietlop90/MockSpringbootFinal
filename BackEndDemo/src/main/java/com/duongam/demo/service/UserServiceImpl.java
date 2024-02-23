@@ -165,9 +165,5 @@ public class UserServiceImpl implements IUserService {
         return dResponseUser;
     }
 
-    @Override
-    public DResponseUser deActivateById(Long id) {
-        return null;
-    }
 
 }

@@ -3,6 +3,7 @@ package com.duongam.demo.controller;
 import com.duongam.demo.dto.page.PaginatedResponse;
 import com.duongam.demo.dto.request.forcreate.CRequestClass;
 import com.duongam.demo.dto.request.forupdate.URequestClass;
+import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.forlist.LResponseClass;
 import com.duongam.demo.service.template.IClassService;

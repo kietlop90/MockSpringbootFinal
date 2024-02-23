@@ -12,7 +12,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class TrainingProgramSyllabus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

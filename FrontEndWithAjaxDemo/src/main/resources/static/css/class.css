@@ -113,6 +113,8 @@ hr {
 }
 
 .group-tab-body .header-group .group-filter-training-program {
+    display: flex;
+    align-items: center;
 }
 
 .group-tab-body .header-group .info-training-program > div {

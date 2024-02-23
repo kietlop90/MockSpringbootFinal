@@ -1,5 +1,6 @@
 package duongam.training.service;
 
+import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -44,10 +45,17 @@ public class HttpSyllabus {
         );
 
         return response.getBody();
-}
+    }
 
-public LResponseSyllabus delete(String id) {
-    HttpBase<LResponseSyllabus, LResponseSyllabus> httpBase = new HttpBase<>();
-    return httpBase.deleteFromAPI(syllabusUrl.delete(id), LResponseSyllabus.class);
-}
+    public List<LResponseSyllabus> searchByCodeForClass(String code) {
+        HttpBase<LResponseSyllabus[], LResponseSyllabus[]> httpBase = new HttpBase<>();
+        String url = syllabusUrl.getAllForClass(code);
+        LResponseSyllabus[] list = httpBase.getFromAPI(url, LResponseSyllabus[].class);
+        return Arrays.asList(list);
+    }
+
+    public LResponseSyllabus delete(String id) {
+        HttpBase<LResponseSyllabus, LResponseSyllabus> httpBase = new HttpBase<>();
+        return httpBase.deleteFromAPI(syllabusUrl.delete(id), LResponseSyllabus.class);
+    }
 }

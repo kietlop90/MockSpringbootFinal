@@ -29,7 +29,7 @@ public class CRequestClass {
     private Timestamp createdDate;
     private Long modifiedBy;
     private Timestamp modifiedDate;
-    private String trainingProgramName;
+    private String trainingProgramCode;
     private String attendee;
     private ArrayList<String> listOfClass;
 }

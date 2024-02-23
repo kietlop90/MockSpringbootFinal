@@ -7,6 +7,7 @@ import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpClass;
+import duongam.training.service.HttpTrainingProgram;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,9 @@ import java.util.List;
 public class ClassController {
     @Autowired
     private HttpClass httpClass;
+
+    @Autowired
+    private HttpTrainingProgram httpTrainingProgram;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "0") int page,
@@ -44,7 +48,7 @@ public class ClassController {
     }
 
     @GetMapping("/add")
-    public String addForm(Model model) {
+    public String addForm(@RequestParam(defaultValue = "") String nameProgram, Model model) {
         model.addAttribute("aClass", new DResponseClass());
         return "class-create";
     }

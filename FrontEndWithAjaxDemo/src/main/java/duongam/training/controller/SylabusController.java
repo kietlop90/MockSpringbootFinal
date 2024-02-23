@@ -1,16 +1,12 @@
 package duongam.training.controller;
 
 import duongam.training.dto.response.forlist.LResponseSyllabus;
-import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpSyllabus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +33,14 @@ public class SylabusController {
         return "syllabus-list";
     }
 
+//    @GetMapping("/list-all")
+//    @JsonProperty("data")
+//    @ResponseBody
+//    public List<DResponseSyllabus> listAll(Model model) {
+//        List<DResponseSyllabus> test = httpSyllabus.();
+//        return httpUser.getTrainer();
+//    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
         httpSyllabus.delete(id);
@@ -53,5 +57,11 @@ public class SylabusController {
     public String syllabusDetails(Model model) {
 
         return "syllabus-details";
+    }
+
+    @GetMapping("/list-syllabus-program/{keywords}")
+    @ResponseBody
+    public List<LResponseSyllabus> getProgramForClass(@PathVariable("keywords") String keywords) {
+        return httpSyllabus.searchByCodeForClass(keywords);
     }
 }

@@ -35,11 +35,6 @@ public class HttpClass {
     @Autowired
     private ClassUrl classUrl;
 
-    public List<LResponseClass> getAll() {
-        HttpBase<LResponseClass[], LResponseClass[]> httpBase = new HttpBase<>();
-        LResponseClass[] list = httpBase.getFromAPI(classUrl.getAll(), LResponseClass[].class);
-        return Arrays.asList(list);
-    }
 
     public PaginatedResponse<LResponseClass> getAll(int page, int size,
                                                    String sortField, String dir, String keywords) {
@@ -80,10 +75,6 @@ public class HttpClass {
         return httpBase.getFromAPI(classUrl.getById(id), DResponseClass.class);
     }
 
-    public DResponseClass getByName(String name) {
-        HttpBase<DResponseClass, DResponseClass> httpBase = new HttpBase<>();
-        return httpBase.getFromAPI(classUrl.getByName(name), DResponseClass.class);
-    }
 
     public DResponseClass deleteById(Long id) {
         HttpBase<DResponseClass, DResponseClass> httpBase = new HttpBase<>();

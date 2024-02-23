@@ -32,7 +32,6 @@ $(document).ready(function () {
 });
 
 let resultList;
-
 function getList(url, prop) {
     return Promise.resolve(
         $.ajax({
@@ -52,8 +51,39 @@ function getList(url, prop) {
     });
 }
 
-let resultGetItemById;
+let resultListWithKeyWord;
+function getListWithKeyWord(url) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (result) {
+                resultListWithKeyWord = result;
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
 
+let resultListSyllabusWithKeyWord;
+
+function getListSyllabusWithKeyWord(url) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (result) {
+                resultListSyllabusWithKeyWord = result;
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
+
+
+let resultGetItemById;
 function getItemById(url, id) {
     $.ajax({
         type: "GET",
@@ -65,7 +95,6 @@ function getItemById(url, id) {
 }
 
 let resultAddItem;
-
 function addItem(url, data, redirect) {
     $.ajax({
         type: "POST",
@@ -83,7 +112,6 @@ function addItem(url, data, redirect) {
 }
 
 let resultUpdateItem;
-
 function updateItem(url, data, redirect, isAlert = true) {
     $.ajax({
         type: "POST",
@@ -102,7 +130,6 @@ function updateItem(url, data, redirect, isAlert = true) {
 }
 
 let resultDetailItem;
-
 function getItem(url, data, redirect) {
     return Promise.resolve(
         $.ajax({
@@ -119,7 +146,6 @@ function getItem(url, data, redirect) {
 }
 
 let resultDeleteItem;
-
 function deleteItem(url, id, redirect) {
     $.ajax({
         type: "DELETE",
@@ -136,5 +162,6 @@ function deleteItem(url, id, redirect) {
 
 function logout() {
     localStorage.removeItem("user-item");
+    localStorage.removeItem("user-info");
     window.location.replace("/user/login");
 }

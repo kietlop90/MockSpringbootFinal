@@ -133,6 +133,13 @@ public class HttpTrainingProgram {
         return Arrays.asList(list);
     }
 
+    public List<DReponseTrainingProgram> searchByNameForClass(String name) {
+        HttpBase<DReponseTrainingProgram[], DReponseTrainingProgram[]> httpBase = new HttpBase<>();
+        String url = trainingProgramUrl.getSearchByNameForClass(name);
+        DReponseTrainingProgram[] list = httpBase.getFromAPI(url, DReponseTrainingProgram[].class);
+        return Arrays.asList(list);
+    }
+
     public DReponseTrainingProgram add(CRequestTrainingProgram request) {
         HttpBase<CRequestTrainingProgram, DReponseTrainingProgram> httpBase = new HttpBase<>();
         request.setStatus("InActive");

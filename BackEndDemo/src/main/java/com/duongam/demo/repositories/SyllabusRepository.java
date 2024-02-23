@@ -22,7 +22,7 @@ public interface SyllabusRepository extends JpaRepository<Syllabus, String> {
             "JOIN TrainingProgram tp ON tp.code = ts.trainingProgramCode\n" +
             "WHERE tp.code = :code\n")
     List<LResponseSyllabus> findAllByTrainingCode(@Param("code") String code);
-    Page<LResponseSyllabus> findAllBy(Pageable pageable);
+    Page<Syllabus> findAllBy(Pageable pageable);
 
     Optional<Syllabus> findByTopicCode(String code);
 

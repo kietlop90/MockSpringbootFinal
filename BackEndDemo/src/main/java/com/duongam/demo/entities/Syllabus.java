@@ -30,6 +30,7 @@ public class Syllabus {
 
     private String technicalGroup;
 
+    @Enumerated(EnumType.STRING)
     private EVersion version;
 
     private Integer attendeeNumber;
@@ -50,9 +51,6 @@ public class Syllabus {
     @JoinColumn(name = "create_by")
     private User createdBy; // Lấy id của user
 
-    public String getCreatedBy() {
-        return createdBy.getName();
-    }
 
     @CreationTimestamp
     @Column(name = "create_date", updatable = false)
@@ -77,10 +75,11 @@ public class Syllabus {
     @OneToMany(mappedBy = "syllabus")
     private List<TrainingUnit> trainingUnits;
 
-    public String getStatus() {
-        return status.name();
-    }
 
+
+    public String getUserName(){
+        return this.createdBy.getName();
+    }
 
 //    public String getModifiedDate() {
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");

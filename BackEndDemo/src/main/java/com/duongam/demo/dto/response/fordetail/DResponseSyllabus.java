@@ -47,8 +47,8 @@ public class DResponseSyllabus {
         this.topicOutline = syllabus.getTopicOutline();
         this.trainingMaterials = syllabus.getTrainingMaterials();
         this.trainingPrinciples = syllabus.getTrainingPrinciples();
-        this.status = syllabus.getStatus();
-        this.createdBy = syllabus.getCreatedBy();
+        this.status = syllabus.getStatus().name();
+        this.createdBy = syllabus.getCreatedBy().getName();
         this.createdDate = syllabus.getCreatedDate();
         this.modifiedBy = syllabus.getModifiedBy();
     }

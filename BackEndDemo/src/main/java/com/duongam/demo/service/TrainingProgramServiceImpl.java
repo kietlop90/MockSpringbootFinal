@@ -81,8 +81,8 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         return syllabusList.stream().map(value -> {
             DResponseSyllabus dResponseSyllabus = new DResponseSyllabus();
             dResponseSyllabus.setTopicCode(value.getTopicCode());
-            dResponseSyllabus.setStatus(value.getStatus());
-            dResponseSyllabus.setCreatedBy(value.getCreatedBy());
+            dResponseSyllabus.setStatus(value.getStatus().name());
+            dResponseSyllabus.setCreatedBy(value.getCreatedBy().getName());
             dResponseSyllabus.setVersion(String.valueOf(value.getVersion()));
             dResponseSyllabus.setTrainingMaterials(value.getTrainingMaterials());
             dResponseSyllabus.setTechnicalGroup(value.getTechnicalGroup());

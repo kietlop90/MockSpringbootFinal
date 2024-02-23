@@ -1,42 +1,59 @@
 package com.duongam.demo.dto.response.forlist;
 
-import com.duongam.demo.entities.User;
+import com.duongam.demo.entities.*;
+import com.duongam.demo.entities.enums.EThreeStatus;
+import com.duongam.demo.entities.enums.EVersion;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class LResponseSyllabus {
 
-public interface LResponseSyllabus {
+    private String topicCode;
 
-    String getTopicCode();
+    private String topicName;
 
-    String getTopicName();
+    private String technicalGroup;
 
-    String getTechnicalGroup();
+    private String version;
 
-    String getVersion();
+    private String topicOutline;
 
-    String getTopicOutline();
+    private String trainingMaterials;
 
-    String getTrainingMaterials();
+    private String trainingPrinciples;
 
-    String getTrainingPrinciples();
-    @Value("#{target.status}")
-    String getStatus();
+    private String status;
 
-    @Value("#{target.createdBy}")
-    String getCreatedBy();
+    private String createdBy; // id of user created syllabus
 
+    private Timestamp createdDate;
 
-    Timestamp getCreatedDate();
+    private Long modifiedBy; // id of user modified syllabus
 
-    Long getModifiedBy();
-
-//    String getModifiedDate();
-
+    public LResponseSyllabus(Syllabus syllabus) {
+        this.topicCode = syllabus.getTopicCode();
+        this.topicName = syllabus.getTopicName();
+        this.technicalGroup = syllabus.getTechnicalGroup();
+        this.version = syllabus.getVersion().name();
+        this.topicOutline = syllabus.getTopicOutline();
+        this.trainingMaterials = syllabus.getTrainingMaterials();
+        this.trainingPrinciples = syllabus.getTrainingPrinciples();
+        this.status = syllabus.getStatus().name();
+        this.modifiedBy = syllabus.getModifiedBy();
+        this.createdBy = syllabus.getUserName();
+    }
 }

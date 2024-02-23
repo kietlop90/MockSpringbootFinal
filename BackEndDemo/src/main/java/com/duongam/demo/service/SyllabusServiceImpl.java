@@ -35,7 +35,11 @@ public class SyllabusServiceImpl implements ISyllabusService {
             pageable = PageRequest.of(page, size, Sort.Direction.fromString(dir), sortField);
         }
         return syllabusRepository.findAllBy(pageable).
-                map(entity -> modelMapper.map(entity, LResponseSyllabus.class));
+                map(entity -> {
+                    LResponseSyllabus responseSyllabus = modelMapper.map(entity, LResponseSyllabus.class);
+                    responseSyllabus.setCreatedBy(entity.getCreatedBy().getName());
+                    return responseSyllabus;
+                });
     }
 
     @Override

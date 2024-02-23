@@ -19,7 +19,7 @@ $(function () {
         //TO DO
     })
     $("#btn-save").on("click", function () {
-        let programName = $("#input-name-program").val();
+        let programName = $("#input-name-program").val()
         let data = {
             name: programName
         };

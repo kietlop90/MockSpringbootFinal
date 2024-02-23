@@ -43,8 +43,8 @@ public class SyllabusController {
         return ResponseEntity.ok().body(lResponseSyllabus);
     }
 
-    @GetMapping("/list-all")
-    public ResponseEntity<List<DResponseSyllabus>> listAll(String syllabusName) {
+    @GetMapping("/list-all/{syllabusName}")
+    public ResponseEntity<List<DResponseSyllabus>> listAll(@PathVariable String syllabusName) {
         List<DResponseSyllabus> dResponseSyllabusList = syllabusService.listAll(syllabusName);
         return ResponseEntity.ok().body(dResponseSyllabusList);
     }

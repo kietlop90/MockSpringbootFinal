@@ -36,13 +36,13 @@ public class SylabusController {
         return "syllabus-list";
     }
 
-//    @GetMapping("/list-all")
-//    @JsonProperty("data")
-//    @ResponseBody
-//    public List<DResponseSyllabus> listAll(Model model) {
-//        List<DResponseSyllabus> test = httpSyllabus.();
-//        return httpUser.getTrainer();
-//    }
+    @GetMapping("/list-all/{name}")
+    @JsonProperty("data")
+    @ResponseBody
+    public List<DResponseSyllabus> listAll(Model model, @PathVariable String name) {
+        List<DResponseSyllabus> test = httpSyllabus.listAll(name);
+        return test;
+    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {

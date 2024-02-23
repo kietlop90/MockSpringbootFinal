@@ -42,9 +42,7 @@ public class SyllabusServiceImpl implements ISyllabusService {
     @Override
     public List<DResponseSyllabus> listAll(String topicName){
         List<Syllabus> syllabusList = syllabusRepository.findAllByTopicCode(topicName);
-        return syllabusList.stream().map(value -> {
-            return new DResponseSyllabus(value);
-        }).collect(Collectors.toList());
+        return syllabusList.stream().map(DResponseSyllabus::new).collect(Collectors.toList());
     }
 
 

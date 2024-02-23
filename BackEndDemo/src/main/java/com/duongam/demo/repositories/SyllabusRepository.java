@@ -5,6 +5,8 @@ import com.duongam.demo.entities.Syllabus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +19,8 @@ public interface SyllabusRepository extends JpaRepository<Syllabus, String> {
 
     Optional<Syllabus> findByTopicCode(String code);
 
-    List<Syllabus> findAllByTopicCode(String topicCode);
+    @Query("select u from Syllabus u where u.topicName like %:topicName% ")
+    List<Syllabus> findAllByTopicCode(@Param("topicName") String topicName);
 
 
 //    Page<LResponseSyllabus> findByNameContainingIgnoreCase(String name, Pageable pageable);

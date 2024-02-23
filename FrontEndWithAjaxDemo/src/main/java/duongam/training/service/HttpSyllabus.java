@@ -1,5 +1,7 @@
 package duongam.training.service;
 
+import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
+import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -44,6 +46,12 @@ public class HttpSyllabus {
         );
 
         return response.getBody();
+    }
+
+    public List<DResponseSyllabus> listAll(String name) {
+        HttpBase<DResponseSyllabus[], DResponseSyllabus[]> httpBase = new HttpBase<>();
+        DResponseSyllabus[] list = httpBase.getFromAPI(syllabusUrl.listAll(name), DResponseSyllabus[].class);
+        return Arrays.asList(list);
     }
 
     public LResponseSyllabus delete(String id) {

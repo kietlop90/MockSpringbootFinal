@@ -1,5 +1,6 @@
 package duongam.training.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -7,10 +8,7 @@ import duongam.training.service.HttpSyllabus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,8 +36,11 @@ public class SylabusController {
     }
 
     @GetMapping("/list-all")
-    public List<LResponseSyllabus> delete(@PathVariable String id) {
-        httpSyllabus.delete(id);
+    @JsonProperty("data")
+    @ResponseBody
+    public List<LResponseUser> listAll(Model model) {
+        List<LResponseUser> test = httpSyllabus.();
+        return httpUser.getTrainer();
     }
 
     @GetMapping("/delete/{id}")

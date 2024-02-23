@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 @Getter
 @Setter
 public class DResponseUser {
-    @Id
     private Long id;
 
     private String username;
@@ -33,6 +32,8 @@ public class DResponseUser {
 
     private String name;
 
+    private Boolean status;
+
     public DResponseUser(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
@@ -42,5 +43,6 @@ public class DResponseUser {
         this.role = user.roleName();
         this.phone = user.getPhone();
         this.name = user.getName();
+        this.status = user.getStatus();
     }
 }

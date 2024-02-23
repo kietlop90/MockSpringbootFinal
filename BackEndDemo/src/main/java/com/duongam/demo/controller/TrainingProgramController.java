@@ -66,6 +66,12 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(reponseTrainingUnits);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<DReponseTrainingProgram> update(@RequestBody URequestTrainingProgram uRequestTrainingProgram) {
+        DReponseTrainingProgram dReponseTrainingProgram = trainingProgramService.update(uRequestTrainingProgram);
+        return ResponseEntity.ok().body(dReponseTrainingProgram);
+    }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<DReponseTrainingProgram> deleteTrainingProgram(@PathVariable String id) {
@@ -79,11 +85,11 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(dReponseTrainingProgram);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<DReponseTrainingProgram> updateTrainingProgram(@RequestBody URequestTrainingProgram requestTrainingProgramUpdate) {
-        DReponseTrainingProgram reponseTrainingProgram = trainingProgramService.updateTrainingProgramById(requestTrainingProgramUpdate);
-        return ResponseEntity.ok().body(reponseTrainingProgram);
-    }
+//    @PutMapping("/update")
+//    public ResponseEntity<DReponseTrainingProgram> updateTrainingProgram(@RequestBody URequestTrainingProgram requestTrainingProgramUpdate) {
+//        DReponseTrainingProgram reponseTrainingProgram = trainingProgramService.updateTrainingProgramById(requestTrainingProgramUpdate);
+//        return ResponseEntity.ok().body(reponseTrainingProgram);
+//    }
 
 
     @GetMapping("/getListTagsSearch")

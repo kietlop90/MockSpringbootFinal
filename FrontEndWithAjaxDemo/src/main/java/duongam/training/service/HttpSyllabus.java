@@ -45,7 +45,7 @@ public class HttpSyllabus {
         );
 
         return response.getBody();
-}
+    }
 
     public List<LResponseSyllabus> searchByCodeForClass(String code) {
         HttpBase<LResponseSyllabus[], LResponseSyllabus[]> httpBase = new HttpBase<>();
@@ -54,10 +54,8 @@ public class HttpSyllabus {
         return Arrays.asList(list);
     }
 
-public LResponseSyllabus delete(String id) {
-    HttpBase<LResponseSyllabus, LResponseSyllabus> httpBase = new HttpBase<>();
-    return httpBase.deleteFromAPI(syllabusUrl.delete(id), LResponseSyllabus.class);
-}
-
-
+    public LResponseSyllabus delete(String id) {
+        HttpBase<LResponseSyllabus, LResponseSyllabus> httpBase = new HttpBase<>();
+        return httpBase.deleteFromAPI(syllabusUrl.delete(id), LResponseSyllabus.class);
+    }
 }

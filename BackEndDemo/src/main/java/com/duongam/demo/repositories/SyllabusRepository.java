@@ -26,6 +26,8 @@ public interface SyllabusRepository extends JpaRepository<Syllabus, String> {
 
     Optional<Syllabus> findByTopicCode(String code);
 
+    List<Syllabus> findAllByTopicCode(String topicCode);
+
 
 //    Page<LResponseSyllabus> findByNameContainingIgnoreCase(String name, Pageable pageable);
 //

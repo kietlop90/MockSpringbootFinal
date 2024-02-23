@@ -9,6 +9,10 @@
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/menu.js}"></script>
     <script th:src="@{/js/syllabus-list.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
@@ -33,7 +37,7 @@
             <!-- filter -->
             <div class="col-3">
                 <div class="input-group">
-                    <form th:action="@{/trainingProgram/search}" method="get" class="d-flex" >
+                    <form th:action="@{/trainingProgram/search}" method="get" class="d-flex">
                         <span class="input-group-text">
                             <img th:src="@{/assets/icon/document-manage/search.png}" alt="">
                         </span>
@@ -51,7 +55,7 @@
                 </button>
                 <button type="button" class="btn btn-main">
                     <img th:src="@{/assets/icon/action/add-white.png}" alt="">
-                    Add Syllabus
+                    Create Program
                 </button>
             </div>
 
@@ -67,57 +71,70 @@
             </div>
 
 
-
             <!-- table -->
             <div class="row">
                 <div class="col">
                     <table class="table">
                         <thead class="header-table">
                         <tr>
-                            <th class="sortable" data-sort="programName">Program name</th>
-                            <th class="sortable" data-sort="createdOn">Created on</th>
-                            <th class="sortable" data-sort="createdBy">Created by</th>
-                            <th class="sortable" data-sort="duration">Duration</th>
-                            <th class="sortable" data-sort="status">Status</th>
+                            <th class="sortable" data-sort="createdBy">Program code<a
+                                    th:href="@{/trainingProgram/list(sortField='code', dir=${dir.equals('asc') && sortField == 'code'} ? 'desc' : 'asc')}"><img
+                                    th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
+                            <th class="sortable" data-sort="name">Program name<a
+                                    th:href="@{/trainingProgram/list(sortField='name', dir=${dir.equals('asc') && sortField == 'name'} ? 'desc' : 'asc')}"><img
+                                    th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
+                            <th class="sortable" data-sort="createdDate">Created on<a
+                                    th:href="@{/trainingProgram/list(sortField='createdDate', dir=${dir.equals('asc') && sortField == 'createdDate'} ? 'desc' : 'asc')}"><img
+                                    th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
+                            <th class="sortable" data-sort="createdBy">Created by<a
+                                    th:href="@{/trainingProgram/list(sortField='CreatedBy', dir=${dir.equals('asc') && sortField == 'CreatedBy'} ? 'desc' : 'asc')}"><img
+                                    th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
+                            <th class="sortable" data-sort="duration">Duration<a
+                                    th:href="@{/trainingProgram/list(sortField='duration', dir=${dir.equals('asc') && sortField == 'duration'} ? 'desc' : 'asc')}"><img
+                                    th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
+                            <th class="sortable" data-sort="status">Status<a
+                                    th:href="@{/trainingProgram/list(sortField='Status', dir=${dir.equals('asc') && sortField == 'Status'} ? 'desc' : 'asc')}"><img
+                                    th:src="@{/icon/action/sort-white.png}" alt=""></a></th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each=" trainingProgram, a : ${list}">
 
-                            <td th:text="${trainingProgram.id}"></td>
-                            <td><a th:href="@{/trainingProgram/getDetailTrainingProgram/{id}(id=${trainingProgram.id})}" th:text="${trainingProgram.programName}"></a></td>
-                            <td th:text="${trainingProgram.createdOn}"></td>
+                            <td th:text="${trainingProgram.code}"></td>
+                            <td><a th:href="@{/trainingProgram/getDetailTrainingProgram/{id}(id=${trainingProgram.code})}"
+                                   th:text="${trainingProgram.name}"></a></td>
+                            <td th:text="${trainingProgram.createdDate}"></td>
                             <td th:text="${trainingProgram.createdBy}"></td>
                             <td th:text="${trainingProgram.duration}"></td>
                             <td th:text="${trainingProgram.status}"></td>
-                            <td><div class="dropdown">
-                                <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    ...
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Training Material</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/trainingProgram/update/{id}(id=${trainingProgram.id})}">Edit Program</a>
-                                    </li>
-
-                                    <li><a th:href="@{/trainingProgram/duplicate/{id}(id=${trainingProgram.id})}"
-                                           onclick="if (!(confirm('Are you sure you want to duplicate this Content?'))) return false">
-                                        Duplicate Program
-                                    </a></li>
-                                    <li><a th:href="@{/trainingProgram/deActive/{id}(id=${trainingProgram.id})}"
-                                           onclick="if (!(confirm('Are you sure you want to duplicate this Content?'))) return false">
-                                        De-Active Program
-                                    </a></li>
-                                    <li>
-                                    <li>
-                                        <a th:href="@{/trainingProgram/delete/{id}(id=${trainingProgram.id})}"
-                                           onclick="if (!(confirm('Are you sure you want to delete this Content?'))) return false">
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <a class="dropdown-item" th:href="@{/trainingProgram/update/{id}(id=${trainingProgram.code})}">
+                                            Edit Program
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{/trainingProgram/duplicate/{id}(id=${trainingProgram.code})}"
+                                           onclick="return confirm('Are you sure you want to duplicate this Content?');">
+                                            Duplicate Program
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{/trainingProgram/deActive/{id}(id=${trainingProgram.code})}"
+                                           onclick="return confirm('Are you sure you want to deactivate this Content?');">
+                                            De-Active Program
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" th:href="@{/trainingProgram/delete/{id}(id=${trainingProgram.code})}"
+                                           onclick="return confirm('Are you sure you want to delete this Content?');">
                                             Delete Program
                                         </a>
-                                    </li>
+                                    </div>
+                                </div>
 
-                                </ul>
-                            </div></td>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -172,24 +189,4 @@
 </div>
 <div id="footer" th:insert="footer.html"></div>
 </body>
-<script>
-    $(document).ready(function () {
-        $('.sortable').click(function () {
-            var column = $(this).data('sort');
-            var order = $(this).hasClass('asc') ? 'desc' : 'asc';
-
-            // Send the sorting information to the server or implement sorting logic here
-
-            // For demonstration, you can console.log the sorting information
-            console.log('Sort Column:', column, 'Sort Order:', order);
-
-            // Toggle sorting classes
-            $('.sortable').removeClass('asc desc');
-            $(this).addClass(order);
-        });
-    });
-</script>
-<script>
-
-</script>
 </html>

@@ -1,8 +1,6 @@
 package duongam.training.controller;
 
-import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
-import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpSyllabus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,14 @@ public class SylabusController {
         model.addAttribute("dir", dir);
         return "syllabus-list";
     }
+
+//    @GetMapping("/list-all")
+//    @JsonProperty("data")
+//    @ResponseBody
+//    public List<DResponseSyllabus> listAll(Model model) {
+//        List<DResponseSyllabus> test = httpSyllabus.();
+//        return httpUser.getTrainer();
+//    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {

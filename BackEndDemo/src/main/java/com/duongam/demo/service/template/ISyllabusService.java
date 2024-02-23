@@ -14,5 +14,7 @@ public interface ISyllabusService {
 
     Page<LResponseSyllabus> getAll(int page, int size, String sort, String dir);
 
+    List<DResponseSyllabus> listAll(String topicName);
+
     DResponseSyllabus delete(String id);
 }

@@ -59,6 +59,14 @@ $(document).ready(function () {
         let id = $(this).attr("data-id");
         deleteItem("/user/delete", id, "/user/list");
     })
+    $(".btn-change-role").on("click", async function(){
+        let id = $(this).attr("data-id");
+        let role = $(this).attr("data-role");
+        await getItem("/user/getById/" + id);
+        resultDetailItem.role = role;
+        resultDetailItem.dob = moment(resultDetailItem.dob, "DD/MM/YYYY").format('YYYY-MM-DD');
+        updateItem("/user/update", resultDetailItem, "/user/list", false);
+    });
 
     // event enter
     $(document).on("keypress", function (e) {

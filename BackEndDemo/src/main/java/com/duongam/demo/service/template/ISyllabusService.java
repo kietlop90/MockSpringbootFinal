@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface ISyllabusService {
 
+
+    List<LResponseSyllabus> findAllByTrainingCode(String code);
+
     Page<LResponseSyllabus> getAll(int page, int size, String sort, String dir);
 
     DResponseSyllabus delete(String id);

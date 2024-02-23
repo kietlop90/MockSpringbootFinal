@@ -165,7 +165,7 @@
                                     <select id="select-fsu" class="form-control">
                                     </select>
                                 </div>
-                                <div  class="col-12">
+                                <div class="col-12">
                                     <select id="select-contact-fsu" class="form-control">
                                     </select>
                                 </div>
@@ -280,13 +280,17 @@
             <div class="col-12">
                 <div class="group-tab-body">
                     <div class="header-group">
-                        <div id="group-filter-training-program" class="group-filter-training-program">
-                            <label>Training Program name </label>
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <img th:src="@{/icon/document-manage/search.png}" alt="">
-                                </span>
-                                <input class="form-control" id="input-filter-training-program"/>
+                        <div id="group-filter-training-program" class="group-filter-training-program mb-2">
+                            <label class="me-2">Training Program name </label>
+                            <div class="group-autocomplete">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <img th:src="@{/icon/document-manage/search.png}" alt="">
+                                    </span>
+                                    <input class="form-control" id="input-filter-training-program"/>
+                                </div>
+                                <div id="list-autocomplete" class="list-autocomplete">
+                                </div>
                             </div>
                         </div>
                         <div id="info-training-program" class="info-training-program">
@@ -307,7 +311,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="body-group">
+                    <div id="group-training-program" class="body-group">
                         <div>
                             <div>
                                 <img th:src="@{/icon/indicator/supplier.png}" alt="">

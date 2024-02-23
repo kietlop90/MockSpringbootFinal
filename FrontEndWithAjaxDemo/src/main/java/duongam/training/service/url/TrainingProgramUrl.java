@@ -15,6 +15,7 @@ public class TrainingProgramUrl {
     private static final String ADD = "trainingProgram.add";
     private static final String UPDATE = "trainingProgram.update";
 
+    private static final String SEARCH_BY_NAME_FOR_CLASS = "trainingProgram.searchbynameforclass";
 
     private static final String GET_BY_ID = "trainingProgram.getbyid";
     private static final String SEARCH_BY_NAME = "trainingProgram.searchbyname";
@@ -67,8 +68,13 @@ public class TrainingProgramUrl {
         return String.format(urlProperties.getProperty(DE_ACTIVE_URL), name);
     }
 
+    public String getSearchByNameForClass(String name) {
+        return String.format(urlProperties.getProperty(SEARCH_BY_NAME_FOR_CLASS), name);
+    }
 
-    public String searchByName(String name) {return String.format(urlProperties.getProperty(SEARCH_BY_NAME), name);}
+    public String searchByName(String name) {
+        return String.format(urlProperties.getProperty(SEARCH_BY_NAME), name);
+    }
 
     public String getAll() {
         return urlProperties.getProperty(GET_ALL);
@@ -86,15 +92,15 @@ public class TrainingProgramUrl {
         return urlProperties.getProperty(UPDATE);
     }
 
-//    public String getByName(String name) {
+    //    public String getByName(String name) {
 //        return String.format(urlProperties.getProperty(GET_BY_NAME), name);
 //    }
 //
     public String getById(String id) {
-        return String.format(urlProperties.getProperty(GET_BY_ID),id);
+        return String.format(urlProperties.getProperty(GET_BY_ID), id);
     }
 
     public String deleteById(String id) {
-        return String.format(urlProperties.getProperty(DELETE_BY_ID),id);
+        return String.format(urlProperties.getProperty(DELETE_BY_ID), id);
     }
 }

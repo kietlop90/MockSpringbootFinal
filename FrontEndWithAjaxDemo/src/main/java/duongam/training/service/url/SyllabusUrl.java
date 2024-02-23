@@ -10,11 +10,16 @@ public class SyllabusUrl {
     @Autowired
     private UrlProperties urlProperties;
 
+    private final String GET_ALL_FOR_CLASS = "syllabus.searchbytrainingcode";
     private final String GET_ALL = "syllabus.getall";
     private final String DELETE_BY_ID = "syllabus.deletebyid";
 
     public String getAll() {
         return urlProperties.getProperty(GET_ALL);
+    }
+
+    public String getAllForClass(String code) {
+        return String.format(urlProperties.getProperty(GET_ALL_FOR_CLASS), code);
     }
 
     public String delete(String id) {

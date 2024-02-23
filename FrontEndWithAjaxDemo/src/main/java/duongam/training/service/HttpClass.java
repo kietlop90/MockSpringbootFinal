@@ -75,10 +75,6 @@ public class HttpClass {
         return httpBase.getFromAPI(classUrl.getById(id), DResponseClass.class);
     }
 
-    public DResponseClass getByName(String name) {
-        HttpBase<DResponseClass, DResponseClass> httpBase = new HttpBase<>();
-        return httpBase.getFromAPI(classUrl.getByName(name), DResponseClass.class);
-    }
 
     public DResponseClass deleteById(Long id) {
         HttpBase<DResponseClass, DResponseClass> httpBase = new HttpBase<>();

@@ -19,7 +19,6 @@ $(function () {
         //TO DO
     })
 
-
     $("#btn-save-as-draft").on("click", function () {
         let className = $("#input-name-class").val();
         // let duration = $("#timePicker").val();
@@ -40,6 +39,7 @@ $(function () {
             endDate: dateTime[1],
             code: code,
             createdBy: JSON.parse(localStorage.getItem("user_info")).id,
+            trainingProgramCode: dataTraining.id
         };
         addItem("/class/add", data, "/class/list");
     })
@@ -125,8 +125,87 @@ $(function () {
     });
 
     // input-filter-training-program
-    $("#group-filter-training-program").hide();
-    $("#info-training-program").show();
+    var dataTraining = {};
+    var dataSyllabus = {};
+    $("#group-filter-training-program").show();
+    $("#input-filter-training-program").on("keyup", async function () {
+        let val = $(this).val();
+        await getListWithKeyWord("/trainingProgram/list-name/" + val);
+        // render
+        let listAutocompleteDom = $("#list-autocomplete");
+        listAutocompleteDom.show();
+        listAutocompleteDom.html("");
+        for (const [index, item] of resultListWithKeyWord.entries()) {
+            let itemDom = $("<div>")
+            itemDom
+                .addClass("item")
+                .on("click", async function () {
+                    dataTraining = item;
+                    await getListSyllabusWithKeyWord("/syllabus/list-syllabus-program/" + item.id);
+                    dataSyllabus = resultListSyllabusWithKeyWord;
+                    for (const itemSyllabus of resultListSyllabusWithKeyWord) {
+                        let groupProgramDom = $("#group-training-program")
+                        let div = $("<div>");
+                        let div1 = $("<div>");
+                        let div2 = $("<div>")
+                        div1.append("<img src='/icon/indicator/supplier.png' alt=''>");
+                        let div3 = $("<div>")
+                            .addClass("pe-3 me-3");
+                        let div4 = $("<div>");
+                        let label1 = $("<label>")
+                            .addClass("name")
+                            .html(itemSyllabus.topicName);
+                        let label2 = $("<label>")
+                            .addClass("status-active")
+                            .html(itemSyllabus.status);
+                        let label3 = $("<label>")
+                            .html(itemSyllabus.topicCode + itemSyllabus.version);
+                        let label4 = $("<label>")
+                            .html("4 days (12 hours)");
+                        let label5 = $("<label>")
+                            .html("on " + itemSyllabus.createdDate + " by "+ itemSyllabus.createdBy);
+                        div3.append(label1).append(label2);
+                        div4.append(label3).append(label4).append(label5);
+                        div2.append(div3).append(div4);
+                        div.append(div1).append(div2);
+                        groupProgramDom.append(div);
+                    }
+                    $("#group-filter-training-program").hide();
+                    $("#info-training-program").show();
+                    $("#group-training-program").show();
+                })
+            ;
+
+            let titleDom = $("<div>")
+            titleDom
+                .addClass("item-title")
+                .html(item.programName);
+
+            let infoDom = $("<div>")
+            let modifiedDate = item.modifiedDate ? item.modifiedDate : "23/07/2022"
+            let modifiedBy = item.modifiedBy ? item.modifiedBy : "Johny Deep"
+            let infoStr = ('... days (... hours) ' + modifiedDate + ' by ' + modifiedBy);
+            infoDom
+                .addClass("item-info")
+                .addClass("small-text")
+                .html(infoStr);
+
+            itemDom
+                .append(titleDom)
+                .append(infoDom);
+
+            listAutocompleteDom
+                .append(itemDom);
+        }
+    })
+    $("#input-filter-training-program").on("blur", function () {
+        setTimeout(function () {
+            $("#list-autocomplete").hide();
+        }, 200)
+    })
+
+    $("#info-training-program").hide();
+    $("#group-training-program").hide();
 
     getTrainer();
     getAdmin();

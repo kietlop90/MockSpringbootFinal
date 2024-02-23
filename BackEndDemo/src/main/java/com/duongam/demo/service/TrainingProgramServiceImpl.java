@@ -95,9 +95,11 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Transactional
     public DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram) {
         TrainingProgram trainingProgram = new TrainingProgram();
-        trainingProgram.setCreatedBy(userRepository.findByUsername("zinny123@gmail.com"));
-        trainingProgram.setCode("TP0016");
-        trainingProgram.setName(cRequestTrainingProgram.getProgramName());
+        trainingProgram.setCreatedBy(userRepository.findByUsername("kietlop9011@gmail.com"));
+        trainingProgram.setCode("TP0011" + ('A' + (int) (Math.random() * 26)) + ('A' + (int) (Math.random() * 26)) );
+        trainingProgram.setName(cRequestTrainingProgram.getName());
+        trainingProgram.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        trainingProgram.setDuration(30);
         if (Objects.equals(cRequestTrainingProgram.getStatus(), "Active")) {
             trainingProgram.setStatus(1);
         } else if ("InActive".equals(cRequestTrainingProgram.getStatus())) {
@@ -304,10 +306,10 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Override
     @Transactional
     public DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate) {
-        TrainingProgram trainingProgram = trainingProgramRepository.findByCode(requestTrainingProgramUpdate.getId()).orElse(null);
+        TrainingProgram trainingProgram = trainingProgramRepository.findByCode(requestTrainingProgramUpdate.getName()).orElse(null);
 
         if (trainingProgram != null) {
-            trainingProgram.setName(requestTrainingProgramUpdate.getProgramName());
+            trainingProgram.setName(requestTrainingProgramUpdate.getName());
             int numberPart = extractNumberBeforeDays(requestTrainingProgramUpdate.getDuration());
             trainingProgram.setDuration(numberPart);
             if (Objects.equals(requestTrainingProgramUpdate.getStatus(), "Active")) {

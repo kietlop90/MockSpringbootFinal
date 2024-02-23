@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CRequestTrainingProgram {
-    private String programName;
+    private String name;
     private String duration;
     private String status;
 }

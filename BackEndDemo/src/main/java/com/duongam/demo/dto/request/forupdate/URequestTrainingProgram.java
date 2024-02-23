@@ -11,8 +11,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class URequestTrainingProgram {
-    private String id;
-    private String programName;
+    private String code;
+
+    private String name;
     private String duration;
     private String status;
 }

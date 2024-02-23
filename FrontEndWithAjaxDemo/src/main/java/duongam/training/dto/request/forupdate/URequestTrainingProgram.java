@@ -14,7 +14,7 @@ public class URequestTrainingProgram {
     private String id;
 
     @Size(min = 6, max = 20, message = "Length of Program Name should be from 6 to 20")
-    private String programName;
+    private String name;
     private String duration;
     private String status;
 }

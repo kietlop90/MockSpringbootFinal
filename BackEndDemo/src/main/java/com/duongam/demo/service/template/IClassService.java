@@ -3,6 +3,7 @@ package com.duongam.demo.service.template;
 import com.duongam.demo.dto.request.authen.RegisterModel;
 import com.duongam.demo.dto.request.forcreate.CRequestClass;
 import com.duongam.demo.dto.request.forupdate.URequestClass;
+import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseClass;
@@ -24,4 +25,6 @@ public interface IClassService {
 	DResponseClass findById(Long id);
 
 	DResponseClass deleteById(Long id);
+
+	List<DReponseTrainingProgram> searchProgram(String programName);
 }

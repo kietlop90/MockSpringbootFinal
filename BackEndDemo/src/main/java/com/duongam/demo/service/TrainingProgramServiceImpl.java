@@ -70,6 +70,10 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                 }).collect(Collectors.toList());
     }
 
+    @Override
+    public List<DReponseTrainingProgram> findAllByNameForclass(String name) {
+        return (trainingProgramRepository.findAllByName(name));
+    }
 
     @Override
     public List<DResponseSyllabus> getAllSyllabusByTrainingProgramCode(String code) {
@@ -95,9 +99,11 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Transactional
     public DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram) {
         TrainingProgram trainingProgram = new TrainingProgram();
-        trainingProgram.setCreatedBy(userRepository.findByUsername("zinny123@gmail.com"));
-        trainingProgram.setCode("TP0016");
-        trainingProgram.setName(cRequestTrainingProgram.getProgramName());
+        trainingProgram.setCreatedBy(userRepository.findByUsername("kietlop9011@gmail.com"));
+        trainingProgram.setCode("TP00" + ('A' + (int) (Math.random() * 26)) + ('A' + (int) (Math.random() * 26)));
+        trainingProgram.setName(cRequestTrainingProgram.getName());
+        trainingProgram.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        trainingProgram.setDuration(30);
         if (Objects.equals(cRequestTrainingProgram.getStatus(), "Active")) {
             trainingProgram.setStatus(1);
         } else if ("InActive".equals(cRequestTrainingProgram.getStatus())) {
@@ -106,6 +112,37 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             trainingProgram.setStatus(3);
         }
         trainingProgramRepository.save(trainingProgram);
+
+        for (String syllabusCode : cRequestTrainingProgram.getListSyllabusCode()) {
+            TrainingProgramSyllabus trainingProgramSyllabus = new TrainingProgramSyllabus();
+            trainingProgramSyllabus.setTrainingProgramCode(trainingProgram);
+            trainingProgramSyllabus.setSyllabusCode(syllabusRepository.findByTopicCode(syllabusCode).orElse(null));
+            trainingProgramSyllabusRepository.save(trainingProgramSyllabus);
+        }
+        return new DReponseTrainingProgram(trainingProgram);
+    }
+
+    @Override
+    @Transactional
+    public DReponseTrainingProgram update(URequestTrainingProgram uRequestTrainingProgram) {
+        TrainingProgram trainingProgram = trainingProgramRepository.findByCode(uRequestTrainingProgram.getCode()).orElse(null);
+        trainingProgram.setName(uRequestTrainingProgram.getName());
+        trainingProgram.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        trainingProgram.setDuration(30);
+        if (Objects.equals(uRequestTrainingProgram.getStatus(), "Active")) {
+            trainingProgram.setStatus(1);
+        } else if ("InActive".equals(uRequestTrainingProgram.getStatus())) {
+            trainingProgram.setStatus(2);
+        } else {
+            trainingProgram.setStatus(3);
+        }
+        trainingProgramRepository.save(trainingProgram);
+//        List<TrainingProgramSyllabus> trainingProgramSyllabusList = trainingProgramSyllabusRepository.findByTrainingProgramCode(trainingProgram.getCode());
+//        for (String syllabusCode : uRequestTrainingProgram.getListSyllabusCode()) {
+//            trainingProgramSyllabus.setTrainingProgramCode(trainingProgram);
+//            trainingProgramSyllabus.setSyllabusCode(syllabusRepository.findByTopicCode(syllabusCode).orElse(null));
+//            trainingProgramSyllabusRepository.save(trainingProgramSyllabus);
+//        }
         return new DReponseTrainingProgram(trainingProgram);
     }
 
@@ -297,30 +334,12 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                 return Collections.emptyList();
         }
 
-        return  trainingProgramList.stream()
+        return trainingProgramList.stream()
                 .map(DReponseTrainingProgram::new).collect(Collectors.toList());
     }
 
     @Override
-    @Transactional
     public DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate) {
-        TrainingProgram trainingProgram = trainingProgramRepository.findByCode(requestTrainingProgramUpdate.getId()).orElse(null);
-
-        if (trainingProgram != null) {
-            trainingProgram.setName(requestTrainingProgramUpdate.getProgramName());
-            int numberPart = extractNumberBeforeDays(requestTrainingProgramUpdate.getDuration());
-            trainingProgram.setDuration(numberPart);
-            if (Objects.equals(requestTrainingProgramUpdate.getStatus(), "Active")) {
-                trainingProgram.setStatus(1);
-            } else if ("InActive".equals(requestTrainingProgramUpdate.getStatus())) {
-                trainingProgram.setStatus(2);
-            } else {
-                trainingProgram.setStatus(3);
-            }
-            trainingProgram.setModifiedDate(new Timestamp(System.currentTimeMillis()));
-            trainingProgramRepository.save(trainingProgram);
-            return new DReponseTrainingProgram(trainingProgram);
-        }
         return null;
     }
 

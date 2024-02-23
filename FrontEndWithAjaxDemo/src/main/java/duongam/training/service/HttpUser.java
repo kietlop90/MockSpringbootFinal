@@ -59,7 +59,9 @@ public class HttpUser {
             urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
         }
 
-
+        if (keywords != null && !keywords.isEmpty()) {
+            urlWithParam += "&keywords=" + keywords;
+        }
         ResponseEntity<PaginatedResponse<LResponseUser>> response = restTemplate.exchange(
                 urlWithParam,
                 HttpMethod.GET,

@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class URequestTrainingProgram {
-    private String id;
-    private String programName;
-    private String duration;
+    private String code;
+
+    private String name;
+    private List<String> listSyllabusCode;
     private String status;
 }

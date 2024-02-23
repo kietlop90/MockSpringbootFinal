@@ -4,6 +4,7 @@ import com.duongam.demo.dto.request.forcreate.CRequestClass;
 import com.duongam.demo.dto.request.forcreate.CRequestTrainingProgram;
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.*;
+import com.duongam.demo.entities.TrainingProgram;
 import com.duongam.demo.entities.TrainingUnit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,9 @@ public interface ITrainingProgramService {
 
     @Transactional
     DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram);
+
+    @Transactional
+    DReponseTrainingProgram update(URequestTrainingProgram uRequestTrainingProgram);
 
     Page<DReponseTrainingProgram> listAllTrainingPrograms(int page, int size, String sort, String dir);
 
@@ -50,5 +54,9 @@ public interface ITrainingProgramService {
 
 
 //    DReponseTrainingProgram save( requestTrainingProgramCreate);
+
     DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate);
+
+    List<DReponseTrainingProgram> findAllByNameForclass(String name);
+
 }

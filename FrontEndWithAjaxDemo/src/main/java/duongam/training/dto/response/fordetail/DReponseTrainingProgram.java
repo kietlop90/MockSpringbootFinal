@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DReponseTrainingProgram {
 
-    private String id;
-    private String ProgramName;
-    private String CreatedOn;
+    private String code;
+    private String name;
+    private String createdDate;
     private String CreatedBy;
     private String duration;
     private String Status;

@@ -9,7 +9,12 @@ import java.util.List;
 
 public interface ISyllabusService {
 
+
+    List<LResponseSyllabus> findAllByTrainingCode(String code);
+
     Page<LResponseSyllabus> getAll(int page, int size, String sort, String dir);
+
+    List<DResponseSyllabus> listAll(String topicName);
 
     DResponseSyllabus delete(String id);
 }

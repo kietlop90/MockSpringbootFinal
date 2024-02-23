@@ -13,6 +13,7 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CRequestClass {
+
     private String name;
     private String code;
     private Integer duration;
@@ -27,7 +28,9 @@ public class CRequestClass {
     private Timestamp createdDate;
     private Long modifiedBy;
     private Timestamp modifiedDate;
-    private String trainingProgramName;
+    private String trainingProgramCode;
     private String attendee;
     private ArrayList<String> listOfClass;
+
+
 }

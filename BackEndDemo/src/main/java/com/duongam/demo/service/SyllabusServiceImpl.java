@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SyllabusServiceImpl implements ISyllabusService {
@@ -35,6 +36,15 @@ public class SyllabusServiceImpl implements ISyllabusService {
         }
         return syllabusRepository.findAllBy(pageable).
                 map(entity -> modelMapper.map(entity, LResponseSyllabus.class));
+    }
+
+
+    @Override
+    public List<DResponseSyllabus> listAll(String topicName){
+        List<Syllabus> syllabusList = syllabusRepository.findAllByTopicCode(topicName);
+        return syllabusList.stream().map(value -> {
+            return new DResponseSyllabus(value);
+        }).collect(Collectors.toList());
     }
 
 

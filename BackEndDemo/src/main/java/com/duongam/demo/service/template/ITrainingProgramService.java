@@ -17,6 +17,9 @@ public interface ITrainingProgramService {
     @Transactional
     DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram);
 
+    @Transactional
+    DReponseTrainingProgram update(URequestTrainingProgram uRequestTrainingProgram);
+
     Page<DReponseTrainingProgram> listAllTrainingPrograms(int page, int size, String sort, String dir);
 
     DReponseTrainingProgram deleteTrainingProgramById(String id);
@@ -50,5 +53,5 @@ public interface ITrainingProgramService {
 
 
 //    DReponseTrainingProgram save( requestTrainingProgramCreate);
-    DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate);
+
 }

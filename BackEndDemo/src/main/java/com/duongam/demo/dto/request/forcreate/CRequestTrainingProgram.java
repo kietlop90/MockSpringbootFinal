@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CRequestTrainingProgram {
     private String name;
-    private String duration;
+    private List<String> listSyllabusCode;
     private String status;
 }

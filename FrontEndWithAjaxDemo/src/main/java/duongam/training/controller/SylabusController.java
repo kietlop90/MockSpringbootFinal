@@ -37,6 +37,11 @@ public class SylabusController {
         return "syllabus-list";
     }
 
+    @GetMapping("/list-all")
+    public List<LResponseSyllabus> delete(@PathVariable String id) {
+        httpSyllabus.delete(id);
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
         httpSyllabus.delete(id);

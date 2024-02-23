@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 @Getter
 @Setter
 public class DResponseUser {
-    @Id
     private Long id;
 
     private String username;

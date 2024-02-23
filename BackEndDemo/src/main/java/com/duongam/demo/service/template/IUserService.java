@@ -17,6 +17,10 @@ public interface IUserService {
 
 	Page<LResponseUser> getAll(int page, int size, String sort, String dir, String[] keywords);
 
+	List<LResponseUser> getTrainer();
+
+	List<LResponseUser> getAdmin();
+
 	DResponseUser save(CRequestUser cUser);
 
 	DResponseUser update(URequestUser uUser);
@@ -25,5 +29,5 @@ public interface IUserService {
 
 	DResponseUser deleteById(Long id);
 
-	DResponseUser deActivateById(Long id);
+
 }

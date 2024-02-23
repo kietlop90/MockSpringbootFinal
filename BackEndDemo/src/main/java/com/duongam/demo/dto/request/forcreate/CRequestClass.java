@@ -14,12 +14,20 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class CRequestClass {
     private String name;
+    private String code;
+    private Integer duration;
+    private Integer days;
+    private Integer hours;
     private String status;
-    private String startDate;
     private String location;
+    private String fsu;
+    private String startDate;
     private String endDate;
-    private String attendee;
+    private Long createdBy;
+    private Timestamp createdDate;
+    private Long modifiedBy;
+    private Timestamp modifiedDate;
     private String trainingProgramName;
-    private String duration;
-    private String FSU;
+    private String attendee;
+    private ArrayList<String> listOfClass;
 }

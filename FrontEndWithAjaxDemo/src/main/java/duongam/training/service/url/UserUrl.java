@@ -17,12 +17,21 @@ public class UserUrl {
     private static final String GET_BY_ID = "user.getbyid";
     private static final String DELETE_BY_ID = "user.deletebyid";
 
+    private static final String GET_ALL_TRAINER = "user.getalltrainer";
+    private static final String GET_ALL_ADMIN = "user.getalladmin";
+
     public String login() {
         return urlProperties.getProperty(LOGIN);
     }
 
     public String getAll() {
         return urlProperties.getProperty(GET_ALL);
+    }
+    public String getAllTrainer() {
+        return urlProperties.getProperty(GET_ALL_TRAINER);
+    }
+    public String getAllAdmin() {
+        return urlProperties.getProperty(GET_ALL_ADMIN);
     }
 
     public String add() {

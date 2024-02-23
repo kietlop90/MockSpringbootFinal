@@ -1,6 +1,7 @@
 package duongam.training.dto.request.forcreate;
 
 import lombok.*;
+import org.apache.tomcat.jni.Local;
 
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
@@ -22,8 +23,8 @@ public class CRequestClass {
     private String status;
     private String location;
     private String fsu;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
     private Long createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;

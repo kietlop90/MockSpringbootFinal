@@ -12,13 +12,19 @@ import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.dto.response.forlist.LResponseClass;
+import duongam.training.dto.response.forlist.LResponseUser;
+import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.http.HttpBase;
 import duongam.training.service.http.Token;
 import duongam.training.service.url.ClassUrl;
 import duongam.training.service.url.UserUrl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +39,29 @@ public class HttpClass {
         HttpBase<LResponseClass[], LResponseClass[]> httpBase = new HttpBase<>();
         LResponseClass[] list = httpBase.getFromAPI(classUrl.getAll(), LResponseClass[].class);
         return Arrays.asList(list);
+    }
+
+    public PaginatedResponse<LResponseClass> getAll(int page, int size,
+                                                   String sortField, String dir, String keywords) {
+        RestTemplate restTemplate = new RestTemplate();
+        String urlWithParam = classUrl.getAll() + "?page=" + page + "&size=" + size;
+
+        if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
+            urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+        }
+
+        if (keywords != null && !keywords.isEmpty()) {
+            urlWithParam += "&keywords=" + keywords;
+        }
+        ResponseEntity<PaginatedResponse<LResponseClass>> response = restTemplate.exchange(
+                urlWithParam,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<PaginatedResponse<LResponseClass>>() {
+                }
+        );
+
+        return response.getBody();
     }
 
     public DResponseClass add(CRequestClass requestClass) {

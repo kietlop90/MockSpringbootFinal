@@ -1,19 +1,19 @@
 package com.duongam.demo.controller;
 
+import com.duongam.demo.dto.page.PaginatedResponse;
 import com.duongam.demo.dto.request.forcreate.CRequestClass;
 import com.duongam.demo.dto.request.forupdate.URequestClass;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
-import com.duongam.demo.entities.Class;
 import com.duongam.demo.dto.response.forlist.LResponseClass;
 import com.duongam.demo.service.template.IClassService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,13 +24,27 @@ public class ClassController {
 	@Autowired
 	private IClassService classService;
 
+
 	@GetMapping("/list")
-	public ResponseEntity<List<LResponseClass>> list(Model model) {
-		List<LResponseClass> list = classService.getAll();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<PaginatedResponse<LResponseClass>> list(@RequestParam(defaultValue = "0") int page,
+																 @RequestParam(defaultValue = "10") int size,
+																 @RequestParam(required = false) String sortField,
+																 @RequestParam(defaultValue = "desc") String dir,
+																 @RequestParam(defaultValue = "") String keywords) {
+		String[] keywordArray = (keywords != null && !keywords.isEmpty()) ? keywords.split(",") : new String[]{};
+		Page<LResponseClass> responseUsers = classService.getAll(page, size, sortField, dir, keywordArray);
+		PaginatedResponse<LResponseClass> paginatedResponse = new PaginatedResponse<>();
+		paginatedResponse.setContent(responseUsers.getContent());
+		paginatedResponse.setTotalPages(responseUsers.getTotalPages());
+		paginatedResponse.setTotalElements(responseUsers.getTotalElements());
+		paginatedResponse.setCurrentPage(responseUsers.getNumber());
+		paginatedResponse.setSize(responseUsers.getSize());
+		return ResponseEntity.ok().body(paginatedResponse);
 	}
+
 	@PostMapping("/add")
 	public ResponseEntity<DResponseClass> add(@Valid @RequestBody CRequestClass cRequestClass, BindingResult bindingResult) {
+
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(null);
 		}

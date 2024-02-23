@@ -4,58 +4,85 @@ import com.duongam.demo.dto.request.forcreate.CRequestClass;
 import com.duongam.demo.dto.request.forupdate.URequestClass;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.forlist.LResponseClass;
-import com.duongam.demo.entities.Class;
+import com.duongam.demo.dto.response.forlist.LResponseUser;
+import com.duongam.demo.entities.ClassForProject;
+import com.duongam.demo.entities.User;
 import com.duongam.demo.repositories.ClassRepository;
+import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IClassService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
 public class ClassServiceImpl implements IClassService {
-	
-	@Autowired
-	private ClassRepository classRepository;
 
+    @Autowired
+    private ClassRepository classRepository;
 
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Override
-	public List<LResponseClass> getAll() {
-        return classRepository.findAllBy();
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    @Transactional
+    public Page<LResponseClass> getAll(int page, int size, String sortField, String dir, String[] keywords) {
+        Pageable pageable = null;
+        if (sortField == null || sortField.isEmpty()) {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString("desc"), "id");
+        } else {
+            pageable = PageRequest.of(page, size, Sort.Direction.fromString(dir), sortField);
+        }
+        if (keywords.length == 0) {
+            return classRepository.findAllBy(pageable);
+        } else {
+            return classRepository.findAllByOneKeyword(keywords[keywords.length - 1], pageable).map(entity -> modelMapper.map(entity, LResponseClass.class));
+        }
     }
 
-	@Override
-	@Transactional
-	public DResponseClass save(CRequestClass CRequestClass) {
-		Class aClass = modelMapper.map(CRequestClass, Class.class);
-		return modelMapper.map(classRepository.save(aClass), DResponseClass.class);
-	}
+    @Override
+    @Transactional
+    public DResponseClass save(CRequestClass cRequestClass) {
+        User user = userRepository.findById(cRequestClass.getCreatedBy()).orElse(null);
 
-	@Override
-	@Transactional
-	public DResponseClass update(URequestClass URequestClass) {
-		Class aClass = modelMapper.map(URequestClass, Class.class);
-		return modelMapper.map(classRepository.save(aClass), DResponseClass.class);
-	}
+        ClassForProject aClass = modelMapper.map(cRequestClass, ClassForProject.class);
+        aClass.setCreatedBy(user);
+        aClass.setStartDate(LocalDate.parse(cRequestClass.getStartDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+        aClass.setEndDate(LocalDate.parse(cRequestClass.getEndDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+        return modelMapper.map(classRepository.save(aClass), DResponseClass.class);
+    }
 
-	@Override
-	@Transactional
-	public DResponseClass findById(Long id) {
-		Optional<Class> aClass = classRepository.findById(id);
-		return aClass.map(value -> modelMapper.map(value, DResponseClass.class)).orElse(null);
-	}
+    @Override
+    @Transactional
+    public DResponseClass update(URequestClass URequestClass) {
+        ClassForProject aClass = modelMapper.map(URequestClass, ClassForProject.class);
+        return modelMapper.map(classRepository.save(aClass), DResponseClass.class);
+    }
 
-	@Override
-	@Transactional
-	public DResponseClass deleteById(Long id) {
-		DResponseClass DResponseClass = findById(id);
-		classRepository.deleteById(id);
-		return DResponseClass;
-	}
+    @Override
+    @Transactional
+    public DResponseClass findById(Long id) {
+        Optional<ClassForProject> aClass = classRepository.findById(id);
+        return aClass.map(value -> modelMapper.map(value, DResponseClass.class)).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public DResponseClass deleteById(Long id) {
+        DResponseClass DResponseClass = findById(id);
+        classRepository.deleteById(id);
+        return DResponseClass;
+    }
 }

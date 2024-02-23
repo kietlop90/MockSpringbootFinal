@@ -4,7 +4,7 @@ import com.duongam.demo.dto.request.forcreate.CRequestTrainingProgram;
 import com.duongam.demo.dto.request.forupdate.URequestTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.*;
 import com.duongam.demo.entities.*;
-import com.duongam.demo.entities.Class;
+import com.duongam.demo.entities.ClassForProject;
 import com.duongam.demo.repositories.*;
 import com.duongam.demo.service.template.ITrainingProgramService;
 import org.modelmapper.ModelMapper;
@@ -63,7 +63,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Override
     @Transactional
     public List<DResponseClass> getALlClassOfTrainingProgram(String code) {
-        List<Class> classList = classRepository.getALlClassByTrainingProgramCode(code);
+        List<ClassForProject> classList = classRepository.getALlClassByTrainingProgramCode(code);
         return classList.stream()
                 .map(value -> {
                     return new DResponseClass(value);

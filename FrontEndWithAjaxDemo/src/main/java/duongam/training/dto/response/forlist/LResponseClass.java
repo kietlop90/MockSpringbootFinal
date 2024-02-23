@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +27,7 @@ public class LResponseClass {
     private String status;
     private String location;
     private String fsu;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private Long createdBy;
+    private String createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;
     private Timestamp modifiedDate;
@@ -39,5 +39,10 @@ public class LResponseClass {
         days = duration != null ? duration : 0;
         hours = days * 4;
         attendee = trainingProgramName;
+    }
+
+    public String formatDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(createdDate);
     }
 }

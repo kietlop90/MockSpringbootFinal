@@ -14,7 +14,6 @@ function login() {
     }
     if (!data.username || !data.password) {
         alert("Email or password cannot be empty");
-        window.location.replace("/user/login");
         return;
     }
 
@@ -23,14 +22,13 @@ function login() {
         url: "/user/login",
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
-            if (result.data === null) {
+            if (result) {
                 localStorage.setItem("user_name", result.name);
                 localStorage.setItem("user_info", JSON.stringify(result));
                 alert("Login successfully !!!");
                 window.location.replace("/user/list");
             } else {
                 alert("Email or password is incorrect. Please try again.");
-                window.location.replace("/user/login");
             }
         }
     });

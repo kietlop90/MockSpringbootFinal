@@ -8,9 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Class implements Serializable {
+public class ClassForProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
@@ -38,22 +37,22 @@ public class Class implements Serializable {
 
     private String FSU;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @ManyToOne
     @JoinColumn(name = "create_by")
     private User createdBy; // Lấy id của user
 
     @CreationTimestamp
-    @Column(name = "create_date", insertable = false, updatable = false)
+    @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;
 
     private Long modifiedBy;
 
     @UpdateTimestamp
-    @Column(name = "modified_date", insertable = false, updatable = false)
+    @Column(name = "modified_date", updatable = false)
     private Timestamp modifiedDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -75,9 +74,5 @@ public class Class implements Serializable {
             classUserList.add(user.userName());
         });
         return classUserList;
-    }
-
-    public String userCreatedBy() {
-        return createdBy.getUsername();
     }
 }

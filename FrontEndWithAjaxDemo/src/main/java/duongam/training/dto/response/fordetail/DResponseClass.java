@@ -21,8 +21,8 @@ public class DResponseClass {
     private String status;
     private String location;
     private String fsu;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
     private Long createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;

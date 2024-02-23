@@ -1,6 +1,7 @@
 package com.duongam.demo.controller;
 
 import com.duongam.demo.dto.page.PaginatedResponse;
+import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DResponseSyllabus;
 import com.duongam.demo.dto.response.forlist.LResponseSyllabus;
 import com.duongam.demo.service.template.ISyllabusService;
@@ -50,10 +51,9 @@ public class SyllabusController {
     }
 
 
-//    @GetMapping("/search")
-//    public ResponseEntity<Page<LResponseSyllabus>> search(){
-//
-//        Page<LResponseSyllabus> responseSyllabi ;
-//        return ResponseEntity.ok().body(responseSyllabi);
-//    }
+    @GetMapping("/list-syllabus-program/{keywords}")
+    public ResponseEntity<List<LResponseSyllabus>> listSyllabusForClass(@PathVariable("keywords") String keywords) {
+        List<LResponseSyllabus> list = syllabusService.findAllByTrainingCode(keywords);
+        return ResponseEntity.ok().body(list);
+    }
 }

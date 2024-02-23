@@ -141,6 +141,8 @@ public class UserServiceImpl implements IUserService {
             existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             existingUser.setGender(EGender.valueOf(uUser.getGender()));
             existingUser.setStatus(uUser.getStatus());
+            Role role = roleRepository.findByName(ERole.valueOf(uUser.getRole())).orElse(null);
+            existingUser.setRole(role);
             userRepository.save(existingUser);
             return new DResponseUser(existingUser);
         }

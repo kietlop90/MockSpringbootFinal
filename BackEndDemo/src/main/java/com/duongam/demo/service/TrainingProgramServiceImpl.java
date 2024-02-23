@@ -70,6 +70,10 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                 }).collect(Collectors.toList());
     }
 
+    @Override
+    public List<DReponseTrainingProgram> findAllByNameForclass(String name) {
+        return (trainingProgramRepository.findAllByName(name));
+    }
 
     @Override
     public List<DResponseSyllabus> getAllSyllabusByTrainingProgramCode(String code) {
@@ -330,11 +334,14 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                 return Collections.emptyList();
         }
 
-        return  trainingProgramList.stream()
+        return trainingProgramList.stream()
                 .map(DReponseTrainingProgram::new).collect(Collectors.toList());
     }
 
-
+    @Override
+    public DReponseTrainingProgram updateTrainingProgramById(URequestTrainingProgram requestTrainingProgramUpdate) {
+        return null;
+    }
 
 
     private static int extractNumberBeforeDays(String input) {

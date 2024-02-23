@@ -1,9 +1,6 @@
 package duongam.training.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
-import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpSyllabus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +57,11 @@ public class SylabusController {
     public String syllabusDetails(Model model) {
 
         return "syllabus-details";
+    }
+
+    @GetMapping("/list-syllabus-program/{keywords}")
+    @ResponseBody
+    public List<LResponseSyllabus> getProgramForClass(@PathVariable("keywords") String keywords) {
+        return httpSyllabus.searchByCodeForClass(keywords);
     }
 }

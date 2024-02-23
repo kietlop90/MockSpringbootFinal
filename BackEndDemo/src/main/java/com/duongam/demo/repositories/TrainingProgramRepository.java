@@ -1,5 +1,6 @@
 package com.duongam.demo.repositories;
 
+import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
 import com.duongam.demo.entities.TrainingProgram;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,8 @@ public interface TrainingProgramRepository extends JpaRepository<TrainingProgram
 
     Optional<TrainingProgram> findByCode(String code);
 
+    @Query("SELECT p FROM TrainingProgram p WHERE p.name LIKE %:name% ")
+    List<DReponseTrainingProgram> findAllByName(@Param("name") String name);
 
 
 

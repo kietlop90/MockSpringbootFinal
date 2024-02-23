@@ -27,8 +27,11 @@ public class Role {
 
     private String description;
 
-    @OneToMany(mappedBy = "role",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.PERSIST)
     private Set<User> users;
+
+    @OneToOne(mappedBy = "role", cascade = CascadeType.PERSIST)
+    private Permission permission;
 
     public Role(ERole name) {
         this.name = name;
@@ -41,6 +44,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return  name.toString();
+        return name.toString();
     }
 }

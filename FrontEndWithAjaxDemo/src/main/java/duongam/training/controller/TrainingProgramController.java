@@ -6,6 +6,7 @@ import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingUnit;
 import duongam.training.dto.response.fordetail.DResponseClass;
 import duongam.training.dto.response.fordetail.DResponseSyllabus;
+import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.HttpTrainingProgram;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,5 +151,11 @@ public class TrainingProgramController {
         model.addAttribute("classList",dResponseClassList );
         model.addAttribute("sylabusList", dResponseSyllabusList );
         return "training-program-detail";
+    }
+
+    @GetMapping("/list-name/{keywords}")
+    @ResponseBody
+    public List<DReponseTrainingProgram> getProgramForClass(@PathVariable("keywords") String keywords){
+        return httpTrainingProgram.searchByNameForClass(keywords);
     }
 }

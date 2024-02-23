@@ -2,14 +2,11 @@ package duongam.training.service;
 
 import duongam.training.dto.enums.ERole;
 import duongam.training.dto.form.LoginForm;
-import duongam.training.dto.form.RegisterForm;
-import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forcreate.CRequestUser;
 import duongam.training.dto.request.forupdate.URequestUser;
-import duongam.training.dto.response.fordetail.DResponseClass;
+import duongam.training.dto.response.fordetail.DReponseUserPermission;
 import duongam.training.dto.response.fordetail.DResponseUser;
-import duongam.training.dto.response.forlist.LResponseClass;
-import duongam.training.dto.response.forlist.LResponseSyllabus;
+import duongam.training.dto.response.forlist.LResponetUserPermission;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.http.HttpBase;
@@ -62,7 +59,9 @@ public class HttpUser {
             urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
         }
 
-
+        if (keywords != null && !keywords.isEmpty()) {
+            urlWithParam += "&keywords=" + keywords;
+        }
         ResponseEntity<PaginatedResponse<LResponseUser>> response = restTemplate.exchange(
                 urlWithParam,
                 HttpMethod.GET,
@@ -101,8 +100,8 @@ public class HttpUser {
         return httpBase.getFromAPI(userUrl.getByName(name), DResponseUser.class);
     }
 
-    public DResponseUser deleteById(Long id) {
-        HttpBase<DResponseUser, DResponseUser> httpBase = new HttpBase<>();
-        return httpBase.deleteFromAPI(userUrl.deleteById(id), DResponseUser.class);
+    public DReponseUserPermission deleteById(Long id) {
+        HttpBase<DReponseUserPermission, DReponseUserPermission> httpBase = new HttpBase<>();
+        return httpBase.getFromAPI(userUrl.getGetAllPermission(),DReponseUserPermission.class);
     }
 }

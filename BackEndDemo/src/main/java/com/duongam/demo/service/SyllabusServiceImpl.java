@@ -38,6 +38,10 @@ public class SyllabusServiceImpl implements ISyllabusService {
                 map(entity -> modelMapper.map(entity, LResponseSyllabus.class));
     }
 
+    @Override
+    public List<LResponseSyllabus> findAllByTrainingCode(String code) {
+        return syllabusRepository.findAllByTrainingCode(code);
+    }
 
     @Override
     public List<DResponseSyllabus> listAll(String topicName){

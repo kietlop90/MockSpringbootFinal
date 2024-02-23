@@ -50,7 +50,8 @@
                 </button>
             </div>
             <div class="col-6 group-btn-right mb-2">
-                <button type="button" id="btn-add" class="btn btn-main" data-bs-toggle="modal" data-bs-target="#addUserModel">
+                <button type="button" id="btn-add" class="btn btn-main" data-bs-toggle="modal"
+                        data-bs-target="#addUserModel">
                     <img th:src="@{/icon/action/add-white.png}" alt="">
                     Add User
                 </button>
@@ -106,14 +107,17 @@
                                 <td th:id='${"dob"+ item.id}' th:text="${item.dob}"></td>
                                 <td th:id="${'status' + item.id}">
                                     <img th:if="${item.gender == 'MALE'}" th:src="@{/icon/other/male.png}" alt="Male">
-                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}" alt="Female">
+                                    <img th:if="${item.gender == 'FEMALE'}" th:src="@{/icon/other/female.png}"
+                                         alt="Female">
                                 </td>
                                 <td th:id='${"role"+ item.id}'>
-                                    <label th:class="${'status-' + item.role.toLowerCase()}" th:text="${item.role}"></label>
+                                    <label th:class="${'status-' + item.role.toLowerCase()}"
+                                           th:text="${item.role}"></label>
                                 </td>
                                 <td th:id='${"action"+ item.id}'>
                                     <button class="btn btn-three-dot dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside" aria-expanded="false">
                                         <img th:src="@{/icon/action/more_horizontal.png}" alt="First Page">
                                     </button>
                                     <ul class="dropdown-menu">
@@ -126,19 +130,50 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:id="'btn-change-role-' + ${item.id}"
-                                               class="dropdown-item btn-change-role"
-                                               th:data-id="${item.id}">
-                                                <img th:src="@{/icon/other/role-black.png}" alt="">
-                                                <label style="color: #2C5282">Change role</label>
-                                            </a>
+                                            <div class="btn-group dropstart">
+                                                <a th:id="'btn-change-role-' + ${item.id}"
+                                                   class="dropdown-item dropdown-toggle"
+                                                   type="button" data-bs-toggle="dropdown"
+                                                   aria-expanded="false">
+                                                    <img th:src="@{/icon/other/role-black.png}" alt="">
+                                                    <label style="color: #2C5282">Change role</label>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'SUPERADMIN'}"
+                                                           th:data-id="${item.id}"
+                                                           th:data-role="'SUPERADMIN'">
+                                                            <label style="color: #2C5282">Super Admin</label>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'ADMIN'}"
+                                                           th:data-id="${item.id}"
+                                                           th:data-role="'ADMIN'">
+                                                            <label style="color: #2C5282">Admin</label>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'TRAINER'}"
+                                                           th:data-id="${item.id}"
+                                                           th:data-role="'TRAINER'">
+                                                            <label style="color: #2C5282">Trainer</label>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </li>
                                         <li>
                                             <a th:id="'btn-de-activate-user-' + ${item.id}"
                                                class="dropdown-item btn-de-activate-user"
                                                th:data-id="${item.id}">
-                                                <img th:src="${item.status == true ? '/icon/other/visibility_off.png' : '/icon/action/visibility.png'}" alt="">
-                                                <label th:text="${item.status == true ? 'De-activate user' : 'Activate user'}" style="color: #2C5282"></label>
+                                                <img th:src="${item.status == true ? '/icon/other/visibility_off.png' : '/icon/action/visibility.png'}"
+                                                     alt="">
+                                                <label th:text="${item.status == true ? 'De-activate user' : 'Activate user'}"
+                                                       style="color: #2C5282"></label>
                                             </a>
                                         </li>
                                         <li>
@@ -146,7 +181,7 @@
                                                class="dropdown-item btn-delete-user"
                                                th:data-id="${item.id}">
                                                 <img th:src="@{/icon/other/delete_forever.png}" alt="">
-                                                <label style="color: #8B8B8B">Delete user</label>
+                                                <label style="color: #2C5282">Delete user</label>
                                             </a>
                                         </li>
                                     </ul>
@@ -213,7 +248,8 @@
 
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: #2D3748">
-                <h4 id="title-model" class="modal-title text-center" style="color: white; width: 100%;">Add a new user</h4>
+                <h4 id="title-model" class="modal-title text-center" style="color: white; width: 100%;">Add a new
+                    user</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -240,15 +276,15 @@
                                autofocus required/>
                     </div>
                 </div>
-<!--                <div class="row mb-2">-->
-<!--                    <div class="col-3">-->
-<!--                        <label for="user-name-input"><b>User Name</b></label>-->
-<!--                    </div>-->
-<!--                    <div class="col-9">-->
-<!--                        <input type="text" id="user-name-input" class="form-control" placeholder="User name"-->
-<!--                               required/>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="row mb-2">-->
+                <!--                    <div class="col-3">-->
+                <!--                        <label for="user-name-input"><b>User Name</b></label>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-9">-->
+                <!--                        <input type="text" id="user-name-input" class="form-control" placeholder="User name"-->
+                <!--                               required/>-->
+                <!--                    </div>-->
+                <!--                </div>-->
                 <div class="row mb-2">
                     <div class="col-3">
                         <label for="email-address-input"><b>Email address</b></label>
@@ -288,7 +324,8 @@
                             Male
                         </label>
                         <label>
-                            <input type="radio" class="gender-input" name="gender" value="FEMALE" style="accent-color: #0a3622">
+                            <input type="radio" class="gender-input" name="gender" value="FEMALE"
+                                   style="accent-color: #0a3622">
                             Female
                         </label>
                     </div>

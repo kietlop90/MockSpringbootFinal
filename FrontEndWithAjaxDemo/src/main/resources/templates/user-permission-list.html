@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/menu.js}"></script>
+    <script th:src="@{/js/user-permission-list.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons/bootstrap-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/menu.css}">
+    <link rel="stylesheet" th:href="@{/css/user-permission.css}">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+</head>
+
+<body>
+<div id="header" th:insert="header.html"></div>
+<div id="body" class="body">
+    <div id="menu" class="menu"></div>
+    <div class="content">
+        <div class="row mb-2">
+            <div class="col title">
+                Users Permission
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead class="header-table">
+                    <tr>
+                        <th> Role name</th>
+                        <th> Syllabus</th>
+                        <th> Training program</th>
+                        <th> Class</th>
+                        <th> Learning masterial</th>
+                        <th> User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each="item : ${list}">
+                        <tr>
+                            <td>
+                                <div th:text="${item.name}"></div>
+                                <div style="display: none" th:id="${'hidden' + item.id}" th:text="${item.name}"></div>
+                            </td>
+                            <td>
+                                <select th:id="${'syllabus' + item.id}" class="form-control">
+                                    <option th:selected="${item.syllabus.equals('Access denied')}"
+                                            value="Access denied">
+                                        Access denied
+                                    </option>
+                                    <option th:selected="${item.syllabus.equals('View')}" value="View">
+                                        View
+                                    </option>
+                                    <option th:selected="${item.syllabus.equals('Modify')}" value="Modify">
+                                        Modify
+                                    </option>
+                                    <option th:selected="${item.syllabus.equals('Create')}" value="Create">
+                                        Create
+                                    </option>
+                                    <option th:selected="${item.syllabus.equals('Full access')}"
+                                            value="Full access">Full access
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <div th:if="${item.name == 'STUDENT'}">
+                                    <label th:text="${item.trainingProgram}"></label>
+                                </div>
+                                <select th:if="${item.name != 'STUDENT'}" th:id="${'program' + item.id}" class="form-control">
+                                    <option th:selected="${item.trainingProgram.equals('Access denied')}"
+                                            value="Access denied">
+                                        Access denied
+                                    </option>
+                                    <option th:selected="${item.trainingProgram.equals('View')}" value="View">
+                                        View
+                                    </option>
+                                    <option th:selected="${item.trainingProgram.equals('Modify')}" value="Modify">
+                                        Modify
+                                    </option>
+                                    <option th:selected="${item.trainingProgram.equals('Create')}" value="Create">
+                                        Create
+                                    </option>
+                                    <option th:selected="${item.trainingProgram.equals('Full access')}"
+                                            value="Full access">Full access
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <div th:if="${item.name == 'STUDENT'}">
+                                    <label th:text="${item.classForProject}"></label>
+                                </div>
+                                <select th:if="${item.name != 'STUDENT'}" th:id="${'class' + item.id}" class="form-control">
+                                    <option th:selected="${item.classForProject.equals('Access denied')}"
+                                            value="Access denied">
+                                        Access denied
+                                    </option>
+                                    <option th:selected="${item.classForProject.equals('View')}" value="View">
+                                        View
+                                    </option>
+                                    <option th:selected="${item.classForProject.equals('Modify')}" value="Modify">
+                                        Modify
+                                    </option>
+                                    <option th:selected="${item.classForProject.equals('Create')}" value="Create">
+                                        Create
+                                    </option>
+                                    <option th:selected="${item.classForProject.equals('Full access')}"
+                                            value="Full access">Full access
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <div th:if="${item.name == 'STUDENT'}">
+                                    <label th:text="${item.learningMetarial}"></label>
+                                </div>
+                                <select th:if="${item.name != 'STUDENT'}" th:id="${'learning' + item.id}" class="form-control">
+                                    <option th:selected="${item.learningMetarial.equals('Access denied')}"
+                                            value="Access denied">
+                                        Access denied
+                                    </option>
+                                    <option th:selected="${item.learningMetarial.equals('View')}" value="View">
+                                        View
+                                    </option>
+                                    <option th:selected="${item.learningMetarial.equals('Modify')}" value="Modify">
+                                        Modify
+                                    </option>
+                                    <option th:selected="${item.learningMetarial.equals('Create')}" value="Create">
+                                        Create
+                                    </option>
+                                    <option th:selected="${item.learningMetarial.equals('Full access')}"
+                                            value="Full access">Full access
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <div>
+                                    <label th:text="${item.userManagerment}"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--        group btn footer-->
+        <div class="row mt-3">
+            <div class="col-12 d-flex justify-content-end">
+                <button id="btn-cancel" class="btn btn-outline-danger me-2">Cancel</button>
+                <button id="btn-save" class="btn btn-main me-2">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" th:insert="footer.html"></div>
+</body>
+
+</html>

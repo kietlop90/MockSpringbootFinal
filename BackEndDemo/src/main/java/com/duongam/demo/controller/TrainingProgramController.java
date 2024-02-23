@@ -44,6 +44,12 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(paginatedResponse);
     }
 
+    @GetMapping("/list-name/{keywords}")
+    public ResponseEntity<List<DReponseTrainingProgram>> listProgramForClass(@PathVariable("keywords") String keywords) {
+        List<DReponseTrainingProgram> list = trainingProgramService.findAllByNameForclass(keywords);
+        return ResponseEntity.ok().body(list);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<DReponseTrainingProgram> add(@Valid @RequestBody CRequestTrainingProgram cRequestTrainingProgram, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

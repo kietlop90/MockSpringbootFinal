@@ -23,30 +23,24 @@ import java.util.List;
 @AllArgsConstructor
 public class LResponseClass {
     private Long id;
-
     private String name;
-
     private String code;
-
     private Integer duration;
-
+    private Integer days;
+    private Integer hours;
     private String status;
-
     private String location;
-
-    private String FSU;
-
+    private String fsu;
     private String startDate;
-
     private String endDate;
-
-    private String createdBy; // Lấy id của user
-
+    private String createdBy;
     private Timestamp createdDate;
-
-    private Long modifiedBy;
-
+    private String modifiedBy;
     private Timestamp modifiedDate;
+    private String trainingProgramCode;
+    private String trainingProgramName;
+    private String attendee;
+    private ArrayList<String> listOfClass;
 
 
     public LResponseClass(ClassForProject classForProject) {
@@ -56,12 +50,12 @@ public class LResponseClass {
         this.duration = classForProject.getDuration();
         this.status = classForProject.getStatus();
         this.location = classForProject.getLocation();
-        this.FSU = classForProject.getFSU();
+        this.fsu = classForProject.getFSU();
         this.startDate =  classForProject.getStartDate() != null ? classForProject.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : null;
         this.endDate = classForProject.getEndDate() != null ? classForProject.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : null;;
         this.createdBy = classForProject.getCreatedBy().getName();
         this.createdDate = classForProject.getCreatedDate();
-        this.modifiedBy = classForProject.getModifiedBy();
+        this.modifiedBy = classForProject.getModifiedBy().getName();
         this.modifiedDate = classForProject.getModifiedDate();
     }
 }

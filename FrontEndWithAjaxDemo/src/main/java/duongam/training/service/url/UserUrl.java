@@ -29,11 +29,12 @@ public class UserUrl {
     public String getAll() {
         return urlProperties.getProperty(GET_ALL);
     }
-    public String getAllTrainer() {
-        return urlProperties.getProperty(GET_ALL_TRAINER);
+    public String getAllTrainer(Long idClass) {
+        return String.format(urlProperties.getProperty(GET_ALL_TRAINER), idClass);
     }
-    public String getAllAdmin() {
-        return urlProperties.getProperty(GET_ALL_ADMIN);
+
+    public String getAllAdmin(Long idClass) {
+        return String.format(urlProperties.getProperty(GET_ALL_ADMIN), idClass);
     }
 
     public String add() {

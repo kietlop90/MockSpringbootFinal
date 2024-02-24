@@ -3,6 +3,7 @@ package duongam.training.controller;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.response.fordetail.DResponseClass;
+import duongam.training.dto.response.fordetail.DResponseUser;
 import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -78,5 +79,11 @@ public class ClassController {
     public Long delete(@PathVariable("id") Long requestId) {
         httpClass.deleteById(requestId);
         return requestId;
+    }
+
+    @GetMapping("/getById/{id}")
+    @ResponseBody
+    public DResponseClass getById(@PathVariable("id") Long requestId) {
+        return httpClass.getById(requestId);
     }
 }

@@ -27,10 +27,13 @@ public class LResponseClass {
     private String status;
     private String location;
     private String fsu;
+    private String startDate;
+    private String endDate;
     private String createdBy;
     private Timestamp createdDate;
-    private Long modifiedBy;
+    private String modifiedBy;
     private Timestamp modifiedDate;
+    private String trainingProgramCode;
     private String trainingProgramName;
     private String attendee;
     private ArrayList<String> listOfClass;

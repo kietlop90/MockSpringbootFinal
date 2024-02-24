@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -102,13 +103,15 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<LResponseUser> getTrainer() {
-        return userRepository.findTrainer();
+    public List<LResponseUser> getTrainer(Long idClass) {
+        List<User> userList = userRepository.listTrainerForClass(idClass);
+        return userList.stream().map(entity -> modelMapper.map(entity,LResponseUser.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<LResponseUser> getAdmin() {
-        return userRepository.findAdmin();
+    public List<LResponseUser> getAdmin(Long idClass) {
+        List<User> userList = userRepository.listAdminForClass(idClass);
+        return userList.stream().map(entity -> modelMapper.map(entity,LResponseUser.class)).collect(Collectors.toList());
     }
 
     @Override

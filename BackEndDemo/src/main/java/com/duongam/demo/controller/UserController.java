@@ -45,14 +45,14 @@ public class UserController {
         return ResponseEntity.ok().body(paginatedResponse);
     }
 
-    @GetMapping("/list-trainer")
-    public ResponseEntity<List<LResponseUser>> listTrainer() {
-        return ResponseEntity.ok().body(userService.getTrainer());
+    @GetMapping("/list-trainer/{idClass}")
+    public ResponseEntity<List<LResponseUser>> listTrainer(@PathVariable  Long idClass) {
+        return ResponseEntity.ok().body(userService.getTrainer(idClass));
     }
 
-    @GetMapping("/list-admin")
-    public ResponseEntity<List<LResponseUser>> listAdmin() {
-        return ResponseEntity.ok().body(userService.getAdmin());
+    @GetMapping("/list-admin/{idClass}")
+    public ResponseEntity<List<LResponseUser>> listAdmin(@PathVariable  Long idClass) {
+        return ResponseEntity.ok().body(userService.getAdmin(idClass));
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

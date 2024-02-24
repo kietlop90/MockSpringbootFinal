@@ -3,6 +3,7 @@ package duongam.training.dto.response.fordetail;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -24,9 +25,11 @@ public class DResponseClass {
     private String startDate;
     private String endDate;
     private String createdBy;
+    private Long createdById;
     private Timestamp createdDate;
-    private Long modifiedBy;
+    private String modifiedBy;
     private Timestamp modifiedDate;
+    private String trainingProgramCode;
     private String trainingProgramName;
     private String attendee;
     private ArrayList<String> listOfClass;
@@ -35,5 +38,10 @@ public class DResponseClass {
         days = duration != null ? duration : 0;
         hours = days * 4;
         attendee = trainingProgramName;
+    }
+
+    public String formatDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(createdDate);
     }
 }

@@ -68,6 +68,7 @@ public class ClassServiceImpl implements IClassService {
 
         ClassForProject aClass = modelMapper.map(cRequestClass, ClassForProject.class);
         aClass.setCreatedBy(user);
+        aClass.setModifiedBy(user);
         aClass.setTrainingProgramCode(trainingProgram);
         aClass.setStartDate(LocalDate.parse(cRequestClass.getStartDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
         aClass.setEndDate(LocalDate.parse(cRequestClass.getEndDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
@@ -76,8 +77,16 @@ public class ClassServiceImpl implements IClassService {
 
     @Override
     @Transactional
-    public DResponseClass update(URequestClass URequestClass) {
-        ClassForProject aClass = modelMapper.map(URequestClass, ClassForProject.class);
+    public DResponseClass update(URequestClass uRequestClass) {
+        User user = userRepository.findById(uRequestClass.getCreatedBy()).orElse(null);
+        TrainingProgram trainingProgram = trainingProgramRepository.findByCode(uRequestClass.getTrainingProgramCode()).orElse(null);
+
+        ClassForProject aClass = modelMapper.map(uRequestClass, ClassForProject.class);
+        aClass.setCreatedBy(user);
+        aClass.setModifiedBy(user);
+        aClass.setTrainingProgramCode(trainingProgram);
+        aClass.setStartDate(LocalDate.parse(uRequestClass.getStartDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+        aClass.setEndDate(LocalDate.parse(uRequestClass.getEndDate(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
         return modelMapper.map(classRepository.save(aClass), DResponseClass.class);
     }
 
@@ -85,7 +94,11 @@ public class ClassServiceImpl implements IClassService {
     @Transactional
     public DResponseClass findById(Long id) {
         Optional<ClassForProject> aClass = classRepository.findById(id);
-        return aClass.map(value -> modelMapper.map(value, DResponseClass.class)).orElse(null);
+        return aClass.map(value ->{
+            DResponseClass dResponseClass = new DResponseClass(value);
+            return dResponseClass;
+        }).orElse(null);
+
     }
 
     @Override

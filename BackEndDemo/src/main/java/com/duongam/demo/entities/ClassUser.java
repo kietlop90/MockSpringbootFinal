@@ -21,7 +21,7 @@ public class ClassUser implements Serializable {
     @Column(name = "classUser_id")
     private Long id;
 
-    private Integer userType; // role of user
+    private String userType; // role of user
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

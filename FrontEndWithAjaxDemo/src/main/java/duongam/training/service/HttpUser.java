@@ -7,6 +7,7 @@ import duongam.training.dto.request.forupdate.URequestUser;
 import duongam.training.dto.response.fordetail.DReponseUserPermission;
 import duongam.training.dto.response.fordetail.DResponseUser;
 import duongam.training.dto.response.forlist.LResponetUserPermission;
+import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.http.HttpBase;
@@ -73,17 +74,20 @@ public class HttpUser {
         return response.getBody();
     }
 
-    public List<LResponseUser> getTrainer() {
+    public List<LResponseUser> getTrainer(Long idClass) {
         HttpBase<LResponseUser[], LResponseUser[]> httpBase = new HttpBase<>();
-        LResponseUser[] list = httpBase.getFromAPI(userUrl.getAllTrainer(), LResponseUser[].class);
+        String url = userUrl.getAllTrainer(idClass);
+        LResponseUser[] list = httpBase.getFromAPI(url, LResponseUser[].class);
         return Arrays.asList(list);
     }
 
-    public List<LResponseUser> getAdmin() {
+    public List<LResponseUser> getAdmin(Long idClass) {
         HttpBase<LResponseUser[], LResponseUser[]> httpBase = new HttpBase<>();
-        LResponseUser[] list = httpBase.getFromAPI(userUrl.getAllAdmin(), LResponseUser[].class);
+        String url = userUrl.getAllAdmin(idClass);
+        LResponseUser[] list = httpBase.getFromAPI(url, LResponseUser[].class);
         return Arrays.asList(list);
     }
+
 
     public DResponseUser update(URequestUser requestCustomer) {
         HttpBase<URequestUser, DResponseUser> httpBase = new HttpBase<>();

@@ -18,15 +18,18 @@ public class URequestClass {
     private String name;
     private String code;
     private Integer duration;
+    private Integer days;
+    private Integer hours;
     private String status;
     private String location;
     private String fsu;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
     private Long createdBy;
     private Timestamp createdDate;
     private Long modifiedBy;
     private Timestamp modifiedDate;
-    private String trainingProgramName;
+    private String trainingProgramCode;
+    private String attendee;
     private ArrayList<String> listOfClass;
 }

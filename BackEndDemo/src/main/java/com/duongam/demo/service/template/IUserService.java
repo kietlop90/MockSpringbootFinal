@@ -17,9 +17,9 @@ public interface IUserService {
 
 	Page<LResponseUser> getAll(int page, int size, String sort, String dir, String[] keywords);
 
-	List<LResponseUser> getTrainer();
+	List<LResponseUser> getTrainer(Long idClass);
 
-	List<LResponseUser> getAdmin();
+	List<LResponseUser> getAdmin(Long idClass);
 
 	DResponseUser save(CRequestUser cUser);
 

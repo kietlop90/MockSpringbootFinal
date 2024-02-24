@@ -44,20 +44,20 @@ public class UserController {
 		return "user-list";
 	}
 
-	@GetMapping("/list-trainer")
+	@GetMapping("/list-trainer/{idClass}")
 	@ResponseBody
 	@JsonProperty("data")
-	public List<LResponseUser> listTrainer(Model model) {
-		List<LResponseUser> test = httpUser.getTrainer();
-		return httpUser.getTrainer();
+	public List<LResponseUser> listTrainer(@PathVariable("idClass") Long idClass) {
+		return httpUser.getTrainer(idClass);
 	}
 
-	@GetMapping("/list-admin")
+	@GetMapping("/list-admin/{idClass}")
 	@ResponseBody
 	@JsonProperty("data")
-	public List<LResponseUser> listAdmin(Model model) {
-		return httpUser.getAdmin();
+	public List<LResponseUser> listAdmin(@PathVariable("idClass") Long idClass) {
+		return httpUser.getAdmin(idClass);
 	}
+
 
     @GetMapping("/login")
     public String getLogin(Model model, String error, String logout) {

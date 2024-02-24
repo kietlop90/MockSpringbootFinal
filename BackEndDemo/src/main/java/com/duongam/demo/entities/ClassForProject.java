@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,11 @@ public class ClassForProject {
     @Column(name = "create_date", updatable = false)
     private Timestamp createdDate;
 
-    private Long modifiedBy;
+
+    @ManyToOne
+    @JoinColumn(name = "modified_by")
+    private User modifiedBy; // Lấy id của user
+
 
     @UpdateTimestamp
     @Column(name = "modified_date", updatable = false)
@@ -74,5 +79,15 @@ public class ClassForProject {
             classUserList.add(user.userName());
         });
         return classUserList;
+    }
+
+    public String formatCreatedDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(createdDate);
+    }
+
+    public String formatModifiedDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(modifiedDate);
     }
 }

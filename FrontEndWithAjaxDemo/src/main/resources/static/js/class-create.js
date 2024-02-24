@@ -26,6 +26,7 @@ $(async function () {
 
     $("#btn-save-as-draft").on("click", function () {
         let dateDatePicker = picker.data('daterangepicker');
+        resultDetailItem = resultDetailItem ? resultDetailItem : {};
 
         let className = $("#input-name-class").val();
         // let duration = $("#timePicker").val();
@@ -89,6 +90,9 @@ $(async function () {
         showCreateContent();
     }
     if (pathName.includes("update")) {
+        getTrainer();
+        getAdmin();
+
         showUpdateContent(true);
         let idClass = pathName.split("/class/update/")[1];
         await getItem("/class/getById/" + idClass);
@@ -172,9 +176,6 @@ $(async function () {
 
     $("#info-training-program").hide();
     $("#group-training-program").hide();
-
-    getTrainer();
-    getAdmin();
 });
 var dataTrainingCode;
 

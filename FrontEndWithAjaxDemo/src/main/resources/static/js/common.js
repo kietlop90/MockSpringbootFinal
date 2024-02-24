@@ -107,8 +107,86 @@ function addItem(url, data, redirect) {
             if (redirect) {
                 window.location.replace(redirect);
             }
+        },
+        error: function(xhr, status, error) {
+            // Xử lý khi có lỗi xảy ra
+
+            var error = xhr.responseJSON.message;
+            error = error.substring(error.indexOf('"') + 1, error.lastIndexOf('"'));
+            error = JSON.parse(error);
+            var code = error.msg;
+            code = code.replace("javassist.bytecode.DuplicateMemberException: ", "");
+            console.log("Lỗi: ", listError[code]);
+            // Hiển thị thông báo lỗi cho người dùng
+            alert("Đã xảy ra lỗi: " + code);
         }
     });
+}
+
+let listError = {
+    EM01: "User type is required. ",
+    EM02: "Name is required. ",
+    EM03: "Email address is required. ",
+    EM04: "Email address is existed. Please check and input another email address.",
+    EM05: "Email address is invalid. Please check and input again.",
+    EM06: "Phone is required. ",
+    EM07: "Phone is invalid. Please check and input again",
+    EM08: "Date of birth is required. ",
+    EM09: "User is created successfully.",
+    EM10: "User is updated successfully.",
+    EM11: "Role is updated successfully.",
+    EM12: "Syllabus name is required. ",
+    EM13: "Level is required. ",
+    EM14: "Attendee number is required. ",
+    EM15: "Technical requirement(s) is required. ",
+    EM16: "Course objectives are required. ",
+    EM17: "Unit name is required. ",
+    EM18: "Content name is required. ",
+    EM19: "Output standard is required. ",
+    EM20: "Training time is required. ",
+    EM21: "Delivery type is required. ",
+    EM22: "Delete all content of the Day?",
+    EM23: "Please input at least one day.",
+    EM24: "Please input at least one unit into this day.",
+    EM25: "Please input at least one content into this unit.",
+    EM26: "The duration exceeds 8 hours per day. Please check again.",
+    EM27: "Quiz is required. ",
+    EM28: "Assignment is required. ",
+    EM29: "Final is required. ",
+    EM30: "Final Theory is required. ",
+    EM31: "Final Practice is required. ",
+    EM32: "GPA is required. ",
+    EM33: "Total of all assessment is not 100%. Please check again.",
+    EM34: "File is required. ",
+    EM35: "Program name is required. ",
+    EM36: "General information is required. ",
+    EM37: "Syllabus is required. ",
+    EM38: "List of syllabuses is required. ",
+    EM39: "File is required. ",
+    EM40: "File is invalid. Please check and upload again. ",
+    EM41: "Class name is required. ",
+    EM42: "Class time is required. ",
+    EM43: "Location is required. ",
+    EM44: "Trainer is required.",
+    EM45: "Admin is required. ",
+    EM46: "FSU is required.",
+    EM47: "Time frame is required. ",
+    EM48: "Training program is required",
+    EM49: "If you change training program, list of syllabuses will be replaced by new training program",
+    EM50: "Do you want to delete class? ",
+    EM51: "Do you want to update schedule? This session of class only. All Session of this class.",
+    EM52: "Token not found",
+    EM53: "Phone number must be 10 digits",
+    EM54: "Gender is required.",
+    EM55: "Password must contain at least one letter, one digit, and be 8-12 characters long",
+    EM56: "Token expires",
+    EM57: "Token was confirmed",
+    EM58: "Your link restore password has been sent to your email",
+    EM59: "Your email or password does not exist",
+    EM60: "Your password has been reset.",
+    EM61: "Completed registration",
+    EM62: "Page has no content because search value",
+    EM63: "User not active",
 }
 
 let resultUpdateItem;

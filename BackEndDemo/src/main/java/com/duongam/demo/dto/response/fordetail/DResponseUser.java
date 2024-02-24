@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
 import javax.persistence.Id;
 import java.text.SimpleDateFormat;
@@ -33,6 +34,8 @@ public class DResponseUser {
     private String name;
 
     private Boolean status;
+    private String msg;
+    private Integer statusCode;
 
     public DResponseUser(User user) {
         this.id = user.getId();
@@ -44,5 +47,10 @@ public class DResponseUser {
         this.phone = user.getPhone();
         this.name = user.getName();
         this.status = user.getStatus();
+    }
+
+    public DResponseUser(String msg, Integer statusCode) {
+        this.msg = msg;
+        this.statusCode = statusCode;
     }
 }

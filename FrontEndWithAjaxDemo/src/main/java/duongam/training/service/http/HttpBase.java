@@ -78,7 +78,7 @@ public class HttpBase<T, K> {
 			response = restTemplate.exchange(url, httpMethod, requestEntity, responseType);
 		} catch (HttpClientErrorException e) {
 			System.out.println(e.toString());
-			return null;
+			throw e;
 		}
 
 		HttpStatus statusCode = response.getStatusCode();

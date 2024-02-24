@@ -5,6 +5,7 @@ import com.duongam.demo.dto.request.forcreate.CRequestUser;
 import com.duongam.demo.dto.request.forupdate.URequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
+import javassist.bytecode.DuplicateMemberException;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public interface IUserService {
 
 	List<LResponseUser> getAdmin(Long idClass);
 
-	DResponseUser save(CRequestUser cUser);
+	DResponseUser save(CRequestUser cUser) throws DuplicateMemberException;
 
 	DResponseUser update(URequestUser uUser);
 

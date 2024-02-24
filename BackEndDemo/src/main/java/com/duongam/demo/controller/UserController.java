@@ -10,6 +10,7 @@ import com.duongam.demo.dto.response.forlist.LResponseSyllabus;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
 import com.duongam.demo.service.template.IUserService;
 import io.swagger.annotations.Api;
+import javassist.bytecode.DuplicateMemberException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,9 +76,14 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DResponseUser> add(@RequestBody CRequestUser cRequestUser) {
-        DResponseUser dResponseUser = userService.save(cRequestUser);
-        return ResponseEntity.ok().body(dResponseUser);
+    public ResponseEntity<DResponseUser> add(@RequestBody CRequestUser cRequestUser) throws DuplicateMemberException {
+        try {
+            DResponseUser dResponseUser = userService.save(cRequestUser);
+            return ResponseEntity.ok().body(dResponseUser);
+        } catch (DuplicateMemberException ex) {
+            DResponseUser dResponseUser = new DResponseUser(ex.toString(), HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dResponseUser);
+        }
     }
 
     @PutMapping("/update")

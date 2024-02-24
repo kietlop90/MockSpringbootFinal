@@ -13,6 +13,7 @@ import com.duongam.demo.entities.enums.ERole;
 import com.duongam.demo.repositories.RoleRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IUserService;
+import javassist.bytecode.DuplicateMemberException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,10 +114,13 @@ public class UserServiceImpl implements IUserService {
         List<User> userList = userRepository.listAdminForClass(idClass);
         return userList.stream().map(entity -> modelMapper.map(entity,LResponseUser.class)).collect(Collectors.toList());
     }
-
     @Override
     @Transactional
-    public DResponseUser save(CRequestUser cUser) {
+    public DResponseUser save(CRequestUser cUser) throws DuplicateMemberException {
+        if (userRepository.findByUsername(cUser.getUsername()).getUsername().equals(cUser.getUsername())) {
+            throw new DuplicateMemberException("EM04");
+        }
+
         User user = new User();
         user.setName(cUser.getName());
         user.setUsername(cUser.getUsername());

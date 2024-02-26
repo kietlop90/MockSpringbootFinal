@@ -30,6 +30,9 @@ function login() {
             } else {
                 alert("Email or password is incorrect. Please try again.");
             }
+        },
+        error: function(xhr, status, error) {
+              throwError(parseInt(xhr.responseJSON.message));
         }
     });
 }

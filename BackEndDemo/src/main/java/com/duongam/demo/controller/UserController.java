@@ -1,5 +1,6 @@
 package com.duongam.demo.controller;
 
+import com.duongam.demo.dto.ErrorMessage;
 import com.duongam.demo.dto.page.PaginatedResponse;
 import com.duongam.demo.dto.request.authen.LoginModel;
 import com.duongam.demo.dto.request.authen.RegisterModel;
@@ -58,14 +59,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Object> loginUser(@RequestBody LoginModel loginModel, HttpServletResponse response) {
-        String username = loginModel.getUsername();
-        String password = loginModel.getPassword();
-        DResponseUser user = userService.login(username, password, response);
-        if (user != null) {
-            return ResponseEntity.ok().body(user);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error");
+    public ResponseEntity<Object> loginUser(@RequestBody LoginModel loginModel, HttpServletResponse response) throws Exception {
+        try{
+            String username = loginModel.getUsername();
+            String password = loginModel.getPassword();
+            DResponseUser user = userService.login(username, password, response);
+
+            if (user != null) {
+                return ResponseEntity.ok().body(user);
+            } else {
+                return ResponseEntity.status(402).body(402);
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body(500);
         }
     }
 

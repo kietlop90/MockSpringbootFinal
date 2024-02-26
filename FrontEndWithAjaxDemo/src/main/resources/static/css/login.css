@@ -46,3 +46,7 @@
     justify-content: end;
     font-style: italic;
 }
+
+#error-message {
+    margin-top: 10px;
+}

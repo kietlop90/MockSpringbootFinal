@@ -1,4 +1,4 @@
-package com.duongam.demo.dto;
+package duongam.training.dto.response;
 
 
 import lombok.Data;

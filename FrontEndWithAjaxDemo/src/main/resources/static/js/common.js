@@ -31,98 +31,6 @@ $(document).ready(function () {
     $("#user-name").html(userName);
 });
 
-let resultList;
-function getList(url, prop) {
-    return Promise.resolve(
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (result) {
-                if (prop) {
-                    resultList = resultList ? resultList : {};
-                    resultList[prop] = result;
-                } else {
-                    resultList = result;
-                }
-            }
-        })
-    ).then(data => {
-        return data;
-    });
-}
-
-let resultListWithKeyWord;
-function getListWithKeyWord(url) {
-    return Promise.resolve(
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (result) {
-                resultListWithKeyWord = result;
-            }
-        })
-    ).then(data => {
-        return data;
-    });
-}
-
-let resultListSyllabusWithKeyWord;
-
-function getListSyllabusWithKeyWord(url) {
-    return Promise.resolve(
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (result) {
-                resultListSyllabusWithKeyWord = result;
-            }
-        })
-    ).then(data => {
-        return data;
-    });
-}
-
-
-let resultGetItemById;
-function getItemById(url, id) {
-    $.ajax({
-        type: "GET",
-        url: url + id,
-        success: function (result) {
-            resultGetItemById = result;
-        }
-    });
-}
-
-let resultAddItem;
-function addItem(url, data, redirect) {
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: JSON.parse(JSON.stringify(data)),
-        success: function (result) {
-            resultAddItem = result;
-            console.log(result)
-            alert("Add new successfully !!!");
-            if (redirect) {
-                window.location.replace(redirect);
-            }
-        },
-        error: function(xhr, status, error) {
-            // Xử lý khi có lỗi xảy ra
-
-            var error = xhr.responseJSON.message;
-            error = error.substring(error.indexOf('"') + 1, error.lastIndexOf('"'));
-            error = JSON.parse(error);
-            var code = error.msg;
-            code = code.replace("javassist.bytecode.DuplicateMemberException: ", "");
-            console.log("Lỗi: ", listError[code]);
-            // Hiển thị thông báo lỗi cho người dùng
-            alert("Đã xảy ra lỗi: " + code);
-        }
-    });
-}
-
 let listError = {
     EM01: "User type is required. ",
     EM02: "Name is required. ",
@@ -189,6 +97,125 @@ let listError = {
     EM63: "User not active",
 }
 
+function throwError(error) {
+    switch (error) {
+        case 402:
+            alert("Email not found ");
+            break;
+        case 500:
+            alert("Unexpected error. ");
+            break;
+        default:
+            error = error.substring(error.indexOf('"') + 1, error.lastIndexOf('"'));
+            error = JSON.parse(error);
+            var code = error.msg ? error.msg : error;
+            code = code.toString()
+                .replaceAll("javassist.bytecode.DuplicateMemberException: ", "");
+            console.log("Lỗi: ", listError[code]);
+            // Hiển thị thông báo lỗi cho người dùng
+            alert("Đã xảy ra lỗi: " + listError[code]);
+            break;
+    }
+}
+
+let resultList;
+function getList(url, prop) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (result) {
+                if (prop) {
+                    resultList = resultList ? resultList : {};
+                    resultList[prop] = result;
+                } else {
+                    resultList = result;
+                }
+            },
+            error: function(xhr, status, error) {
+                throwError(xhr.responseJSON.message);
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
+
+let resultListWithKeyWord;
+function getListWithKeyWord(url) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (result) {
+                resultListWithKeyWord = result;
+            },
+            error: function(xhr, status, error) {
+                throwError(xhr.responseJSON.message);
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
+
+let resultListSyllabusWithKeyWord;
+
+function getListSyllabusWithKeyWord(url) {
+    return Promise.resolve(
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (result) {
+                resultListSyllabusWithKeyWord = result;
+            },
+            error: function(xhr, status, error) {
+                throwError(xhr.responseJSON.message);
+            }
+        })
+    ).then(data => {
+        return data;
+    });
+}
+
+
+let resultGetItemById;
+function getItemById(url, id) {
+    $.ajax({
+        type: "GET",
+        url: url + id,
+        success: function (result) {
+            resultGetItemById = result;
+        },
+        error: function(xhr, status, error) {
+            throwError(xhr.responseJSON.message);
+        }
+    });
+}
+
+let resultAddItem;
+function addItem(url, data, redirect) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: JSON.parse(JSON.stringify(data)),
+        success: function (result) {
+            resultAddItem = result;
+            console.log(result)
+            alert("Add new successfully !!!");
+            if (redirect) {
+                window.location.replace(redirect);
+            }
+        },
+        error: function(xhr, status, error) {
+            throwError(xhr.responseJSON.message);
+        },
+        error: function(xhr, status, error) {
+            throwError(xhr.responseJSON.message);
+        }
+    });
+}
+
 let resultUpdateItem;
 function updateItem(url, data, redirect, isAlert = true) {
     $.ajax({
@@ -203,6 +230,9 @@ function updateItem(url, data, redirect, isAlert = true) {
             if (redirect) {
                 window.location.replace(redirect);
             }
+        },
+        error: function(xhr, status, error) {
+            throwError(xhr.responseJSON.message);
         }
     });
 }
@@ -216,6 +246,9 @@ function getItem(url, data, redirect) {
             data: data,
             success: function (result) {
                 resultDetailItem = result;
+            },
+            error: function(xhr, status, error) {
+                throwError(xhr.responseJSON.message);
             }
         })
     ).then(data => {
@@ -234,6 +267,9 @@ function deleteItem(url, id, redirect) {
             if (redirect) {
                 window.location.replace(redirect);
             }
+        },
+        error: function(xhr, status, error) {
+            throwError(xhr.responseJSON.message);
         }
     });
 }

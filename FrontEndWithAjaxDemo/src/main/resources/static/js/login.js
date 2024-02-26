@@ -5,6 +5,7 @@ $(document).ready(function(){
     } else {
         $("#group-header-info-user").show();
     }
+<<<<<<< HEAD
 });
 
 function login() {
@@ -36,3 +37,6 @@ function login() {
         }
     });
 }
+=======
+});
+>>>>>>> 70ac80f23602cbdb19471525e85dc9bfb0954a25

@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.http.Cookie;
+
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -24,14 +26,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 				// No need authentication.
-				.antMatchers("/user/login","/user/register","/role/create").permitAll()
+				.antMatchers("/user/login").permitAll()
+//				.antMatchers( "/user/**","/syllabus/**","/trainingProgram/**","/class/**","/user-permission/**").hasAnyAuthority("ADMIN","TRAINER")
 				.antMatchers( "/user/**","/syllabus/**","/trainingProgram/**","/class/**","/user-permission/**").permitAll()
 				// Need authentication.
 				.anyRequest().authenticated().and()
-				//
+
 				// Add Filter - JWTAuthenticationFilter
 				//
-				.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).
+				logout().logoutUrl("/user/logout")
+				.logoutSuccessHandler((request, response, authentication) -> {
+					response.setHeader("Authorization","");
+					// Thêm Cache-Control header để ngăn chặn trình duyệt lưu trữ cache
+					response.setHeader("Cache-Control", "no-store");
+
+					// Xóa cookie (đổi tên và path tùy thuộc vào cách bạn đặt cookie)
+					Cookie cookie = new Cookie("token", null);
+					cookie.setPath("/");
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+				});
 	}
 
 	@Bean

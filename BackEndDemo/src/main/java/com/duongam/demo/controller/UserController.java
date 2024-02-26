@@ -9,6 +9,7 @@ import com.duongam.demo.dto.request.forupdate.URequestUser;
 import com.duongam.demo.dto.response.fordetail.DResponseUser;
 import com.duongam.demo.dto.response.forlist.LResponseSyllabus;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
+import com.duongam.demo.service.TokenAuthenticationService;
 import com.duongam.demo.service.template.IUserService;
 import io.swagger.annotations.Api;
 import javassist.bytecode.DuplicateMemberException;
@@ -17,8 +18,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -75,6 +78,27 @@ public class UserController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        // Lấy token từ header Authorization
+        String token = extractTokenFromHeader(request);
+
+        if (token != null) {
+            return ResponseEntity.ok("Logout successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Logout failed");
+        }
+    }
+
+    // Phương thức để trích xuất token từ header Authorization
+    private String extractTokenFromHeader(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7); // Bỏ qua phần "Bearer "
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<DResponseUser> register(@RequestBody RegisterModel registerModel) {
         DResponseUser result = userService.create(registerModel);
@@ -82,7 +106,8 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DResponseUser> add(@RequestBody CRequestUser cRequestUser) throws DuplicateMemberException {
+    public ResponseEntity<DResponseUser> add(HttpServletRequest request, @RequestBody CRequestUser cRequestUser) throws DuplicateMemberException {
+
         try {
             DResponseUser dResponseUser = userService.save(cRequestUser);
             return ResponseEntity.ok().body(dResponseUser);

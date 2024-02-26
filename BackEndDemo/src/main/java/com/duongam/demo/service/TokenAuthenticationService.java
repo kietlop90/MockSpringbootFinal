@@ -2,6 +2,7 @@ package com.duongam.demo.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Set;
 
+@Setter
 public class TokenAuthenticationService {
 	static final long EXPIRATIONTIME = 864_000_000; // 10 days
 

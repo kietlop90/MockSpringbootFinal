@@ -1,5 +1,7 @@
 package duongam.training.config.interceptors;
 
+import duongam.training.customexception.ForbiddenException;
+import duongam.training.dto.enums.ERole;
 import duongam.training.service.http.Token;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

@@ -77,6 +77,12 @@ public class UserController {
         return httpUser.login(loginForm);
 	}
 
+	@PostMapping("/logout")
+	@ResponseBody
+	public String logout() {
+		return httpUser.logout();
+	}
+
 	@PostMapping("/add")
 	@ResponseBody
 	public DResponseUser addDatabase(@ModelAttribute("user") CRequestUser request) {

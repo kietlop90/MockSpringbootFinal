@@ -62,9 +62,9 @@ public class UserServiceImpl implements IUserService {
         }
 
         DResponseUser detailRespondUser = modelMapper.map(user, DResponseUser.class);
-        detailRespondUser.setRole(user.roleName());
+        detailRespondUser.setRole(user.getRole().getName().name());
 
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.roleName());
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().getName().name());
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>(List.of(grantedAuthority));
 
         TokenAuthenticationService.addAuthentication(response, user.getUsername(), grantedAuthorities);
@@ -117,9 +117,9 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional
     public DResponseUser save(CRequestUser cUser) throws DuplicateMemberException {
-        if (userRepository.findByUsername(cUser.getUsername()).getUsername().equals(cUser.getUsername())) {
+        if (userRepository.findByUsername(cUser.getUsername()) != null) {
             throw new DuplicateMemberException("EM04");
-        }
+        } else {
 
         User user = new User();
         user.setName(cUser.getName());
@@ -134,7 +134,7 @@ public class UserServiceImpl implements IUserService {
         user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         user.setGender(EGender.valueOf(cUser.getGender()));
         userRepository.save(user);
-        return new DResponseUser(user);
+        return new DResponseUser(user);}
     }
 
     @Override

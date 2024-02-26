@@ -30,6 +30,7 @@ $(document).ready(function () {
     let userName = localStorage.getItem("user_name");
     $("#user-name").html(userName);
 });
+let token = localStorage.getItem("token");
 
 let resultList;
 function getList(url, prop) {
@@ -37,6 +38,9 @@ function getList(url, prop) {
         $.ajax({
             type: "GET",
             url: url,
+            headers: {
+                Authorization: token // Thêm token vào header Authorization
+            },
             success: function (result) {
                 if (prop) {
                     resultList = resultList ? resultList : {};
@@ -57,6 +61,9 @@ function getListWithKeyWord(url) {
         $.ajax({
             type: "GET",
             url: url,
+            headers: {
+                Authorization: token // Thêm token vào header Authorization
+            },
             success: function (result) {
                 resultListWithKeyWord = result;
             }
@@ -73,6 +80,9 @@ function getListSyllabusWithKeyWord(url) {
         $.ajax({
             type: "GET",
             url: url,
+            headers: {
+                Authorization: token // Thêm token vào header Authorization
+            },
             success: function (result) {
                 resultListSyllabusWithKeyWord = result;
             }
@@ -88,6 +98,9 @@ function getItemById(url, id) {
     $.ajax({
         type: "GET",
         url: url + id,
+        headers: {
+            Authorization: token // Thêm token vào header Authorization
+        },
         success: function (result) {
             resultGetItemById = result;
         }
@@ -99,6 +112,9 @@ function addItem(url, data, redirect) {
     $.ajax({
         type: "POST",
         url: url,
+        headers: {
+            Authorization: token // Thêm token vào header Authorization
+        },
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
             resultAddItem = result;
@@ -194,6 +210,9 @@ function updateItem(url, data, redirect, isAlert = true) {
     $.ajax({
         type: "POST",
         url: url,
+        headers: {
+            Authorization: token // Thêm token vào header Authorization
+        },
         data: data,
         success: function (result) {
             resultUpdateItem = result;
@@ -213,6 +232,9 @@ function getItem(url, data, redirect) {
         $.ajax({
             type: "GET",
             url: url,
+            headers: {
+                Authorization: token // Thêm token vào header Authorization
+            },
             data: data,
             success: function (result) {
                 resultDetailItem = result;
@@ -228,6 +250,9 @@ function deleteItem(url, id, redirect) {
     $.ajax({
         type: "DELETE",
         url: url + "/" + id,
+        headers: {
+            Authorization: token // Thêm token vào header Authorization
+        },
         success: function (result) {
             resultDeleteItem = result;
             alert("Delete successfully !!!");
@@ -238,8 +263,60 @@ function deleteItem(url, id, redirect) {
     });
 }
 
+function login() {
+    let data = {
+        username: $("#username-input").val(),
+        password: $("#password-input").val(),
+    }
+    if (!data.username || !data.password) {
+        alert("Email or password cannot be empty");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/user/login",
+        data: JSON.parse(JSON.stringify(data)),
+        success: function (result) {
+            if (result) {
+                localStorage.setItem("user_name", result.name);
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("user_info", JSON.stringify(result));
+                alert("Login successfully !!!");
+                window.location.replace("/user/list");
+            } else {
+                alert("Email or password is incorrect. Please try again.");
+            }
+        }
+    });
+}
+
 function logout() {
-    localStorage.removeItem("user-item");
-    localStorage.removeItem("user-info");
-    window.location.replace("/user/login");
+    // Lấy token từ localStorage
+    const token = localStorage.getItem("token");
+
+    // Kiểm tra xem token có tồn tại không
+    if (token) {
+        // Gửi yêu cầu đăng xuất đến backend
+        $.ajax({
+            type: "POST",
+            url: "/user/logout",
+            headers: {
+                Authorization: token
+            },
+            success: function (result) {
+                // Xử lý kết quả từ server nếu cần
+                console.log("Logout successful");                // Sau khi xử lý, xóa token từ localStorage và chuyển hướng đến trang đăng nhập
+                localStorage.clear();
+                window.location.replace("/user/login");
+            },
+            error: function (error) {
+                // Xử lý lỗi nếu có
+                console.error("Logout failed", error);
+            },
+        });
+    } else {
+        // Nếu không có token, chỉ chuyển hướng đến trang đăng nhập
+        window.location.replace("/user/login");
+    }
 }

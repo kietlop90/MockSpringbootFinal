@@ -21,8 +21,7 @@ import duongam.training.service.url.UserUrl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,10 +47,20 @@ public class HttpClass {
         if (keywords != null && !keywords.isEmpty()) {
             urlWithParam += "&keywords=" + keywords;
         }
+        //Token
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if(!Token.API_KEY.equals("None")){
+            headers.set(Token.HEADER, Token.API_KEY);
+        }
+
+        HttpEntity<Object> entity = new HttpEntity<>(headers);
+
         ResponseEntity<PaginatedResponse<LResponseClass>> response = restTemplate.exchange(
                 urlWithParam,
                 HttpMethod.GET,
-                null,
+                entity,
                 new ParameterizedTypeReference<PaginatedResponse<LResponseClass>>() {
                 }
         );

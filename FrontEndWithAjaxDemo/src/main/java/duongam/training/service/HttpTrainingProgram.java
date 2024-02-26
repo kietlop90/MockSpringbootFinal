@@ -10,12 +10,12 @@ import duongam.training.dto.response.forlist.LResponseClass;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.http.HttpBase;
+import duongam.training.service.http.Token;
 import duongam.training.service.url.ClassUrl;
 import duongam.training.service.url.TrainingProgramUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -51,7 +51,7 @@ public class HttpTrainingProgram {
     }
 
     public PaginatedResponse<DReponseTrainingProgram> getAll(int page, int size,
-                                                       String sortField, String dir) {
+                                                             String sortField, String dir) {
         RestTemplate restTemplate = new RestTemplate();
         String urlWithParam = trainingProgramUrl.getAll() + "?page=" + page + "&size=" + size;
 
@@ -59,10 +59,19 @@ public class HttpTrainingProgram {
             urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
         }
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if(!Token.API_KEY.equals("None")){
+            headers.set(Token.HEADER, Token.API_KEY);
+        }
+
+        HttpEntity<Object> entity = new HttpEntity<>(headers);
+
         ResponseEntity<PaginatedResponse<DReponseTrainingProgram>> response = restTemplate.exchange(
                 urlWithParam,
                 HttpMethod.GET,
-                null,
+                entity, // Pass the HttpEntity with headers
                 new ParameterizedTypeReference<PaginatedResponse<DReponseTrainingProgram>>() {
                 }
         );

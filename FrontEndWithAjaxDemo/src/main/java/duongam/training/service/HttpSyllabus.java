@@ -5,12 +5,12 @@ import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseUser;
 import duongam.training.dto.response.page.PaginatedResponse;
 import duongam.training.service.http.HttpBase;
+import duongam.training.service.http.Token;
 import duongam.training.service.url.SyllabusUrl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,11 +35,22 @@ public class HttpSyllabus {
         if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
             urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
         }
+        //token
+        //Token
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        if(!Token.API_KEY.equals("None")){
+            headers.set(Token.HEADER, Token.API_KEY);
+        }
+
+        HttpEntity<Object> entity = new HttpEntity<>(headers);
+
 
         ResponseEntity<PaginatedResponse<LResponseSyllabus>> response = restTemplate.exchange(
                 urlWithParam,
                 HttpMethod.GET,
-                null,
+                entity,
                 new ParameterizedTypeReference<PaginatedResponse<LResponseSyllabus>>() {
                 }
         );

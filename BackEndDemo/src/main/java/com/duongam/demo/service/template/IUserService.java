@@ -12,23 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface IUserService {
-	DResponseUser login(String username, String password, HttpServletResponse response);
+    DResponseUser login(String username, String password, HttpServletResponse response);
 
-	DResponseUser create(RegisterModel registerModel);
+    DResponseUser create(RegisterModel registerModel);
 
-	Page<LResponseUser> getAll(int page, int size, String sort, String dir, String[] keywords);
+    Page<LResponseUser> getAll(int page, int size, String sort, String dir, String[] keywords);
 
-	List<LResponseUser> getTrainer(Long idClass);
+    List<LResponseUser> getTrainer(Long idClass);
 
-	List<LResponseUser> getAdmin(Long idClass);
+    List<LResponseUser> getAdmin(Long idClass);
 
-	DResponseUser save(CRequestUser cUser) throws DuplicateMemberException;
+    DResponseUser save(CRequestUser cUser) throws DuplicateMemberException;
 
-	DResponseUser update(URequestUser uUser);
+    DResponseUser update(URequestUser uUser);
 
-	DResponseUser findById(Long id);
+    DResponseUser findById(Long id);
 
-	DResponseUser deleteById(Long id);
+    DResponseUser deleteById(Long id);
 
 
 }

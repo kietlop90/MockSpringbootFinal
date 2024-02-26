@@ -106,35 +106,36 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<LResponseUser> getTrainer(Long idClass) {
         List<User> userList = userRepository.listTrainerForClass(idClass);
-        return userList.stream().map(entity -> modelMapper.map(entity,LResponseUser.class)).collect(Collectors.toList());
+        return userList.stream().map(entity -> modelMapper.map(entity, LResponseUser.class)).collect(Collectors.toList());
     }
 
     @Override
     public List<LResponseUser> getAdmin(Long idClass) {
         List<User> userList = userRepository.listAdminForClass(idClass);
-        return userList.stream().map(entity -> modelMapper.map(entity,LResponseUser.class)).collect(Collectors.toList());
+        return userList.stream().map(entity -> modelMapper.map(entity, LResponseUser.class)).collect(Collectors.toList());
     }
+
     @Override
     @Transactional
     public DResponseUser save(CRequestUser cUser) throws DuplicateMemberException {
         if (userRepository.findByUsername(cUser.getUsername()) != null) {
             throw new DuplicateMemberException("EM04");
         } else {
-
-        User user = new User();
-        user.setName(cUser.getName());
-        user.setUsername(cUser.getUsername());
-        user.setEmail(cUser.getEmail());
-        user.setPhone(cUser.getPhone());
-        user.setStatus(cUser.getStatus());
-        user.setPassword(bCryptPasswordEncoder.encode(cUser.getPassword()));
-        Role role = roleRepository.findByName(ERole.valueOf(cUser.getRole())).orElse(null);
-        user.setRole(role);
-        String date = cUser.getDob();
-        user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        user.setGender(EGender.valueOf(cUser.getGender()));
-        userRepository.save(user);
-        return new DResponseUser(user);}
+            User user = new User();
+            user.setName(cUser.getName());
+            user.setUsername(cUser.getUsername());
+            user.setEmail(cUser.getEmail());
+            user.setPhone(cUser.getPhone());
+            user.setStatus(cUser.getStatus());
+            user.setPassword(bCryptPasswordEncoder.encode(cUser.getPassword()));
+            Role role = roleRepository.findByName(ERole.valueOf(cUser.getRole())).orElse(null);
+            user.setRole(role);
+            String date = cUser.getDob();
+            user.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            user.setGender(EGender.valueOf(cUser.getGender()));
+            userRepository.save(user);
+            return new DResponseUser(user);
+        }
     }
 
     @Override

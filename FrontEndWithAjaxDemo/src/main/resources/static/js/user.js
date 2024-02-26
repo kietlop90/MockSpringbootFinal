@@ -22,8 +22,71 @@ $(document).ready(function () {
         };
         if (resultDetailItem && resultDetailItem.id) {
             data.id = resultDetailItem.id;
+
+            let errorName = $("#error-name");
+            let errorPhone = $("#error-phone");
+            let errorDob = $("#error-dob");
+            let nameRegex = /^[a-zA-Z\u00C0-\u017F\s]{1,50}$/;
+            let phoneRegex = /^[0-9]{9}$/;
+
+            if (!name) {
+                errorName.html(listError.EM02);
+            } else if (!nameRegex.test(name)) {
+                errorName.html("Invalid name format. Please enter from a-z or A-Z and limit 50 characters");
+                return;
+            }
+
+            if (!phone) {
+                errorPhone.html(listError.EM06);
+            } else if (!phoneRegex.test(phone)) {
+                errorPhone.html("Invalid phone number format. Please enter 9 digits from 0 to 9.");
+                return;
+            }
+
+            if (!dob) {
+                errorDob.html(listError.EM08);
+                return;
+            }
             updateItem("/user/update", data, "/user/list");
         } else {
+            let errorRole = $("#error-role");
+            let errorName = $("#error-name");
+            let errorEmail = $("#error-email");
+            let errorPhone = $("#error-phone");
+            let errorDob = $("#error-dob");
+            let phoneRegex = /^[0-9]{9}$/;
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let nameRegex = /^[a-zA-Z\u00C0-\u017F\s]{1,50}$/;
+
+            if (!role) {
+                errorRole.html("Role is required")
+            }
+            if (!name) {
+                errorName.html(listError.EM02);
+            } else if (!nameRegex.test(name)) {
+                errorName.html("Invalid name format. Please enter from a-z or A-Z and limit 50 characters");
+                return;
+            }
+
+            if (!email) {
+                errorEmail.html(listError.EM03);
+            } else if (!emailRegex.test(email)) {
+                errorEmail.html(listError.EM05);
+                return;
+            }
+
+            if (!phone) {
+                errorPhone.html(listError.EM06);
+            } else if (!phoneRegex.test(phone)) {
+                errorPhone.html("Invalid phone number format. Please enter 9 digits from 0 to 9.");
+                return;
+            }
+
+            if (!dob) {
+                errorDob.html(listError.EM08);
+                return;
+            }
+
             addItem("/user/add", data, "/user/list");
         }
     })
@@ -48,7 +111,7 @@ $(document).ready(function () {
         // trigger show modal
         $("#btn-add").click();
     })
-    $(".btn-de-activate-user").on("click",  async function () {
+    $(".btn-de-activate-user").on("click", async function () {
         let id = $(this).attr("data-id");
         await getItem("/user/getById/" + id);
         resultDetailItem.status = !resultDetailItem.status;
@@ -59,7 +122,7 @@ $(document).ready(function () {
         let id = $(this).attr("data-id");
         deleteItem("/user/delete", id, "/user/list");
     })
-    $(".btn-change-role").on("click", async function(){
+    $(".btn-change-role").on("click", async function () {
         let id = $(this).attr("data-id");
         let role = $(this).attr("data-role");
         await getItem("/user/getById/" + id);
@@ -70,7 +133,7 @@ $(document).ready(function () {
 
     // event enter
     $(document).on("keypress", function (e) {
-        if(e.keyCode === 13) {
+        if (e.keyCode === 13) {
             addKeywordAndSearch();
         }
     })
@@ -97,10 +160,6 @@ function addKeywordAndSearch() {
     }
 }
 
-function removeKeywordAndSearch(index) {
-    searchKeywords.splice(index, 1);
-    search();
-}
 
 function search() {
     // Gửi yêu cầu tìm kiếm đến server
@@ -118,7 +177,7 @@ function renderKeywords() {
         let itemFilterDom = $("<span>")
             .addClass("item-filter")
             .addClass("me-2")
-            .css('cursor','pointer')
+            .css('cursor', 'pointer')
             .on("click", function () {
                 searchKeywords.splice(index, 1);
                 searchKeywords.push(item);

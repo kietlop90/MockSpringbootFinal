@@ -34,7 +34,7 @@
                    class="form-control mb-2" placeholder="Enter Email" autofocus/>
             <input id="password-input" type="password" value="123123" class="form-control"
                    placeholder="Password"/>
-
+            <p id="error" class="text-danger text-center" ></p>
 
             <button class="btn w-100 justify-content-center btn-main" onclick="login()">
                 Sign In
@@ -43,6 +43,65 @@
     </div>
 </div>
 <div id="footer" th:insert="footer.html"></div>
+<!--Error modal-->
+<div class="modal" id="errorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 id="title-model-error" class="modal-title text-center" style="color: white; width: 100%;">Error</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="errorNotified" class="text-danger text-center" ></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-error" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Success modal-->
+<div class="modal" id="successModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 id="title-model-success" class="modal-title text-center" style="color: white; width: 100%;">Success</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="successNotified" class="text-success text-center" ></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-success" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

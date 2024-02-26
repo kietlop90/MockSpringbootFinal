@@ -268,6 +268,10 @@
                     </div>
                 </div>
                 <div class="row mb-2">
+                    <div class="col-3"></div>
+                    <div class="col-9"><p id="error-role" class="text-danger"></p></div>
+                </div>
+                <div class="row mb-2">
                     <div class="col-3">
                         <label for="name-input"><b>Name</b></label>
                     </div>
@@ -275,6 +279,10 @@
                         <input type="text" id="name-input" class="form-control" placeholder="Name"
                                autofocus required/>
                     </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3"></div>
+                    <div class="col-9"><p id="error-name" class="text-danger"></p></div>
                 </div>
                 <!--                <div class="row mb-2">-->
                 <!--                    <div class="col-3">-->
@@ -295,6 +303,10 @@
                     </div>
                 </div>
                 <div class="row mb-2">
+                    <div class="col-3"></div>
+                    <div class="col-9"><p id="error-email" class="text-danger"></p></div>
+                </div>
+                <div class="row mb-2">
                     <div class="col-3">
                         <label for="phone-input"><b>Phone</b></label>
                     </div>
@@ -304,14 +316,23 @@
                     </div>
                 </div>
                 <div class="row mb-2">
+                    <div class="col-3"></div>
+                    <div class="col-9"><p id="error-phone" class="text-danger"></p></div>
+                </div>
+
+                <div class="row mb-2">
                     <div class="col-3">
                         <label for="dob-input"><b>Date of birth</b></label>
                     </div>
                     <div class="col-9">
                         <div class="input-group">
-                            <input type="date" id="dob-input" class="form-control" required>
+                            <input type="date" id="dob-input" class="form-control" required min="1980-01-01" max="2024-12-31" >
                         </div>
                     </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-3"></div>
+                    <div class="col-9"><p id="error-dob" class="text-danger"></p></div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-3">
@@ -353,6 +374,65 @@
                         <button id="btn-cancel-user" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
                         </button>
                         <button id="btn-add-user" class="btn btn-main me-2">Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Error modal-->
+<div class="modal" id="errorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 id="title-model-error" class="modal-title text-center" style="color: white; width: 100%;">Error</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="errorNotified" class="text-danger text-center" ></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-error" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Success modal-->
+<div class="modal" id="successModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 id="title-model-success" class="modal-title text-center" style="color: white; width: 100%;">Success</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="successNotified" class="text-success text-center" ></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-success" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">OK
+                        </button>
                     </div>
                 </div>
             </div>

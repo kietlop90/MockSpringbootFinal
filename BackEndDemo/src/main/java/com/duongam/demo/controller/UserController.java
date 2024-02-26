@@ -106,8 +106,13 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DResponseUser> add(HttpServletRequest request, @RequestBody CRequestUser cRequestUser) throws DuplicateMemberException {
+    public ResponseEntity<Object> add(HttpServletRequest request, @RequestBody CRequestUser cRequestUser) throws DuplicateMemberException  {
         try {
+            if (cRequestUser.getEmail().isEmpty() || cRequestUser.getName().isEmpty() ||
+                    cRequestUser.getDob().isEmpty() || cRequestUser.getPhone().isEmpty() ||
+                    cRequestUser.getRole().isEmpty()){
+                return ResponseEntity.status(404).body(404);
+            }
             DResponseUser dResponseUser = userService.save(cRequestUser);
             return ResponseEntity.ok().body(dResponseUser);
         } catch (DuplicateMemberException ex) {

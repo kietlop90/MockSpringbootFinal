@@ -120,6 +120,7 @@ function throwError(error) {
 }
 
 let resultList;
+
 function getList(url, prop) {
     return Promise.resolve(
         $.ajax({
@@ -133,7 +134,7 @@ function getList(url, prop) {
                     resultList = result;
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 throwError(xhr.responseJSON.message);
             }
         })
@@ -143,6 +144,7 @@ function getList(url, prop) {
 }
 
 let resultListWithKeyWord;
+
 function getListWithKeyWord(url) {
     return Promise.resolve(
         $.ajax({
@@ -151,7 +153,7 @@ function getListWithKeyWord(url) {
             success: function (result) {
                 resultListWithKeyWord = result;
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 throwError(xhr.responseJSON.message);
             }
         })
@@ -170,7 +172,7 @@ function getListSyllabusWithKeyWord(url) {
             success: function (result) {
                 resultListSyllabusWithKeyWord = result;
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 throwError(xhr.responseJSON.message);
             }
         })
@@ -181,6 +183,7 @@ function getListSyllabusWithKeyWord(url) {
 
 
 let resultGetItemById;
+
 function getItemById(url, id) {
     $.ajax({
         type: "GET",
@@ -188,13 +191,14 @@ function getItemById(url, id) {
         success: function (result) {
             resultGetItemById = result;
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             throwError(xhr.responseJSON.message);
         }
     });
 }
 
 let resultAddItem;
+
 function addItem(url, data, redirect) {
     $.ajax({
         type: "POST",
@@ -208,16 +212,19 @@ function addItem(url, data, redirect) {
                 window.location.replace(redirect);
             }
         },
-        error: function(xhr, status, error) {
-            throwError(xhr.responseJSON.message);
+        error: function (xhr, status, error) {
+                var errorAddUser = parseInt(xhr.responseJSON.message);
+            if ( errorAddUser === 404){
+                showErrorModal("All input is required")
+            }if ( errorAddUser === 400){
+                showErrorModal(listError.EM04)
+            }
         },
-        error: function(xhr, status, error) {
-            throwError(xhr.responseJSON.message);
-        }
     });
 }
 
 let resultUpdateItem;
+
 function updateItem(url, data, redirect, isAlert = true) {
     $.ajax({
         type: "POST",
@@ -235,13 +242,14 @@ function updateItem(url, data, redirect, isAlert = true) {
                 window.location.replace(redirect);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             throwError(xhr.responseJSON.message);
         }
     });
 }
 
 let resultDetailItem;
+
 function getItem(url, data, redirect) {
     return Promise.resolve(
         $.ajax({
@@ -254,7 +262,7 @@ function getItem(url, data, redirect) {
             success: function (result) {
                 resultDetailItem = result;
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 throwError(xhr.responseJSON.message);
             }
         })
@@ -264,6 +272,7 @@ function getItem(url, data, redirect) {
 }
 
 let resultDeleteItem;
+
 function deleteItem(url, id, redirect) {
     $.ajax({
         type: "DELETE",
@@ -278,7 +287,7 @@ function deleteItem(url, id, redirect) {
                 window.location.replace(redirect);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             throwError(xhr.responseJSON.message);
         }
     });
@@ -289,8 +298,13 @@ function login() {
         username: $("#username-input").val(),
         password: $("#password-input").val(),
     }
-    if (!data.username || !data.password) {
-        alert("Email or password cannot be empty");
+    let errorInput = $("#error");
+    if (!data.username) {
+        errorInput.html(listError.EM03)
+        return;
+    }
+    if (!data.password) {
+        errorInput.html("Password cannot be empty");
         return;
     }
 
@@ -299,17 +313,38 @@ function login() {
         url: "/user/login",
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
-            if (result) {
-                localStorage.setItem("user_name", result.name);
-                localStorage.setItem("token", result.token);
-                localStorage.setItem("user_info", JSON.stringify(result));
-                alert("Login successfully !!!");
+            localStorage.setItem("user_name", result.name);
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("user_info", JSON.stringify(result));
+            showSuccessModal("Login successfully !!!");
+            //delay 2s to display modal
+            setTimeout(function () {
                 window.location.replace("/user/list");
-            } else {
-                alert("Email or password is incorrect. Please try again.");
+            }, 1000);
+        },
+        error: function (xhr) {
+            var errorText = parseInt(xhr.responseJSON.message);
+            if (errorText === 402) {
+                showErrorModal(listError.EM59)
             }
         }
     });
+}
+
+//Login error
+function showErrorModal(errorMessage) {
+    let errorNotified = $("#errorNotified");
+    $("#title-model-error").text("Error");
+    errorNotified.text(errorMessage);
+    $("#errorModal").modal("show");
+}
+
+//Login success
+function showSuccessModal(successMessage) {
+    let successNotified = $("#successNotified");
+    $("#title-model-success").text("Success");
+    successNotified.text(successMessage);
+    $("#successModal").modal("show");
 }
 
 function logout() {

@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class URequestTrainingProgram {
     private String code;
-
     private String name;
     private List<String> listSyllabusCode;
     private String status;

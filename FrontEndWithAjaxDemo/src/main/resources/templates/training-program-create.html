@@ -107,32 +107,34 @@
                     <label for="select-syllabus" class="me-2" style="white-space: nowrap; margin: auto">
                         Content
                     </label>
-                    <div class="group-syllabus">
-<!--                        TO DO-->
-                        <div class="item-syllabus">
-                            <div class="name-syllabus d-flex justify-content-between">
-                                <div>
-                                    <label>Linux</label>
-                                    <label class="status-Inactive">Inactive</label>
-                                </div>
-                                <div>X</div>
-                            </div>
-                            <div class="info-syllabus">
-                                <label class="me-2">LIN v2.0</label>|
-                                <label class="me-2 mx-2">4 days (12 hours)</label>|
-                                <label class="mx-2">Modified on 23/07/2022 by Johny Deep</label>
-                            </div>
-                        </div>
+                    <div id="group-syllabus" class="group-syllabus">
+<!--&lt;!&ndash;                        TO DO&ndash;&gt;-->
+<!--                        <div class="item-syllabus">-->
+<!--                            <div class="name-syllabus d-flex justify-content-between">-->
+<!--                                <div>-->
+<!--                                    <label>Linux</label>-->
+<!--                                    <label class="status-Inactive">Inactive</label>-->
+<!--                                </div>-->
+<!--                                <div>X</div>-->
+<!--                            </div>-->
+<!--                            <div class="info-syllabus">-->
+<!--                                <label class="me-2">LIN v2.0</label>|-->
+<!--                                <label class="me-2 mx-2">4 days (12 hours)</label>|-->
+<!--                                <label class="mx-2">Modified on 23/07/2022 by Johny Deep</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
             <div>
-                <div class="col-5 d-flex align-content-lg-center">
+                <div class="col-5 d-flex align-content-lg-center group-autocomplete">
                     <label for="select-syllabus" class="me-2" style="white-space: nowrap; margin: auto">
                         Select syllabus
                     </label>
                     <div class="input-group">
                         <input id="select-syllabus" class="form-control w-100"></input>
+                    </div>
+                    <div id="list-autocomplete" class="list-autocomplete">
                     </div>
                 </div>
             </div>

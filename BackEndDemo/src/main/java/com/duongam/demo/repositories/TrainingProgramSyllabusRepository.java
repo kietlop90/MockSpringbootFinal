@@ -18,8 +18,8 @@ public interface TrainingProgramSyllabusRepository extends JpaRepository<Trainin
 
     TrainingProgramSyllabus findBySyllabusCode(String code);
 
-    List<TrainingProgramSyllabus> findByTrainingProgramCode(String code);
-
+    @Query("SELECT tps FROM TrainingProgramSyllabus tps WHERE tps.trainingProgramCode.code = :trainingProgramCode")
+    List<TrainingProgramSyllabus> findTrainingProgramByCode(@Param("trainingProgramCode") String trainingProgramCode);
 
 
 }

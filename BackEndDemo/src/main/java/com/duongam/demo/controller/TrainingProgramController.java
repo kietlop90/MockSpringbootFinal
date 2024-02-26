@@ -44,11 +44,7 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(paginatedResponse);
     }
 
-    @GetMapping("/list-name/{keywords}")
-    public ResponseEntity<List<DReponseTrainingProgram>> listProgramForClass(@PathVariable("keywords") String keywords) {
-        List<DReponseTrainingProgram> list = trainingProgramService.findAllByNameForclass(keywords);
-        return ResponseEntity.ok().body(list);
-    }
+
 
     @PostMapping("/add")
     public ResponseEntity<DReponseTrainingProgram> add(@Valid @RequestBody CRequestTrainingProgram cRequestTrainingProgram, BindingResult bindingResult) {
@@ -85,11 +81,6 @@ public class TrainingProgramController {
         return ResponseEntity.ok().body(dReponseTrainingProgram);
     }
 
-//    @PutMapping("/update")
-//    public ResponseEntity<DReponseTrainingProgram> updateTrainingProgram(@RequestBody URequestTrainingProgram requestTrainingProgramUpdate) {
-//        DReponseTrainingProgram reponseTrainingProgram = trainingProgramService.updateTrainingProgramById(requestTrainingProgramUpdate);
-//        return ResponseEntity.ok().body(reponseTrainingProgram);
-//    }
 
 
     @GetMapping("/getListTagsSearch")
@@ -152,9 +143,14 @@ public class TrainingProgramController {
     }
 
 
-//    @PostMapping("/saveTrainingProgram")
-//    public ResponseEntity<DReponseTrainingProgram> saveTrainingProgram(@RequestBody RequestTrainingProgramCreate requestTrainingProgramUpdate) {
-//        DReponseTrainingProgram reponseTrainingProgram = trainingProgramService.save(requestTrainingProgramUpdate);
-//        return ResponseEntity.ok().body(reponseTrainingProgram);
-//    }
+
+
+
+//    ---------------- Used by CLass ----------------------
+    @GetMapping("/list-name/{keywords}")
+    public ResponseEntity<List<DReponseTrainingProgram>> listProgramForClass(@PathVariable("keywords") String keywords) {
+        List<DReponseTrainingProgram> list = trainingProgramService.findAllByNameForclass(keywords);
+        return ResponseEntity.ok().body(list);
+    }
+
 }

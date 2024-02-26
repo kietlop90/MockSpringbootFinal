@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CRequestTrainingProgram {
     private String name;
-    private List<String> listSyllabusCode;
+    private String email;
+    private String[] listSyllabusCode;
     private String status;
 }

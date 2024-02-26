@@ -86,7 +86,7 @@ public class TrainingProgramController {
 
     @GetMapping("/add")
     public String addForm(Model model) {
-        model.addAttribute("program", new DReponseTrainingProgram());
+        model.addAttribute("request", new CRequestTrainingProgram());
         return "training-program-create";
     }
 

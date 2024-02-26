@@ -35,13 +35,7 @@ public class SylabusController {
         return "syllabus-list";
     }
 
-    @GetMapping("/list-all/{name}")
-    @JsonProperty("data")
-    @ResponseBody
-    public List<DResponseSyllabus> listAll(Model model, @PathVariable String name) {
-        List<DResponseSyllabus> test = httpSyllabus.listAll(name);
-        return test;
-    }
+
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable String id) {
@@ -65,5 +59,14 @@ public class SylabusController {
     @ResponseBody
     public List<LResponseSyllabus> getProgramForClass(@PathVariable("keywords") String keywords) {
         return httpSyllabus.searchByCodeForClass(keywords);
+    }
+
+//    --------------- used by TrainingProgram --------------------
+
+    @GetMapping("/list-all/{name}")
+    @JsonProperty("data")
+    @ResponseBody
+    public List<DResponseSyllabus> listAll(@PathVariable String name) {
+        return httpSyllabus.listAll(name);
     }
 }

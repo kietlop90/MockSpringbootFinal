@@ -40,3 +40,19 @@
     padding: 1px 10px;
 }
 
+.status-superadmin {
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #fa0000;
+    border-radius: 14px;
+    padding: 1px 10px;
+}
+
+.status-student {
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #fa9600;
+    border-radius: 14px;
+    padding: 1px 10px;
+}
+

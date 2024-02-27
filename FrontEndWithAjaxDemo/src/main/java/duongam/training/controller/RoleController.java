@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/user-permission")
+@RequestMapping("/role")
 public class RoleController {
     @Autowired
     private HttpRole httpRole;

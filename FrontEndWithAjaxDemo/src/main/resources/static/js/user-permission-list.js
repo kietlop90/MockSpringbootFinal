@@ -16,7 +16,7 @@ $(document).ready(function () {
                 classForProject: aClass ? aClass : "View",
                 learningMetarial: learning ? learning : "View",
             }
-            updateItem("/user-permission/update", data, "/user-permission/list", false);
+            updateItem("/role/update", data, "/role/list", false);
         }
     });
 })

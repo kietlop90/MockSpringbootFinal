@@ -68,8 +68,8 @@ $(document).ready(function () {
                 },
                 {
                     label: "User permission",
-                    path: "/user-permission/list",
-                    pathGroup: ["/user-permission/list"],
+                    path: "/role/list",
+                    pathGroup: ["/role/list"],
                 },
             ],
             icon: "icon/navigation-menu/group.png",

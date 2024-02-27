@@ -1,24 +1,21 @@
-package duongam.training.dto.request.forupdate;
+package com.duongam.demo.dto.request.forupdate;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class URequestUserPermission {
+@Getter
+@Setter
+public class URequestRole {
     private Long id;
-
-    private String role;
-
+    private String name;
+    private String description;
     private String syllabus;
-
     private String trainingProgram;
-
     private String classForProject;
-
     private String learningMetarial;
-
     private String userManagerment;
 }

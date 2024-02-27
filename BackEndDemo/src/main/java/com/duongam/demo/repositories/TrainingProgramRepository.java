@@ -24,7 +24,7 @@ public interface TrainingProgramRepository extends JpaRepository<TrainingProgram
     @Query("SELECT p FROM TrainingProgram p WHERE p.name LIKE %:name% ")
     List<DReponseTrainingProgram> findAllByName(@Param("name") String name);
 
-
+    Optional<TrainingProgram> findByName(String name);
 
     @Query("SELECT u FROM TrainingProgram u WHERE u.name LIKE %:searchTerm% OR u.createdBy.name LIKE %:searchTerm% or u.code like %:searchTerm%" )
     List<TrainingProgram> findByNameLike1tag(@Param("searchTerm") String searchTerm);

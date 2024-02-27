@@ -213,11 +213,25 @@ function addItem(url, data, redirect) {
             }
         },
         error: function (xhr, status, error) {
-                var errorAddUser = parseInt(xhr.responseJSON.message);
-            if ( errorAddUser === 404){
+            var errorAddUser = parseInt(xhr.responseJSON.message);
+            if (errorAddUser === 404) {
                 showErrorModal("All input is required")
-            }if ( errorAddUser === 400){
+            }
+            if (errorAddUser === 400) {
                 showErrorModal(listError.EM04)
+            }
+            if (errorAddUser === 501) {
+                showErrorModal("Training program name is exist.")
+                setTimeout(function () {
+                    window.location.replace("/trainingProgram/add");
+                }, 1300);
+            }
+
+            if (errorAddUser === 502) {
+                showErrorModal("Class name is exist.")
+                setTimeout(function () {
+                    window.location.replace("/class/add");
+                }, 1300);
             }
         },
     });
@@ -313,17 +327,21 @@ function login() {
         url: "/user/login",
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
-            localStorage.setItem("user_name", result.name);
-            localStorage.setItem("token", result.token);
-            localStorage.setItem("user_info", JSON.stringify(result));
-            showSuccessModal("Login successfully !!!");
-            //delay 2s to display modal
-            setTimeout(function () {
-                window.location.replace("/user/list");
-            }, 1000);
+            debugger
+            if (result.name) {
+                localStorage.setItem("user_name", result.name);
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("user_info", JSON.stringify(result));
+                showSuccessModal("Login successfully !!!");
+                //delay 2s to display modal
+                setTimeout(function () {
+                    window.location.replace("/user/list");
+                }, 1000);
+            } else {
+                showErrorModal(listError.EM59)
+            }
         },
         error: function (xhr) {
-
             var errorText = parseInt(xhr.responseJSON.message);
             if (errorText === 402) {
                 showErrorModal(listError.EM59)
@@ -362,13 +380,11 @@ function logout() {
                 Authorization: token
             },
             success: function (result) {
-                // Xử lý kết quả từ server nếu cần
                 console.log("Logout successful");                // Sau khi xử lý, xóa token từ localStorage và chuyển hướng đến trang đăng nhập
                 localStorage.clear();
                 window.location.replace("/user/login");
             },
             error: function (error) {
-                // Xử lý lỗi nếu có
                 console.error("Logout failed", error);
             },
         });

@@ -7,11 +7,13 @@ import com.duongam.demo.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +23,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class LResponseClass {
     private Long id;
     private String name;
@@ -57,5 +60,10 @@ public class LResponseClass {
         this.createdDate = classForProject.getCreatedDate();
         this.modifiedBy = classForProject.getModifiedBy().getName();
         this.modifiedDate = classForProject.getModifiedDate();
+    }
+
+    public String formatDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(createdDate);
     }
 }

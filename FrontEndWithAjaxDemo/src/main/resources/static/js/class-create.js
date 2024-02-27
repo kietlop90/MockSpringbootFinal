@@ -28,8 +28,12 @@ $(async function () {
         let dateDatePicker = picker.data('daterangepicker');
         resultDetailItem = resultDetailItem ? resultDetailItem : {};
 
+        let attend = $("#select-attendee").val();
         let className = $("#input-name-class").val();
         // let duration = $("#timePicker").val();
+        let fsu1 = $("#select-fsu").val();
+        let fsuContact =    $("#select-contact-fsu").val();
+        let fu = fsu1 + " - " + fsuContact;
         let location = $("#select-location").val();
         let trainer = $("#select-trainer").val();
         let admin = $("#select-admin").val();
@@ -40,11 +44,11 @@ $(async function () {
         let code = location + today.getFullYear() + zeroPad(random, 2);
         let data = {
             location: location,
-            attendee: resultDetailItem.attendee,
+            attendee: attend,
             code: code,
             createdBy: JSON.parse(localStorage.getItem("user_info")).id,
             days: resultDetailItem.days,
-            fsu: resultDetailItem.fsu,
+            fsu: fu,
             hours: resultDetailItem.hours,
             id: resultDetailItem.id,
             listOfClass: resultDetailItem.listOfClass,
@@ -60,6 +64,11 @@ $(async function () {
         };
         let pathName = window.location.pathname;
         if (pathName.includes("add")) {
+            if(!data.trainingProgramCode)
+            {
+                showErrorModal(listError.EM48);
+                return;
+            }
             addItem("/class/add", data, "/class/list");
         }
         if (pathName.includes("update")) {
@@ -68,6 +77,9 @@ $(async function () {
             data.name = resultDetailItem.name;
             data.createdBy = resultDetailItem.createdById;
             data.status = resultDetailItem.status;
+            data.attendee = resultDetailItem.attendee;
+            data.location = resultDetailItem.location;
+            data.fsu = resultDetailItem.fsu;
             updateItem("/class/update", data, "/class/list");
         }
     })

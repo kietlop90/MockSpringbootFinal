@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Syllabus</title>
+    <title>Class Create</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
@@ -127,11 +127,9 @@
                             </div>
                             <div>
                                 <select id="select-location" class="form-control">
-                                    <option value="VN">VietNam</option>
-                                    <option value="USA">USA</option>
-                                    <option value="USA1">USA1</option>
-                                    <option value="USA2">USA2</option>
-                                    <option value="USA3">USA3</option>
+                                    <option value="FT1">FTown1</option>
+                                    <option value="FT2">FTown2</option>
+                                    <option value="FT3">FTown3</option>
                                 </select>
                             </div>
                         </div>
@@ -163,10 +161,12 @@
                             <div class="flex-md-wrap">
                                 <div class="col-12 mb-1">
                                     <select id="select-fsu" class="form-control">
+                                        <option value="FHM">FHM</option>
                                     </select>
                                 </div>
                                 <div class="col-12">
                                     <select id="select-contact-fsu" class="form-control">
+                                        <option value="BaCH@fsoft.com.vn">BaCH@fsoft.com.vn</option>
                                     </select>
                                 </div>
                             </div>
@@ -203,10 +203,10 @@
                             <img th:src="@{/icon/indicator/grade-white.png}" alt="">
                             <label class="me-2">Attendee</label>
                             <select id="select-attendee" class="form-control w-50">
-                                <option value="VietNam">VietNam</option>
-                                <option value="USA">USA</option>
-                                <option value="USA1">USA1</option>
-                                <option value="USA2">USA2</option>
+                                <option value="Intern">Intern</option>
+                                <option value="Fresher">Fresher</option>
+                                <option value="Online fee-fresher">Online fee-fresher</option>
+                                <option value="Offline fee-fresher">Offline fee-fresher</option>
                             </select>
                         </div>
                         <div>
@@ -370,6 +370,66 @@
     </div>
 </div>
 <div id="footer" th:insert="footer.html"></div>
+<!--Error modal-->
+<div class="modal" id="errorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 id="title-model-error" class="modal-title text-center" style="color: white; width: 100%;">Error</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="errorNotified" class="text-danger text-center"></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-error" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Success modal-->
+<div class="modal" id="successModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #2D3748">
+                <h4 id="title-model-success" class="modal-title text-center" style="color: white; width: 100%;">
+                    Success</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p id="successNotified" class="text-success text-center"></p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button id="btn-cancel-success" class="btn btn-outline-danger me-2" data-bs-dismiss="modal">OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

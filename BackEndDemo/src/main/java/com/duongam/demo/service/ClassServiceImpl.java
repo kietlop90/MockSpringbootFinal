@@ -58,13 +58,20 @@ public class ClassServiceImpl implements IClassService {
         if (keywords.length == 0) {
             return classRepository.findAllBy(pageable);
         } else {
-            return classRepository.findAllByOneKeyword(keywords[keywords.length - 1], pageable).map(entity -> modelMapper.map(entity, LResponseClass.class));
+            return classRepository.findAllByOneKeyword(keywords[keywords.length - 1], pageable);
         }
     }
 
     @Override
     @Transactional
     public DResponseClass save(CRequestClass cRequestClass) {
+
+        Optional<ClassForProject> classForProjectDB = classRepository.findByName(cRequestClass.getName());
+        if (classForProjectDB.isPresent()) {
+            return null;
+        }
+
+
         User user = userRepository.findById(cRequestClass.getCreatedBy()).orElse(null);
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(cRequestClass.getTrainingProgramCode()).orElse(null);
 

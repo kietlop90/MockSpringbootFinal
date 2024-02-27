@@ -11,11 +11,16 @@ import org.springframework.stereotype.Repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
 public interface ClassRepository extends JpaRepository<ClassForProject, Long> {
 	Page<LResponseClass> findAllBy(Pageable pageable);
+
+	List<ClassForProject> findAllBy();
+
+	Optional<ClassForProject> findByName(String name);
 
 	@Query("SELECT c FROM ClassForProject c WHERE c.name LIKE %:keyword% OR c.code LIKE %:keyword% ")
 	Page<LResponseClass> findAllByOneKeyword(@Param("keyword") String keyword, Pageable pageable);

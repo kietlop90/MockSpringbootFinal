@@ -86,7 +86,6 @@ public class HttpUser {
                 new ParameterizedTypeReference<PaginatedResponse<LResponseUser>>() {
                 }
         );
-
         return response.getBody();
     }
 

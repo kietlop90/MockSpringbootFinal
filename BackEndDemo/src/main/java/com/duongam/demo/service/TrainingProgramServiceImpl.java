@@ -98,6 +98,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Override
     @Transactional
     public DReponseTrainingProgram save(CRequestTrainingProgram cRequestTrainingProgram) {
+
         TrainingProgram trainingProgram = new TrainingProgram();
         trainingProgram.setCreatedBy(userRepository.findByUsername(cRequestTrainingProgram.getEmail()));
         trainingProgram.setCode("TP00" + ('A' + (int) (Math.random() * 26)) + ('A' + (int) (Math.random() * 26)));
@@ -111,6 +112,12 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         } else {
             trainingProgram.setStatus(3);
         }
+
+        Optional<TrainingProgram> trainingProgramDB = trainingProgramRepository.findByName(cRequestTrainingProgram.getName());
+        if (trainingProgramDB.isPresent()) {
+            return null;
+        }
+
         trainingProgramRepository.save(trainingProgram);
 
         List<String> stringList = Arrays.asList(cRequestTrainingProgram.getListSyllabusCode());
@@ -159,7 +166,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
                         trainingProgramSyllabusRepository.save(trainingProgramSyllabusList.get(i));
                     } else {
                         // If syllabusCode is null, delete the corresponding TrainingProgramSyllabus
-                        trainingProgramSyllabusRepository.delete(trainingProgramSyllabusList.get(i+1));
+                        trainingProgramSyllabusRepository.delete(trainingProgramSyllabusList.get(i + 1));
                     }
                 }
             }
@@ -195,7 +202,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         assert trainingProgram != null : "Training program not found";
         DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(trainingProgram);
         List<TrainingProgramSyllabus> trainingProgramSyllabusList = trainingProgramSyllabusRepository.findTrainingProgramByCode(id);
-        for (TrainingProgramSyllabus trainingProgramSyllabus:trainingProgramSyllabusList) {
+        for (TrainingProgramSyllabus trainingProgramSyllabus : trainingProgramSyllabusList) {
             trainingProgramSyllabusRepository.delete(trainingProgramSyllabus);
         }
         trainingProgramRepository.deleteById(id);
@@ -219,7 +226,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             trainingProgram1.setCreatedBy(trainingProgram.getCreatedBy());
             trainingProgramRepository.save(trainingProgram1);
 
-            for (TrainingProgramSyllabus trainingProgramSyllabus: trainingProgramSyllabusList ) {
+            for (TrainingProgramSyllabus trainingProgramSyllabus : trainingProgramSyllabusList) {
                 TrainingProgramSyllabus trainingProgramSyllabus1 = new TrainingProgramSyllabus();
                 trainingProgramSyllabus1.setTrainingProgramCode(trainingProgram1);
                 trainingProgramSyllabus1.setSyllabusCode(syllabusRepository.findByTopicCode(trainingProgramSyllabus.getSyllabusCode().getTopicCode()).orElse(null));

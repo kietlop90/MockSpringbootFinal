@@ -45,13 +45,15 @@ public class TrainingProgramController {
     }
 
 
-
     @PostMapping("/add")
-    public ResponseEntity<DReponseTrainingProgram> add(@Valid @RequestBody CRequestTrainingProgram cRequestTrainingProgram, BindingResult bindingResult) {
+    public ResponseEntity<?> add(@Valid @RequestBody CRequestTrainingProgram cRequestTrainingProgram, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(null);
         }
         DReponseTrainingProgram dReponseTrainingProgram = trainingProgramService.save(cRequestTrainingProgram);
+        if (dReponseTrainingProgram == null) {
+            return ResponseEntity.status(501).body(501);
+        }
         return ResponseEntity.ok().body(dReponseTrainingProgram);
     }
 
@@ -80,7 +82,6 @@ public class TrainingProgramController {
         DReponseTrainingProgram dReponseTrainingProgram = trainingProgramService.findTrainingProgrammById(id);
         return ResponseEntity.ok().body(dReponseTrainingProgram);
     }
-
 
 
     @GetMapping("/getListTagsSearch")
@@ -143,10 +144,7 @@ public class TrainingProgramController {
     }
 
 
-
-
-
-//    ---------------- Used by CLass ----------------------
+    //    ---------------- Used by CLass ----------------------
     @GetMapping("/list-name/{keywords}")
     public ResponseEntity<List<DReponseTrainingProgram>> listProgramForClass(@PathVariable("keywords") String keywords) {
         List<DReponseTrainingProgram> list = trainingProgramService.findAllByNameForclass(keywords);

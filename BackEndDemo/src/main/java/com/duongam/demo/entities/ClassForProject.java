@@ -36,6 +36,8 @@ public class ClassForProject {
 
     private String location;
 
+    private String attendee;
+
     private String FSU;
 
     private LocalDate startDate;

@@ -44,11 +44,14 @@ public class ClassController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<DResponseClass> add(@Valid @RequestBody CRequestClass cRequestClass, BindingResult bindingResult) {
+	public ResponseEntity<?> add(@Valid @RequestBody CRequestClass cRequestClass, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.badRequest().body(null);
 		}
 		DResponseClass dResponseClass = classService.save(cRequestClass);
+		if(dResponseClass == null){
+			return ResponseEntity.status(502).body(502);
+		}
 		return ResponseEntity.ok().body(dResponseClass);
 	}
 

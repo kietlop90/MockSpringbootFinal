@@ -1,6 +1,6 @@
 package duongam.training.controller;
 
-import duongam.training.dto.request.forupdate.UResponseRole;
+import duongam.training.dto.request.forupdate.URequestRole;
 import duongam.training.dto.response.fordetail.DResponseRole;
 import duongam.training.dto.response.forlist.LResponseRole;
 import duongam.training.service.HttpRole;
@@ -26,7 +26,7 @@ public class RoleController {
 
 	@PostMapping("/update")
 	@ResponseBody
-	public DResponseRole updateDatabase(UResponseRole uResponseRole) {
-		return httpRole.update(uResponseRole);
+	public DResponseRole updateDatabase(URequestRole uRequestRole) {
+		return httpRole.update(uRequestRole);
 	}
 }

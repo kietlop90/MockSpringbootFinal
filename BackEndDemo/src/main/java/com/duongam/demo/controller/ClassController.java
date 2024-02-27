@@ -68,8 +68,7 @@ public class ClassController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<DResponseClass> delete(@PathVariable("id") Long classId) {
-		DResponseClass dResponseClass = classService.deleteById(classId);
-		return ResponseEntity.ok().body(dResponseClass);
+	public void delete(@PathVariable("id") Long classId) {
+		classService.deleteById(classId);
 	}
 }

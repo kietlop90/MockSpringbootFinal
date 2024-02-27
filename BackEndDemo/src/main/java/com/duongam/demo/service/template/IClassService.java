@@ -24,7 +24,7 @@ public interface IClassService {
 
 	DResponseClass findById(Long id);
 
-	DResponseClass deleteById(Long id);
+	void deleteById(Long id);
 
 	List<DReponseTrainingProgram> searchProgram(String programName);
 }

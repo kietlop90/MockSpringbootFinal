@@ -10,12 +10,12 @@ $(async function () {
         //TO DO
     })
     $("#btn-delete-class").on("click", function () {
-        //TO DO
+
     })
     $("#btn-back").on("click", function () {
         //TO DO
     })
-    $("#btn-cancel").on("click", function () {
+    $("#btn-cancel").on("click", function () {f
         //TO DO
     })
     $("#btn-change-training").on("click",function (){
@@ -181,8 +181,10 @@ var dataTrainingCode;
 
 function addProgramOrUpdate() {
     $("#input-filter-training-program").on("keyup",  async function () {
-
         let val = $(this).val();
+        if (!val) {
+            return;
+        }
         await getListWithKeyWord("/trainingProgram/list-name/" + val);
         // render
         let listAutocompleteDom = $("#list-autocomplete");

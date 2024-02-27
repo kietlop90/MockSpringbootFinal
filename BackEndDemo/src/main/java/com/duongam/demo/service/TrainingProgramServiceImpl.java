@@ -194,6 +194,10 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
         assert trainingProgram != null : "Training program not found";
         DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(trainingProgram);
+        List<TrainingProgramSyllabus> trainingProgramSyllabusList = trainingProgramSyllabusRepository.findTrainingProgramByCode(id);
+        for (TrainingProgramSyllabus trainingProgramSyllabus:trainingProgramSyllabusList) {
+            trainingProgramSyllabusRepository.delete(trainingProgramSyllabus);
+        }
         trainingProgramRepository.deleteById(id);
         return reponseTrainingProgram;
     }
@@ -203,6 +207,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Transactional
     public DReponseTrainingProgram duplicateTrainingProgram(String id) {
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
+        List<TrainingProgramSyllabus> trainingProgramSyllabusList = trainingProgramSyllabusRepository.findTrainingProgramByCode(id);
 
         if (trainingProgram != null) {
             TrainingProgram trainingProgram1 = new TrainingProgram();
@@ -211,12 +216,16 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             trainingProgram1.setDuration(trainingProgram.getDuration());
             trainingProgram1.setStatus(trainingProgram.getStatus());
             trainingProgram1.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-
             trainingProgram1.setCreatedBy(trainingProgram.getCreatedBy());
-
-//            trainingProgram1.setCreateBy(trainingProgram.getCreateBy());
-
             trainingProgramRepository.save(trainingProgram1);
+
+            for (TrainingProgramSyllabus trainingProgramSyllabus: trainingProgramSyllabusList ) {
+                TrainingProgramSyllabus trainingProgramSyllabus1 = new TrainingProgramSyllabus();
+                trainingProgramSyllabus1.setTrainingProgramCode(trainingProgram1);
+                trainingProgramSyllabus1.setSyllabusCode(syllabusRepository.findByTopicCode(trainingProgramSyllabus.getSyllabusCode().getTopicCode()).orElse(null));
+                trainingProgramSyllabusRepository.save(trainingProgramSyllabus1);
+            }
+
 
             return new DReponseTrainingProgram(trainingProgram1);
         } else {

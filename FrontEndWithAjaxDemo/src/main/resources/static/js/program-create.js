@@ -75,6 +75,9 @@ function showUpdateContent(isUpdate = false) {
 function addSyllabus() {
     $("#select-syllabus").on("keyup", async function () {
         let val = $(this).val();
+        if (!val) {
+            return;
+        }
         await getListSyllabusWithKeyWord("/syllabus/list-all/" + val);
         // render
         let listAutocompleteDom = $("#list-autocomplete");
@@ -82,20 +85,32 @@ function addSyllabus() {
         listAutocompleteDom.html("");
         console.log(resultListSyllabusWithKeyWord)
         for (const [index, item] of resultListSyllabusWithKeyWord.entries()) {
-            let syllabusItem = $("<div>").addClass("item-syllabus");
+            let syllabusItem = $("<div>")
+                .addClass("item-syllabus")
+                .addClass("p-2");
             syllabusItem.on("click", function () {
                 console.log(item);
                 onSelectSyllabus(item);
             })
 
             // Create name and status elements
-            let nameStatusDiv = $("<div>").addClass("name-syllabus d-flex justify-content-between");
-            nameStatusDiv.append($("<div>").html(`<label>${item.topicName}</label><label class="status-Inactive">Inactive</label>`));
-            nameStatusDiv.append($("<div>").html("X"));
+            let nameStatusDiv = $("<div>")
+                .addClass("name-syllabus d-flex justify-content-between")
+                .addClass("item-title");
+            nameStatusDiv
+                .append($("<div>")
+                    .addClass("ms-2")
+                    .html(`
+                        <label>${item.topicName}</label>
+                        <label class="status-${item.status}">${item.status}</label>
+                    `));
             syllabusItem.append(nameStatusDiv);
 
             // Create info element
-            let infoDiv = $("<div>").addClass("info-syllabus");
+            let infoDiv = $("<div>")
+                .addClass("info-syllabus")
+                .addClass("item-info")
+                .addClass("small-text");
             let modifiedDate = item.modifiedDate ? item.modifiedDate : "23/07/2022";
             let modifiedBy = item.modifiedBy ? item.modifiedBy : "Johny Deep";
             let infoStr = (`<label class="me-2">${item.version}</label>|<label class="me-2 mx-2">${item.duration}</label>|<label class="mx-2">Modified on ${modifiedDate} by ${modifiedBy}</label>`);
@@ -110,6 +125,15 @@ function addSyllabus() {
     });
 }
 
+function toProperCase(str) {
+    return str.replace(
+        /\w\S*/g,
+        function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+    );
+}
+
 function onSelectSyllabus(syllabus) {
     listStringSyllabusCode.push(syllabus.topicCode)
     $(".group-syllabus").append(`
@@ -117,14 +141,15 @@ function onSelectSyllabus(syllabus) {
             <div class="name-syllabus d-flex justify-content-between">
                 <div>
                     <label>${syllabus.topicName}</label>
-                    <label class="status-${syllabus.status.toProperCase()}">${syllabus.status}</label>
+                    
+                    <label class="status-${toProperCase(syllabus.status)}">${syllabus.status}</label>
                 </div>
                 <div>X</div>
             </div>
             <div class="info-syllabus">
                 <label class="me-2">${syllabus.topicCode}</label>|
                 <label class="me-2 mx-2">4 days (12 hours)</label>|
-                <label class="mx-2">Modified on ${syllabus.modifiedDate} by ${syllabus.modifiedBy}</label>
+                <label class="mx-2">Modified on ${syllabus.moda} by ${syllabus.modifiedBy}</label>
             </div>
         </div>
     `);

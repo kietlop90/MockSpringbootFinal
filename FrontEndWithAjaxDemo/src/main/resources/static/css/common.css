@@ -185,7 +185,9 @@ body {
 }
 
 .item-filter .btn-x {
+    color: #ffffff;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .item-filter .btn-x:hover {

@@ -6,10 +6,9 @@ import com.duongam.demo.dto.response.fordetail.DReponseTrainingProgram;
 import com.duongam.demo.dto.response.fordetail.DResponseClass;
 import com.duongam.demo.dto.response.forlist.LResponseClass;
 import com.duongam.demo.dto.response.forlist.LResponseUser;
-import com.duongam.demo.entities.ClassForProject;
-import com.duongam.demo.entities.TrainingProgram;
-import com.duongam.demo.entities.User;
+import com.duongam.demo.entities.*;
 import com.duongam.demo.repositories.ClassRepository;
+import com.duongam.demo.repositories.ClassUserRepository;
 import com.duongam.demo.repositories.TrainingProgramRepository;
 import com.duongam.demo.repositories.UserRepository;
 import com.duongam.demo.service.template.IClassService;
@@ -37,6 +36,9 @@ public class ClassServiceImpl implements IClassService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ClassUserRepository classUserRepository;
 
     @Autowired
     private TrainingProgramRepository trainingProgramRepository;
@@ -103,10 +105,20 @@ public class ClassServiceImpl implements IClassService {
 
     @Override
     @Transactional
-    public DResponseClass deleteById(Long id) {
-        DResponseClass DResponseClass = findById(id);
-        classRepository.deleteById(id);
-        return DResponseClass;
+    public void deleteById(Long id) {
+        ClassForProject dResponseClass = classRepository.findById(id).orElse(null);
+
+        dResponseClass.setTrainingProgramCode(null);
+        dResponseClass.setModifiedBy(null);
+        dResponseClass.setCreatedBy(null);
+
+        List<ClassUser> classUserList = classUserRepository.findClassUserByClassCode(dResponseClass.getId());
+        for (ClassUser classUser : classUserList) {
+            classUser.setUserId(null);
+            classUserRepository.delete(classUser);
+        }
+
+        classRepository.delete(dResponseClass);
     }
 
     @Override

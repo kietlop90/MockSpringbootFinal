@@ -1,4 +1,4 @@
-$(function(){
+$(function () {
     $("#btn-filter-class").on("click", function () {
         addKeywordAndSearch();
     })
@@ -10,19 +10,20 @@ $(function(){
     })
     $(".btn-update-class").on("click", function () {
         let idClass = $(this).attr("data-id");
-        window.location.replace("/class/update/"+idClass);
+        window.location.replace("/class/update/" + idClass);
     })
     $("#btn-copy-class").on("click", function () {
         //TO DO
     })
-    $("#btn-delete-class").on("click", function () {
-        //TO DO
+    $(".btn-delete-class").on("click", function () {
+        let id = $(this).attr("data-id");
+        deleteItem("/class/delete", id, "/class/list");
     })
 
 
     // event enter
     $(document).on("keypress", function (e) {
-        if(e.keyCode === 13) {
+        if (e.keyCode === 13) {
             addKeywordAndSearch();
         }
     })
@@ -70,7 +71,7 @@ function renderKeywords() {
         let itemFilterDom = $("<span>")
             .addClass("item-filter")
             .addClass("me-2")
-            .css('cursor','pointer')
+            .css('cursor', 'pointer')
             .on("click", function () {
                 searchKeywords.splice(index, 1);
                 searchKeywords.push(item);

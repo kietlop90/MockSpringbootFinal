@@ -1,7 +1,10 @@
 package duongam.training.dto.enums;
 
 public enum ERole {
-    TRAINER("TRAINER"), ADMIN("ADMIN"),SUPER_ADMIN("SUPER_ADMIN");
+    SUPERADMIN("SUPERADMIN"),
+    ADMIN("ADMIN"),
+    TRAINER("TRAINER"),
+    STUDENT("STUDENT");
     private final String text;
 
     private ERole(final String text) {

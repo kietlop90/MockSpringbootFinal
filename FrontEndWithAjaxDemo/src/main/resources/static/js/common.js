@@ -101,14 +101,14 @@ let listError = {
 function throwError(error) {
     switch (error) {
         case 402:
-            alert("Email not found ");
+            alert("Email not found. ");
             break;
         case 500:
             alert("Unexpected error. ");
             break;
         default:
             error = error.substring(error.indexOf('"') + 1, error.lastIndexOf('"'));
-            error = JSON.parse(error);
+            error = error ? JSON.parse(error) : "Unexpected error. ";
             var code = error.msg ? error.msg : error;
             code = code.toString()
                 .replaceAll("javassist.bytecode.DuplicateMemberException: ", "");
@@ -323,6 +323,7 @@ function login() {
             }, 1000);
         },
         error: function (xhr) {
+
             var errorText = parseInt(xhr.responseJSON.message);
             if (errorText === 402) {
                 showErrorModal(listError.EM59)

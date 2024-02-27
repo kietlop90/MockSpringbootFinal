@@ -74,11 +74,10 @@ public class ClassController {
         return httpClass.update(request);
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseBody
-    public Long delete(@PathVariable("id") Long requestId) {
+    public void delete(@PathVariable("id") Long requestId) {
         httpClass.deleteById(requestId);
-        return requestId;
     }
 
     @GetMapping("/getById/{id}")

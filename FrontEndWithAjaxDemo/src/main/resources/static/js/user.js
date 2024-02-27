@@ -131,6 +131,13 @@ $(document).ready(function () {
         updateItem("/user/update", resultDetailItem, "/user/list", false);
     });
 
+    var myDropdownThreeDot = document.getElementsByClassName('btn-three-dot');
+    for (const ele of myDropdownThreeDot) {
+        ele.addEventListener('show.bs.dropdown', function (e) {
+            checkShowChangeRole(e);
+        })
+    }
+
     // event enter
     $(document).on("keypress", function (e) {
         if (e.keyCode === 13) {
@@ -207,4 +214,17 @@ function removeFilter(index) {
     searchKeywords.splice(index, 1);
     renderKeywords();
     search();
+}
+
+function checkShowChangeRole(item) {
+    let id = $(item.target).attr("data-id");
+    let role = $(item.target).attr("data-role");
+    let userInfo = JSON.parse(localStorage.getItem("user_info"));
+    if (userInfo.role !== 'SUPERADMIN') {
+        let myDropdownChangeRole = document.getElementById('btn-change-role-' + id);
+        myDropdownChangeRole.addEventListener('show.bs.dropdown', function (e) {
+            $("#item-role-" + id).hide();
+        })
+    }
+    console.log(id, role);
 }

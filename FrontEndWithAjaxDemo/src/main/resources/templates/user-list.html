@@ -115,9 +115,12 @@
                                            th:text="${item.role}"></label>
                                 </td>
                                 <td th:id='${"action"+ item.id}'>
-                                    <button class="btn btn-three-dot dropdown-toggle" type="button"
+                                    <button th:disabled="${item.role == 'SUPERADMIN'}"
+                                            class="btn btn-three-dot dropdown-toggle" type="button"
                                             data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside" aria-expanded="false">
+                                            data-bs-auto-close="outside" aria-expanded="false"
+                                            th:data-id="${item.id}"
+                                            th:data-role="${item.role}">
                                         <img th:src="@{/icon/action/more_horizontal.png}" alt="First Page">
                                     </button>
                                     <ul class="dropdown-menu">
@@ -132,7 +135,7 @@
                                         <li>
                                             <div class="btn-group dropstart">
                                                 <a th:id="'btn-change-role-' + ${item.id}"
-                                                   class="dropdown-item dropdown-toggle"
+                                                   class="dropdown-item dropdown-toggle btn-change-role"
                                                    type="button" data-bs-toggle="dropdown"
                                                    aria-expanded="false">
                                                     <img th:src="@{/icon/other/role-black.png}" alt="">
@@ -141,6 +144,7 @@
                                                 <ul class="dropdown-menu">
                                                     <li>
                                                         <a class="dropdown-item btn-change-role "
+                                                           th:id="${'item-role-'+item.id}"
                                                            th:if="${item.role != 'SUPERADMIN'}"
                                                            th:data-id="${item.id}"
                                                            th:data-role="'SUPERADMIN'">
@@ -161,6 +165,14 @@
                                                            th:data-id="${item.id}"
                                                            th:data-role="'TRAINER'">
                                                             <label style="color: #2C5282">Trainer</label>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item btn-change-role "
+                                                           th:if="${item.role != 'STUDENT'}"
+                                                           th:data-id="${item.id}"
+                                                           th:data-role="'STUDENT'">
+                                                            <label style="color: #2C5282">Student</label>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -284,15 +296,6 @@
                     <div class="col-3"></div>
                     <div class="col-9"><p id="error-name" class="text-danger"></p></div>
                 </div>
-                <!--                <div class="row mb-2">-->
-                <!--                    <div class="col-3">-->
-                <!--                        <label for="user-name-input"><b>User Name</b></label>-->
-                <!--                    </div>-->
-                <!--                    <div class="col-9">-->
-                <!--                        <input type="text" id="user-name-input" class="form-control" placeholder="User name"-->
-                <!--                               required/>-->
-                <!--                    </div>-->
-                <!--                </div>-->
                 <div class="row mb-2">
                     <div class="col-3">
                         <label for="email-address-input"><b>Email address</b></label>

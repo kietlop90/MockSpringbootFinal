@@ -21,7 +21,7 @@ public class UserUrl {
     private static final String GET_ALL_TRAINER = "user.getalltrainer";
     private static final String GET_ALL_ADMIN = "user.getalladmin";
 
-    private static final String GET_ALL_PERMISSION = "user.permissionlist";
+    private static final String GET_ALL_PERMISSION = "role.getall";
 
     public String login() {
         return urlProperties.getProperty(LOGIN);

@@ -66,6 +66,11 @@ body {
     align-items: center;
 }
 
+.btn:not(.cancelBtn):not(.applyBtn):disabled {
+    cursor: not-allowed;
+    border: none;
+}
+
 .btn-orange {
     background-color: #D45B13 !important;
     color: #FFFFFF;

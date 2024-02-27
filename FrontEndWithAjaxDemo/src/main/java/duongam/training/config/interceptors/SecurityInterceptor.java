@@ -14,9 +14,9 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         String url = request.getRequestURI();
         System.out.println(url);
-//        if(Token.API_KEY.equals("None")){
-//            response.sendRedirect("/user/login");
-//        }
+        if(Token.API_KEY.equals("None")){
+            response.sendRedirect("/user/login");
+        }
 //        else {
 //            if(!Token.ROLE.contains(ERole.ADMIN)) {
 //                throw new ForbiddenException("403 Forbidden");

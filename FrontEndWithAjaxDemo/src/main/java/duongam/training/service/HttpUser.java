@@ -123,7 +123,7 @@ public class HttpUser {
 
     public DReponseUserPermission deleteById(Long id) {
         HttpBase<DReponseUserPermission, DReponseUserPermission> httpBase = new HttpBase<>();
-        return httpBase.getFromAPI(userUrl.getGetAllPermission(), DReponseUserPermission.class);
+        return httpBase.deleteFromAPI(userUrl.deleteById(id), DReponseUserPermission.class);
     }
 
 

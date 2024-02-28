@@ -2,6 +2,12 @@ $(document).ready(function () {
     $("#btn-filter-user").on("click", function () {
         addKeywordAndSearch();
     })
+    $("#btn-add").on("click", function () {
+        if (!isEditUser) {
+            resetFormAddUser();
+        }
+        isEditUser = false;
+    })
     $("#btn-add-user").on("click", function () {
         let role = $("#user-type-input").val();
         let name = $("#name-input").val(); // ten that
@@ -110,6 +116,7 @@ $(document).ready(function () {
         $("#gender-input").val(resultDetailItem.gender);
         $("#switch-status").attr("checked", resultDetailItem.status);
 
+        isEditUser = true;
         // trigger show modal
         $("#btn-add").click();
     })
@@ -139,7 +146,7 @@ $(document).ready(function () {
             checkShowChangeRole(e);
         })
     }
-
+    var isEditUser = false
     // event enter
     $(document).on("keypress", function (e) {
         if (e.keyCode === 13) {
@@ -229,4 +236,23 @@ function checkShowChangeRole(item) {
         })
     }
     console.log(id, role);
+}
+
+function resetFormAddUser() {
+    resultDetailItem = null;
+
+    // update text in form
+    $("#title-model").html("Add new a user");
+    $("#user-type-input").removeAttr("disabled");
+    $("#email-address-input").removeAttr("disabled");
+
+    // fill data in form
+    $("#user-type-input").val("");
+    $("#name-input").val("");
+    $("#user-name-input").val("");
+    $("#email-address-input").val("");
+    $("#phone-input").val("");
+    $("#dob-input").attr("value", "");
+    $("#gender-input").val("");
+    $("#switch-status").val("");
 }

@@ -125,6 +125,7 @@ public class UserServiceImpl implements IUserService {
             user.setName(cUser.getName());
             user.setUsername(cUser.getUsername());
             user.setEmail(cUser.getEmail());
+            user.setCreatedBy(userRepository.findById(cUser.getCreatedBy()).orElse(null).getName());
             user.setPhone(cUser.getPhone());
             user.setStatus(cUser.getStatus());
             user.setPassword(bCryptPasswordEncoder.encode(cUser.getPassword()));
@@ -146,6 +147,7 @@ public class UserServiceImpl implements IUserService {
         if (existingUser != null) {
             existingUser.setName(uUser.getName());
             existingUser.setPhone(uUser.getPhone());
+            existingUser.setModifiedBy(userRepository.findById(uUser.getModifiedBy()).orElse(null).getName());
             existingUser.setDob(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             existingUser.setGender(EGender.valueOf(uUser.getGender()));
             existingUser.setStatus(uUser.getStatus());

@@ -1,5 +1,6 @@
 package duongam.training.service;
 
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.enums.ERole;
 import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -36,36 +38,41 @@ public class HttpClass {
 
 
     public PaginatedResponse<LResponseClass> getAll(int page, int size,
-                                                   String sortField, String dir, String keywords) {
-        RestTemplate restTemplate = new RestTemplate();
-        String urlWithParam = classUrl.getAll() + "?page=" + page + "&size=" + size;
+                                                    String sortField, String dir, String keywords) throws ForbiddenException {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String urlWithParam = classUrl.getAll() + "?page=" + page + "&size=" + size;
 
-        if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
-            urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+            if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
+                urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+            }
+
+            if (keywords != null && !keywords.isEmpty()) {
+                urlWithParam += "&keywords=" + keywords;
+            }
+            //Token
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(new MediaType[]{MediaType.APPLICATION_JSON}));
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            if (!Token.API_KEY.equals("None")) {
+                headers.set(Token.HEADER, Token.API_KEY);
+            }
+
+            HttpEntity<Object> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<PaginatedResponse<LResponseClass>> response = restTemplate.exchange(
+                    urlWithParam,
+                    HttpMethod.GET,
+                    entity,
+                    new ParameterizedTypeReference<PaginatedResponse<LResponseClass>>() {
+                    }
+            );
+
+            return response.getBody();
+        } catch (
+                HttpClientErrorException.Forbidden ex) {
+            throw new ForbiddenException(ex.getMessage());
         }
-
-        if (keywords != null && !keywords.isEmpty()) {
-            urlWithParam += "&keywords=" + keywords;
-        }
-        //Token
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if(!Token.API_KEY.equals("None")){
-            headers.set(Token.HEADER, Token.API_KEY);
-        }
-
-        HttpEntity<Object> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<PaginatedResponse<LResponseClass>> response = restTemplate.exchange(
-                urlWithParam,
-                HttpMethod.GET,
-                entity,
-                new ParameterizedTypeReference<PaginatedResponse<LResponseClass>>() {
-                }
-        );
-
-        return response.getBody();
     }
 
     public DResponseClass add(CRequestClass requestClass) {

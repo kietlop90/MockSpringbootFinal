@@ -1,6 +1,7 @@
 package duongam.training.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.response.fordetail.DResponseSyllabus;
 import duongam.training.dto.response.forlist.LResponseSyllabus;
 import duongam.training.dto.response.page.PaginatedResponse;
@@ -23,7 +24,7 @@ public class SylabusController {
     public String list(Model model, @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "10") int size,
                        @RequestParam(required = false) String sortField,
-                       @RequestParam(defaultValue = "desc") String dir) {
+                       @RequestParam(defaultValue = "desc") String dir) throws ForbiddenException {
         PaginatedResponse<LResponseSyllabus> syllabusPage = httpSyllabus.getAll(page, size, sortField, dir);
         model.addAttribute("syllabusList", syllabusPage.getContent());
         model.addAttribute("totalPages", syllabusPage.getTotalPages());

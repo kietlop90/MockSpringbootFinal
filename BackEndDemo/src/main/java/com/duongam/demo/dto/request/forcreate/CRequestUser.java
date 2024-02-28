@@ -12,6 +12,8 @@ import java.time.LocalDate;
 public class CRequestUser {
     private String username;
     private String password;
+    private Long createdBy;
+    private Long modifiedBy;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
     private String role;

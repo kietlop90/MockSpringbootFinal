@@ -71,6 +71,11 @@ public class ClassServiceImpl implements IClassService {
             return null;
         }
 
+        Optional<ClassForProject> checkCode = classRepository.findByCode(cRequestClass.getCode());
+        if (checkCode.isPresent()){
+            return null;
+        }
+
 
         User user = userRepository.findById(cRequestClass.getCreatedBy()).orElse(null);
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(cRequestClass.getTrainingProgramCode()).orElse(null);

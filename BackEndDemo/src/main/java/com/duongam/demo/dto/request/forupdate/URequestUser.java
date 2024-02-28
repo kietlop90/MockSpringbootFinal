@@ -13,6 +13,8 @@ public class URequestUser {
     private Long id;
     private String username;
     private String password;
+    private Long createdBy;
+    private Long modifiedBy;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
     private String role;

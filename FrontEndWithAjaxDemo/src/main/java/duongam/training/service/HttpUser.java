@@ -1,5 +1,6 @@
 package duongam.training.service;
 
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.enums.ERole;
 import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.request.forcreate.CRequestUser;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -58,7 +60,8 @@ public class HttpUser {
     }
 
     public PaginatedResponse<LResponseUser> getAll(int page, int size,
-                                                   String sortField, String dir, String keywords) {
+                                                   String sortField, String dir, String keywords) throws ForbiddenException {
+        try{
         RestTemplate restTemplate = new RestTemplate();
         String urlWithParam = userUrl.getAll() + "?page=" + page + "&size=" + size;
 
@@ -87,6 +90,9 @@ public class HttpUser {
                 }
         );
         return response.getBody();
+        } catch (HttpClientErrorException.Forbidden ex) {
+            throw new ForbiddenException(ex.getMessage());
+        }
     }
 
 

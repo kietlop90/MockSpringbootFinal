@@ -203,6 +203,8 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
         DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(trainingProgram);
         List<TrainingProgramSyllabus> trainingProgramSyllabusList = trainingProgramSyllabusRepository.findTrainingProgramByCode(id);
         for (TrainingProgramSyllabus trainingProgramSyllabus : trainingProgramSyllabusList) {
+            trainingProgramSyllabus.setSyllabusCode(null);
+            trainingProgramSyllabus.setTrainingProgramCode(null);
             trainingProgramSyllabusRepository.delete(trainingProgramSyllabus);
         }
         trainingProgramRepository.deleteById(id);

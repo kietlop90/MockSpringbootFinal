@@ -1,5 +1,6 @@
 package duongam.training.controller;
 
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forupdate.URequestClass;
 import duongam.training.dto.response.fordetail.DResponseClass;
@@ -31,7 +32,7 @@ public class ClassController {
                        @RequestParam(defaultValue = "10") int size,
                        @RequestParam(required = false) String sortField,
                        @RequestParam(defaultValue = "desc") String dir,
-                       @RequestParam(defaultValue = "")String keywords){
+                       @RequestParam(defaultValue = "") String keywords) throws ForbiddenException {
         PaginatedResponse<LResponseClass> lResponseClassPaginatedResponse = httpClass.getAll(page, size, sortField, dir, keywords);
         model.addAttribute("list", lResponseClassPaginatedResponse.getContent());
         model.addAttribute("totalPages", lResponseClassPaginatedResponse.getTotalPages());

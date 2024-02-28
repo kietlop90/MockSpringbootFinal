@@ -1,5 +1,6 @@
 package duongam.training.controller;
 
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.request.forcreate.CRequestTrainingProgram;
 import duongam.training.dto.request.forupdate.URequestTrainingProgram;
 import duongam.training.dto.response.fordetail.DReponseTrainingProgram;
@@ -26,7 +27,7 @@ public class TrainingProgramController {
     public String list(Model model, @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "10") int size,
                        @RequestParam(required = false) String sortField,
-                       @RequestParam(defaultValue = "desc") String dir) {
+                       @RequestParam(defaultValue = "desc") String dir) throws ForbiddenException {
 
         PaginatedResponse<DReponseTrainingProgram> trainingProgramPaginatedResponse = httpTrainingProgram.getAll(page, size, sortField, dir);
         model.addAttribute("totalPages", trainingProgramPaginatedResponse.getTotalPages());
@@ -92,7 +93,7 @@ public class TrainingProgramController {
 
     @PostMapping("/add")
     @ResponseBody
-    public DReponseTrainingProgram addDatabase(@ModelAttribute("request") CRequestTrainingProgram request) {
+    public DReponseTrainingProgram addDatabase(@ModelAttribute("request") CRequestTrainingProgram request) throws ForbiddenException {
         return httpTrainingProgram.add(request);
     }
 

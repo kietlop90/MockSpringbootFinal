@@ -15,10 +15,11 @@ $(async function () {
     $("#btn-back").on("click", function () {
         //TO DO
     })
-    $("#btn-cancel").on("click", function () {f
+    $("#btn-cancel").on("click", function () {
+        f
         //TO DO
     })
-    $("#btn-change-training").on("click",function (){
+    $("#btn-change-training").on("click", function () {
         $("#info-training-program").hide();
         $("#group-training-program").hide();
         $("#group-filter-training-program").show();
@@ -30,18 +31,23 @@ $(async function () {
 
         let attend = $("#select-attendee").val();
         let className = $("#input-name-class").val();
-        // let duration = $("#timePicker").val();
+
         let fsu1 = $("#select-fsu").val();
-        let fsuContact =    $("#select-contact-fsu").val();
+        let fsuContact = $("#select-contact-fsu").val();
         let fu = fsu1 + " - " + fsuContact;
         let location = $("#select-location").val();
         let trainer = $("#select-trainer").val();
         let admin = $("#select-admin").val();
-        let startDate = dateDatePicker.startDate.format('MM-DD-YYYY');
-        let endDate = dateDatePicker.endDate.format('MM-DD-YYYY');
+
         let today = new Date();
         let random = Math.floor(Math.random() * 100);
         let code = location + today.getFullYear() + zeroPad(random, 2);
+        let startDate = dateDatePicker.startDate.format('MM-DD-YYYY');
+        let endDate = dateDatePicker.endDate.format('MM-DD-YYYY');
+        let startDayForDuration = moment(dateDatePicker.startDate.format('MM-DD-YYYY'), 'MM-DD-YYYY');
+        let endDayForDuration = moment(dateDatePicker.endDate.format('MM-DD-YYYY'), 'MM-DD-YYYY');
+        let timeDiff = endDayForDuration.diff(startDayForDuration);
+        let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
         let data = {
             location: location,
             attendee: attend,
@@ -60,12 +66,11 @@ $(async function () {
             trainingProgramCode: dataTrainingCode,
             // trainer: trainer,
             // admin: admin,
-            // duration: duration,
+            duration: daysDiff,
         };
         let pathName = window.location.pathname;
         if (pathName.includes("add")) {
-            if(!data.trainingProgramCode)
-            {
+            if (!data.trainingProgramCode) {
                 showErrorModal(listError.EM48);
                 return;
             }
@@ -80,6 +85,7 @@ $(async function () {
             data.attendee = resultDetailItem.attendee;
             data.location = resultDetailItem.location;
             data.fsu = resultDetailItem.fsu;
+            data.duration = resultDetailItem.duration;
             updateItem("/class/update", data, "/class/list");
         }
     })
@@ -192,7 +198,7 @@ $(async function () {
 var dataTrainingCode;
 
 function addProgramOrUpdate() {
-    $("#input-filter-training-program").on("keyup",  async function () {
+    $("#input-filter-training-program").on("keyup", async function () {
         let val = $(this).val();
         if (!val) {
             return;

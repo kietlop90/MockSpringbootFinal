@@ -26,8 +26,8 @@ public class CRequestClass {
     private String startDate;
     private String endDate;
     private Long createdBy;
-    private Timestamp createdDate;
     private Long modifiedBy;
+    private Timestamp createdDate;
     private Timestamp modifiedDate;
     private String trainingProgramCode;
     private String attendee;

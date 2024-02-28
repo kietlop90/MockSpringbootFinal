@@ -19,6 +19,8 @@ $(document).ready(function () {
             dob: dob,
             gender: gender,
             status: true,
+            modifiedBy: JSON.parse(localStorage.getItem("user_info")).id,
+            createdBy: JSON.parse(localStorage.getItem("user_info")).id,
         };
         if (resultDetailItem && resultDetailItem.id) {
             data.id = resultDetailItem.id;

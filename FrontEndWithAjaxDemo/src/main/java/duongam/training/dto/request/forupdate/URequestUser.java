@@ -18,6 +18,8 @@ public class URequestUser {
     private String password;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
+    private Long createdBy;
+    private Long modifiedBy;
     private String role;
     private String name;
     private String email;

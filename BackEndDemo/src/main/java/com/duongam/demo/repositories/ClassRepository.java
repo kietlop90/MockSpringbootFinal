@@ -20,6 +20,8 @@ public interface ClassRepository extends JpaRepository<ClassForProject, Long> {
 
 	List<ClassForProject> findAllBy();
 
+	Optional<ClassForProject> findByCode(String code);
+
 	Optional<ClassForProject> findByName(String name);
 
 	@Query("SELECT c FROM ClassForProject c WHERE c.name LIKE %:keyword% OR c.code LIKE %:keyword% ")

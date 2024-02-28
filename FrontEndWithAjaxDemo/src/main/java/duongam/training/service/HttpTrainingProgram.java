@@ -1,5 +1,6 @@
 package duongam.training.service;
 
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.request.forcreate.CRequestClass;
 import duongam.training.dto.request.forcreate.CRequestTrainingProgram;
 import duongam.training.dto.request.forupdate.URequestClass;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -51,32 +53,37 @@ public class HttpTrainingProgram {
     }
 
     public PaginatedResponse<DReponseTrainingProgram> getAll(int page, int size,
-                                                             String sortField, String dir) {
-        RestTemplate restTemplate = new RestTemplate();
-        String urlWithParam = trainingProgramUrl.getAll() + "?page=" + page + "&size=" + size;
+                                                             String sortField, String dir) throws ForbiddenException {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String urlWithParam = trainingProgramUrl.getAll() + "?page=" + page + "&size=" + size;
 
-        if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
-            urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+            if (sortField != null && !sortField.isEmpty() && dir != null && !dir.isEmpty()) {
+                urlWithParam += "&sortField=" + sortField + "&dir=" + dir;
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(new MediaType[]{MediaType.APPLICATION_JSON}));
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            if (!Token.API_KEY.equals("None")) {
+                headers.set(Token.HEADER, Token.API_KEY);
+            }
+
+            HttpEntity<Object> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<PaginatedResponse<DReponseTrainingProgram>> response = restTemplate.exchange(
+                    urlWithParam,
+                    HttpMethod.GET,
+                    entity, // Pass the HttpEntity with headers
+                    new ParameterizedTypeReference<PaginatedResponse<DReponseTrainingProgram>>() {
+                    }
+            );
+
+            return response.getBody();
+        } catch (
+                HttpClientErrorException.Forbidden ex) {
+            throw new ForbiddenException(ex.getMessage());
         }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        if(!Token.API_KEY.equals("None")){
-            headers.set(Token.HEADER, Token.API_KEY);
-        }
-
-        HttpEntity<Object> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<PaginatedResponse<DReponseTrainingProgram>> response = restTemplate.exchange(
-                urlWithParam,
-                HttpMethod.GET,
-                entity, // Pass the HttpEntity with headers
-                new ParameterizedTypeReference<PaginatedResponse<DReponseTrainingProgram>>() {
-                }
-        );
-
-        return response.getBody();
     }
 
     public DReponseTrainingProgram duplicate(String id) {
@@ -136,7 +143,6 @@ public class HttpTrainingProgram {
 //    }
 
 
-
     public List<DReponseTrainingProgram> searchByName(String name) {
         HttpBase<DReponseTrainingProgram[], DReponseTrainingProgram[]> httpBase = new HttpBase<>();
         DReponseTrainingProgram[] list = httpBase.getFromAPI(trainingProgramUrl.searchByName(name), DReponseTrainingProgram[].class);
@@ -150,9 +156,15 @@ public class HttpTrainingProgram {
         return Arrays.asList(list);
     }
 
-    public DReponseTrainingProgram add(CRequestTrainingProgram request) {
-        HttpBase<CRequestTrainingProgram, DReponseTrainingProgram> httpBase = new HttpBase<>();
-        request.setStatus("InActive");
-        return httpBase.postToAPI(request, trainingProgramUrl.add(), DReponseTrainingProgram.class);
+    public DReponseTrainingProgram add(CRequestTrainingProgram request) throws ForbiddenException {
+        try {
+            HttpBase<CRequestTrainingProgram, DReponseTrainingProgram> httpBase = new HttpBase<>();
+            request.setStatus("InActive");
+            return httpBase.postToAPI(request, trainingProgramUrl.add(), DReponseTrainingProgram.class);
+        }  catch (
+                HttpClientErrorException.Forbidden ex) {
+            throw new ForbiddenException(ex.getMessage());
+        }
+
     }
 }

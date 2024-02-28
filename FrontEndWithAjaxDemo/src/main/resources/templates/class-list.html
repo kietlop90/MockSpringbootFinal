@@ -92,7 +92,7 @@
                                 <td th:id='${"code"+ item.id}' th:text="${item.code}"></td>
                                 <td th:id='${"createdDate"+ item.id}' th:text="${item.formatDate()}"></td>
                                 <td th:id='${"createdBy"+ item.id}' th:text="${item.createdBy}"></td>
-                                <td th:id='${"duration"+ item.id}' th:text="${item.duration}"></td>
+                                <td th:id='${"duration"+ item.id}' th:text="${item.duration} + 'days'"> </td>
                                 <td th:id='${"attendee"+ item.id}' th:text="${item.attendee}"></td>
                                 <td th:id='${"status"+ item.id}'>
                                     <label th:class="${'status-' + item.status}" th:text="${item.status}"></label>

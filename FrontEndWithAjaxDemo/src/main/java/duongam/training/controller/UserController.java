@@ -1,6 +1,7 @@
 package duongam.training.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import duongam.training.customexception.ForbiddenException;
 import duongam.training.dto.form.LoginForm;
 import duongam.training.dto.form.RegisterForm;
 import duongam.training.dto.request.forcreate.CRequestClass;
@@ -33,7 +34,7 @@ public class UserController {
 					   @RequestParam(defaultValue = "10") int size,
 					   @RequestParam(required = false) String sortField,
 					   @RequestParam(defaultValue = "desc") String dir,
-					   @RequestParam(defaultValue = "")String keywords){
+					   @RequestParam(defaultValue = "")String keywords) throws ForbiddenException {
 		PaginatedResponse<LResponseUser> lResponseUsers = httpUser.getAll(page, size, sortField, dir, keywords);
 		model.addAttribute("userList", lResponseUsers.getContent());
 		model.addAttribute("totalPages", lResponseUsers.getTotalPages());

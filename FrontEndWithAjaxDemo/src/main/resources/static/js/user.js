@@ -124,6 +124,8 @@ $(document).ready(function () {
         let id = $(this).attr("data-id");
         await getItem("/user/getById/" + id);
         resultDetailItem.status = !resultDetailItem.status;
+        resultDetailItem.createdBy = JSON.parse(localStorage.getItem("user_info")).id;
+        resultDetailItem.modifiedBy = JSON.parse(localStorage.getItem("user_info")).id;
         resultDetailItem.dob = moment(resultDetailItem.dob, "DD/MM/YYYY").format('YYYY-MM-DD');
         updateItem("/user/update", resultDetailItem, "/user/list", false);
     });
@@ -135,6 +137,8 @@ $(document).ready(function () {
         let id = $(this).attr("data-id");
         let role = $(this).attr("data-role");
         await getItem("/user/getById/" + id);
+        resultDetailItem.createdBy = JSON.parse(localStorage.getItem("user_info")).id;
+        resultDetailItem.modifiedBy = JSON.parse(localStorage.getItem("user_info")).id;
         resultDetailItem.role = role;
         resultDetailItem.dob = moment(resultDetailItem.dob, "DD/MM/YYYY").format('YYYY-MM-DD');
         updateItem("/user/update", resultDetailItem, "/user/list", false);

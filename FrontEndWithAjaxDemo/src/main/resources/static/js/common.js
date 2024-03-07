@@ -103,24 +103,15 @@ function throwError(error) {
         case 402:
             alert("Email not found. ");
             break;
-        case 500:
-            alert("Unexpected error. ");
-            break;
         default:
-            error = error.substring(error.indexOf('"') + 1, error.lastIndexOf('"'));
-            error = error ? JSON.parse(error) : "Unexpected error. ";
-            var code = error.msg ? error.msg : error;
-            code = code.toString()
-                .replaceAll("javassist.bytecode.DuplicateMemberException: ", "");
-            console.log("Lỗi: ", listError[code]);
-            // Hiển thị thông báo lỗi cho người dùng
-            alert("Đã xảy ra lỗi: " + listError[code]);
+            alert("Unexpected error. ");
             break;
     }
 }
 
 let resultList;
 
+//Method for get list admin and trainer for  class
 function getList(url, prop) {
     return Promise.resolve(
         $.ajax({
@@ -161,7 +152,7 @@ function getListWithKeyWord(url) {
         return data;
     });
 }
-
+//use 2 method WithKeyWord for đảm bảo không bị mất dữ liệu của biến chứa kết quả vì nó là biến global
 let resultListSyllabusWithKeyWord;
 
 function getListSyllabusWithKeyWord(url) {
@@ -249,6 +240,7 @@ function updateItem(url, data, redirect, isAlert = true) {
         data: data,
         success: function (result) {
             resultUpdateItem = result;
+            //use sAlert if need change any so dont need display notify update success
             if (isAlert) {
                 alert("Update successfully !!!");
             }
@@ -270,7 +262,7 @@ function getItem(url, data, redirect) {
             type: "GET",
             url: url,
             headers: {
-                Authorization: token // Thêm token vào header Authorization
+                Authorization: token
             },
             data: data,
             success: function (result) {
@@ -292,7 +284,7 @@ function deleteItem(url, id, redirect) {
         type: "DELETE",
         url: url + "/" + id,
         headers: {
-            Authorization: token // Thêm token vào header Authorization
+            Authorization: token
         },
         success: function (result) {
             resultDeleteItem = result;
@@ -327,7 +319,7 @@ function login() {
         url: "/user/login",
         data: JSON.parse(JSON.stringify(data)),
         success: function (result) {
-            debugger
+
             if (result.name) {
                 localStorage.setItem("user_name", result.name);
                 localStorage.setItem("token", result.token);
@@ -350,7 +342,7 @@ function login() {
     });
 }
 
-//Login error
+//Modal notify error
 function showErrorModal(errorMessage) {
     let errorNotified = $("#errorNotified");
     $("#title-model-error").text("Error");
@@ -358,7 +350,7 @@ function showErrorModal(errorMessage) {
     $("#errorModal").modal("show");
 }
 
-//Login success
+//Modal notify success
 function showSuccessModal(successMessage) {
     let successNotified = $("#successNotified");
     $("#title-model-success").text("Success");

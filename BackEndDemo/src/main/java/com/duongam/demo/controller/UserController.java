@@ -90,7 +90,6 @@ public class UserController {
         }
     }
 
-    // Phương thức để trích xuất token từ header Authorization
     private String extractTokenFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

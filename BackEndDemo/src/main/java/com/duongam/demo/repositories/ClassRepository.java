@@ -27,6 +27,6 @@ public interface ClassRepository extends JpaRepository<ClassForProject, Long> {
 	@Query("SELECT c FROM ClassForProject c WHERE c.name LIKE %:keyword% OR c.code LIKE %:keyword% ")
 	Page<LResponseClass> findAllByOneKeyword(@Param("keyword") String keyword, Pageable pageable);
 
-	@Query("select u from ClassForProject u where u.trainingProgramCode.code = :trainingProgramCode ")
+	@Query("SELECT u FROM ClassForProject u WHERE u.trainingProgramCode.code = :trainingProgramCode ")
 	List<ClassForProject> getALlClassByTrainingProgramCode(@Param("trainingProgramCode") String trainingProgramCode);
 }

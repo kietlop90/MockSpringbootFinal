@@ -16,7 +16,7 @@ $(async function () {
         //TO DO
     })
     $("#btn-cancel").on("click", function () {
-        f
+
         //TO DO
     })
     $("#btn-change-training").on("click", function () {
@@ -39,15 +39,24 @@ $(async function () {
         let trainer = $("#select-trainer").val();
         let admin = $("#select-admin").val();
 
+        //Random code for class
         let today = new Date();
         let random = Math.floor(Math.random() * 100);
         let code = location + today.getFullYear() + zeroPad(random, 2);
+
+        //format for startDate and endDate follow MM-DD-YYYY
         let startDate = dateDatePicker.startDate.format('MM-DD-YYYY');
         let endDate = dateDatePicker.endDate.format('MM-DD-YYYY');
+
+        //Calculate duration (days) for variable duration of entity class
         let startDayForDuration = moment(dateDatePicker.startDate.format('MM-DD-YYYY'), 'MM-DD-YYYY');
         let endDayForDuration = moment(dateDatePicker.endDate.format('MM-DD-YYYY'), 'MM-DD-YYYY');
+
+        //Calculate timeDiff between endDate and startDate = ms
         let timeDiff = endDayForDuration.diff(startDayForDuration);
         let daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+
         let data = {
             location: location,
             attendee: attend,
@@ -68,6 +77,8 @@ $(async function () {
             // admin: admin,
             duration: daysDiff,
         };
+
+        //Take pathName of url (/class/**)
         let pathName = window.location.pathname;
         if (pathName.includes("add")) {
             if (!data.trainingProgramCode) {
@@ -102,6 +113,7 @@ $(async function () {
 
     // check add or update
     let pathName = window.location.pathname;
+    //subtract 30days calculated from the current date
     let startDate = moment().subtract(30, 'days');
     let endDate = moment();
     if (pathName.includes("add")) {
@@ -113,6 +125,7 @@ $(async function () {
 
         showUpdateContent(true);
         let idClass = pathName.split("/class/update/")[1];
+        //Ensure view render done before call function getItem
         await getItem("/class/getById/" + idClass);
         startDate = moment(resultDetailItem.startDate, "DD/MM/YYYY");
         endDate = moment(resultDetailItem.endDate, "DD/MM/YYYY");
@@ -291,6 +304,7 @@ async function getAdmin() {
     }
 }
 
+//Method create number 00 and if number is 10 will change number -> 10 instead of 010
 function zeroPad(num, places) {
     var zero = places - num.toString().length + 1;
     return Array(+(zero > 0 && zero)).join("0") + num;

@@ -106,7 +106,7 @@
                         <td th:text="${trainingProgram.code}"></td>
                         <td>
                             <a th:href="@{/trainingProgram/getDetailTrainingProgram/{id}(id=${trainingProgram.code})}"
-                               th:text="${trainingProgram.name}"></a></td>
+                               th:text="${trainingProgram.name}" style="color: black; text-decoration: none"></a></td>
                         <td th:text="${trainingProgram.createdDate}"></td>
                         <td th:text="${trainingProgram.createdBy}"></td>
                         <td th:text="${trainingProgram.duration}"></td>
@@ -119,8 +119,7 @@
                                     <img th:src="@{/icon/action/more_horizontal.png}" alt="First Page">
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <a class="dropdown-item"
-                                       th:href="@{/trainingProgram/update/{id}(id=${trainingProgram.code})}">
+                                    <a class="dropdown-item">
                                         Edit Program
                                     </a>
                                     <a class="dropdown-item"

@@ -9,7 +9,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaginatedResponse<T> {
+public class
+
+
+
+PaginatedResponse<T> {
     private List<T> content;
     private int totalPages;
     private long totalElements;

@@ -78,7 +78,7 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     @Override
     public List<DResponseSyllabus> getAllSyllabusByTrainingProgramCode(String code) {
         List<Syllabus> syllabusList = trainingProgramSyllabusRepository.getAllSyllabusCodesByTrainingProgramCode(code);
-        return syllabusList.stream().map(value -> {
+        List<DResponseSyllabus> dResponseSyllabusList = syllabusList.stream().map(value -> {
             DResponseSyllabus dResponseSyllabus = new DResponseSyllabus();
             dResponseSyllabus.setTopicCode(value.getTopicCode());
             dResponseSyllabus.setStatus(value.getStatus().name());
@@ -93,6 +93,10 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
             dResponseSyllabus.setModifiedBy(value.getModifiedBy());
             return dResponseSyllabus;
         }).collect(Collectors.toList());
+
+        dResponseSyllabusList.removeIf(dResponseSyllabus -> dResponseSyllabus.getStatus() != "Active");
+
+        return dResponseSyllabusList;
     }
 
     @Override
@@ -124,8 +128,8 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
 
         for (String syllabusCode : stringList) {
             TrainingProgramSyllabus trainingProgramSyllabus = new TrainingProgramSyllabus();
-            trainingProgramSyllabus.setTrainingProgramCode(trainingProgram);
             trainingProgramSyllabus.setSyllabusCode(syllabusRepository.findByTopicCode(syllabusCode).orElse(null));
+            trainingProgramSyllabus.setTrainingProgramCode(trainingProgram);
             trainingProgramSyllabusRepository.save(trainingProgramSyllabus);
         }
         return new DReponseTrainingProgram(trainingProgram);
@@ -200,6 +204,9 @@ public class TrainingProgramServiceImpl implements ITrainingProgramService {
     public DReponseTrainingProgram deleteTrainingProgramById(String id) {
         TrainingProgram trainingProgram = trainingProgramRepository.findByCode(id).orElse(null);
         assert trainingProgram != null : "Training program not found";
+        if (trainingProgram.getStatus() == 1) {
+            throw new IllegalStateException("No delete");
+        }
         DReponseTrainingProgram reponseTrainingProgram = new DReponseTrainingProgram(trainingProgram);
         List<TrainingProgramSyllabus> trainingProgramSyllabusList = trainingProgramSyllabusRepository.findTrainingProgramByCode(id);
         for (TrainingProgramSyllabus trainingProgramSyllabus : trainingProgramSyllabusList) {

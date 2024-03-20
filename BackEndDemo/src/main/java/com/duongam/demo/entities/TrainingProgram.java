@@ -45,11 +45,11 @@ public class TrainingProgram {
 
     // lien ket voi class
 
-    @OneToMany(mappedBy = "trainingProgramCode")
+    @OneToMany(mappedBy = "trainingProgramCode", cascade = CascadeType.PERSIST)
     private List<ClassForProject> classId; // map voi bang class(truong id)
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "create_by")
     private User createdBy;  // map voi bang user(truong id)
 
